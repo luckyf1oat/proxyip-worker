@@ -304,18 +304,47 @@ async function main() {
       msg += `📋 失效原因: ${reasonText}\n\n`;
     }
 
-    // 显示每个分组的移除情况
+    // 显示每个分组的详细信息
     for (const g of groups) {
       const ipsStr = await kvGet('ips:' + g.id);
       if (!ipsStr) continue;
       const gips = JSON.parse(ipsStr);
+
+      // 获取该分组的有效IP（按延迟排序）
+      const validInGroup = gips
+        .filter(ip => ip.status === 'valid' && ip.checkLatency)
+        .sort((a, b) => a.checkLatency - b.checkLatency);
+
+      // 获取该分组移除的IP
       const removedInGroup = invalidIPs.filter(ip =>
-        toCheck.some(t => t.ipPort === ip.ipPort && t.groupId === g.id)
+        gips.some(g => g.ipPort === ip.ipPort)
       );
-      if (removedInGroup.length > 0) {
-        msg += `📦${g.name}→${g.domain || 'N/A'}\n`;
-        msg += `🗑️ 已移除${removedInGroup.length}个失效IP\n`;
+
+      msg += `📦<b>${g.name}</b>→${g.domain || 'N/A'}\n`;
+
+      if (validInGroup.length > 0) {
+        msg += `✅ 有效IP (${validInGroup.length}个):\n`;
+        // 显示前5个最快的IP
+        validInGroup.slice(0, 5).forEach(ip => {
+          msg += `  ${ip.ipPort} (${ip.checkLatency}ms, ${ip.colo || 'UNK'})\n`;
+        });
+        if (validInGroup.length > 5) {
+          msg += `  ...还有${validInGroup.length - 5}个\n`;
+        }
       }
+
+      if (removedInGroup.length > 0) {
+        msg += `🗑️ 已移除${removedInGroup.length}个失效IP:\n`;
+        // 显示前3个移除的IP
+        removedInGroup.slice(0, 3).forEach(ip => {
+          msg += `  ${ip.ipPort} (${ip.failReason || 'unknown'})\n`;
+        });
+        if (removedInGroup.length > 3) {
+          msg += `  ...还有${removedInGroup.length - 3}个\n`;
+        }
+      }
+
+      msg += `\n`;
     }
 
     await sendTelegram(config, msg);
