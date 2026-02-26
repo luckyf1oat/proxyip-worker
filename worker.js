@@ -154,8 +154,8 @@
       trash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
     });
     await env.KV.put('trash',JSON.stringify(trash));
-    // 按分组更新+解析，移除失效IP
-    await env.KV.put('check_progress',JSON.stringify({phase:'resolving',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size}));
+    // 按分组更新，移除失效IP（不再自动解析DNS）
+    await env.KV.put('check_progress',JSON.stringify({phase:'updating',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size}));
     const gr=[];
     for(const g of groups){
       let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
@@ -167,10 +167,8 @@
       let gv=validIPs.filter(i=>i.status==='valid');
       if(g.selectedAsns?.length)gv=gv.filter(i=>g.selectedAsns.includes(i.asn));
       const sorted=[...gv].sort((a,b)=>a.checkLatency-b.checkLatency);
-      const resolved=sorted.slice(0,g.resolveCount||8);
-      let ok=false,err='';
-      if(resolved.length){try{ok=await resolveToCloudflare(g,resolved)}catch(e){err=e.message}}
-      gr.push({id:g.id,name:g.name,domain:g.domain,ok,err,count:validIPs.length,removed:removedCount,resolved:resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)')});
+      const topIPs=sorted.slice(0,g.resolveCount||8);
+      gr.push({id:g.id,name:g.name,domain:g.domain,count:validIPs.length,removed:removedCount,topIPs:topIPs.map(i=>i.ipPort+'('+i.checkLatency+'ms)')});
     }
     // 统计失效原因
     const failedIPs=checked.filter(i=>i.status==='invalid');
@@ -183,9 +181,9 @@
     let tm='<b>🔍 ProxyIP检测报告</b>\n⏰'+result.time+'\n📊 总:'+result.total+' ✅'+result.valid+' ❌'+result.invalid;
     if(reasonStr)tm+='\n📋 失效原因: '+reasonStr;
     for(const g of gr){
-      tm+='\n\n<b>📦'+g.name+'</b>→'+g.domain+'\n'+(g.ok?'✅':'❌')+(g.err?' '+g.err:'');
+      tm+='\n\n<b>📦'+g.name+'</b>→'+g.domain;
       if(g.removed>0)tm+='\n🗑️ 已移除'+g.removed+'个失效IP';
-      tm+='\n'+(g.resolved.length?g.resolved.map(r=>'  '+r).join('\n'):'  无有效IP');
+      tm+='\n'+(g.topIPs.length?g.topIPs.map(r=>'  '+r).join('\n'):'  无有效IP');
     }
     await sendTG(cfg,tm);
     return result;

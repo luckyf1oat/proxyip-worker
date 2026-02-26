@@ -325,7 +325,7 @@ async function main() {
       err,
       count: validIPs.length,
       removed: removedCount,
-      resolved: resolved.map(i => i.ipPort + '(' + i.checkLatency + 'ms)')
+      resolved: resolved  // 保存完整的IP对象
     });
 
     console.log(`  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}, 解析: ${resolved.length}个IP`);
@@ -373,7 +373,10 @@ async function main() {
       msg += `📦<b>${gr.name}</b>→${gr.domain || 'N/A'} ${gr.ok ? '✅' : '❌'}${gr.err ? ' ' + gr.err : ''}\n`;
 
       if (gr.resolved && gr.resolved.length > 0) {
-        msg += `🌐 已解析: ${gr.resolved.join(', ')}\n`;
+        msg += `🌐 已解析:\n`;
+        gr.resolved.forEach(ip => {
+          msg += `  ${ip.ipPort} | ${ip.checkLatency}ms | AS${ip.asn} ${ip.org || ''}\n`;
+        });
       }
 
       if (gr.removed > 0) {
