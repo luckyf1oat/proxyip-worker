@@ -152,13 +152,11 @@
     const groups=JSON.parse(await env.KV.get('groups')||'[]');
     const bl=new Set(JSON.parse(await env.KV.get('blacklist')||'[]'));
     if(!groups.length)return;
-    // 收集所有分组IP(去重，排除回收站中的IP)
+    // 收集所有分组IP(去重)
     const allMap=new Map();
     for(const g of groups){
       let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
-      const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
-      const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
-      let filtered=gips.filter(ip=>!bl.has(ip.ip)&&!trashIPs.has(ip.ipPort));
+      let filtered=gips.filter(ip=>!bl.has(ip.ip));
       if(g.selectedAsns?.length)filtered=filtered.filter(ip=>g.selectedAsns.includes(ip.asn));
       filtered.forEach(ip=>{if(!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip)});
     }
@@ -172,18 +170,14 @@
     });
     const resultMap=new Map(checked.map(i=>[i.ipPort,i]));
     const validSet=new Set(checked.filter(i=>i.status==='valid').map(i=>i.ipPort));
-    // 收集失效IP到各分组回收站
-    const now=new Date().toISOString();
+    // 收集失效IP到回收站
+    const trash=JSON.parse(await env.KV.get('trash')||'[]');
     const invalidIPs=checked.filter(i=>i.status==='invalid');
-    for(const g of groups){
-      const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
-      const gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
-      const groupInvalidIPs=invalidIPs.filter(ip=>gips.some(gip=>gip.ipPort===ip.ipPort));
-      groupInvalidIPs.forEach(ip=>{
-        groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
-      });
-      await env.KV.put('trash:'+g.id,JSON.stringify(groupTrash));
-    }
+    const now=new Date().toISOString();
+    invalidIPs.forEach(ip=>{
+      trash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
+    });
+    await env.KV.put('trash',JSON.stringify(trash));
     // 按分组更新，移除失效IP（不再自动解析DNS）
     await env.KV.put('check_progress',JSON.stringify({phase:'updating',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size}));
     const gr=[];
@@ -237,15 +231,10 @@
     if(path==='/api/upload'&&req.method==='POST'){
       const{groupId,csv}=await req.json();if(!groupId)return json({error:'需要分组ID'},400);
       const ni=parseCSV(csv);if(!ni.length)return json({error:'无有效数据'},400);
-      const old=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
-      const groupTrash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
-      const existingIPs=new Set(old.map(i=>i.ipPort));
-      const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
-      // 过滤：不在现有列表中 且 不在回收站中
-      const added=ni.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
-      const rejected=ni.filter(i=>trashIPs.has(i.ipPort)).length;
+      const old=JSON.parse(await env.KV.get('ips:'+groupId)||'[]'),s=new Set(old.map(i=>i.ipPort));
+      const added=ni.filter(i=>!s.has(i.ipPort));
       await env.KV.put('ips:'+groupId,JSON.stringify([...old,...added]));
-      return json({ok:1,added:added.length,rejected,total:old.length+added.length});
+      return json({ok:1,added:added.length,total:old.length+added.length});
     }
     if(path==='/api/ips'){
       const groupId=new URL(req.url).searchParams.get('groupId');
@@ -283,11 +272,7 @@
           method:'POST',headers:{'Authorization':`Bearer ${ghToken}`,'Content-Type':'application/json','User-Agent':'ProxyIP-Manager'},
           body:JSON.stringify({ref:'main'})
         });
-        if(!r.ok){
-          const errText=await r.text();
-          console.error('GitHub API错误:',r.status,errText);
-          return json({error:'触发失败: '+r.status+' - '+errText},500);
-        }
+        if(!r.ok)return json({error:'触发失败:'+r.status},500);
         return json({ok:1,msg:'GitHub Actions已触发'});
       }catch(e){return json({error:e.message},500)}
     }
@@ -308,25 +293,10 @@
         });
         const resultMap=new Map(checked.map(i=>[i.ipPort,i]));
         const validSet=new Set(checked.filter(i=>i.status==='valid').map(i=>i.ipPort));
-
-        // 收集失效IP到回收站
-        const invalidIPs=checked.filter(i=>i.status==='invalid');
-        if(invalidIPs.length>0){
-          const groupTrash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
-          const now=new Date().toISOString();
-          invalidIPs.forEach(ip=>{
-            groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
-          });
-          await env.KV.put('trash:'+groupId,JSON.stringify(groupTrash));
-        }
-
-        // 更新IP列表，移除失效IP
         gips=gips.map(ip=>resultMap.get(ip.ipPort)||ip);
-        const validIPs=gips.filter(i=>i.status!=='invalid');
-        await env.KV.put('ips:'+groupId,JSON.stringify(validIPs));
-
+        await env.KV.put('ips:'+groupId,JSON.stringify(gips));
         await env.KV.put('check_progress',JSON.stringify({phase:'resolving',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size,group:g.name}));
-        let gv=validIPs.filter(i=>i.status==='valid');
+        let gv=gips.filter(i=>i.status==='valid');
         if(g.selectedAsns?.length)gv=gv.filter(i=>g.selectedAsns.includes(i.asn));
         const sorted=[...gv].sort((a,b)=>a.checkLatency-b.checkLatency);
         const resolved=sorted.slice(0,g.resolveCount||8);
@@ -337,12 +307,11 @@
         const reasonLabels={timeout:'超时',network_error:'网络错误',api_fail:'API返回失败',unknown:'未知'};
         const reasonStr=Object.entries(reasonMap).map(([k,v])=>(reasonLabels[k]||k)+':'+v).join(' | ');
         const result={time:new Date().toISOString(),total:toCheck.length,checked:checked.length,valid:validSet.size,invalid:checked.length-validSet.size,failReasons:reasonMap,
-          groups:[{id:g.id,name:g.name,domain:g.domain,ok,err,count:validIPs.length,resolved:resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)')}]};
+          groups:[{id:g.id,name:g.name,domain:g.domain,ok,err,count:gips.length,resolved:resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)')}]};
         await env.KV.put('last_result',JSON.stringify(result));
         await env.KV.put('check_progress',JSON.stringify({phase:'done',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size,group:g.name}));
         let tgMsg='<b>🔍 ['+g.name+']检测报告</b>\n⏰'+result.time+'\n📊 总:'+toCheck.length+' ✅'+validSet.size+' ❌'+(checked.length-validSet.size);
         if(reasonStr)tgMsg+='\n📋 失效原因: '+reasonStr;
-        if(invalidIPs.length>0)tgMsg+='\n🗑️ 已移除'+invalidIPs.length+'个失效IP到回收站';
         const recordType=g.recordType||'TXT';
         tgMsg+='\n🌐 DNS类型: '+recordType+' '+(ok?'✅':'❌')+(err?' '+err:'');
         tgMsg+='\n'+(resolved.length?resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)').join('\n'):'无有效IP');
@@ -371,116 +340,22 @@
     if(path==='/api/progress')return json(JSON.parse(await env.KV.get('check_progress')||'{"phase":"idle"}'));
     // 回收站API
     if(path==='/api/trash'){
-      const groupId=new URL(req.url).searchParams.get('groupId');
-      if(!groupId)return json({error:'需要分组ID'},400);
-      if(req.method==='GET')return json(JSON.parse(await env.KV.get('trash:'+groupId)||'[]'));
-      if(req.method==='DELETE'){await env.KV.delete('trash:'+groupId);return json({ok:1})}
+      if(req.method==='GET')return json(JSON.parse(await env.KV.get('trash')||'[]'));
+      if(req.method==='DELETE'){await env.KV.delete('trash');return json({ok:1})}
       return json({error:'Method not allowed'},405);
     }
     if(path==='/api/restore'&&req.method==='POST'){
       const{ipPorts,groupId}=await req.json();
       if(!ipPorts||!groupId)return json({error:'缺少参数'},400);
-      const trash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
+      const trash=JSON.parse(await env.KV.get('trash')||'[]');
       const toRestore=trash.filter(i=>ipPorts.includes(i.ipPort));
       const remaining=trash.filter(i=>!ipPorts.includes(i.ipPort));
-      await env.KV.put('trash:'+groupId,JSON.stringify(remaining));
+      await env.KV.put('trash',JSON.stringify(remaining));
       let gips=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
       toRestore.forEach(ip=>{delete ip.deletedAt;delete ip.deletedReason;ip.status='unchecked'});
       gips.push(...toRestore);
       await env.KV.put('ips:'+groupId,JSON.stringify(gips));
       return json({ok:1,restored:toRestore.length});
-    }
-    // FOFA搜索API
-    if(path==='/api/fofa-search'&&req.method==='POST'){
-      const{groupId}=await req.json();
-      if(!groupId)return json({error:'需要分组ID'},400);
-      const gs=JSON.parse(await env.KV.get('groups')||'[]');
-      const g=gs.find(x=>x.id===groupId);
-      if(!g)return json({error:'分组不存在'},400);
-      if(!g.fofaQuery)return json({error:'未配置FOFA查询语法'},400);
-      if(!cfg.fofaKey)return json({error:'未配置FOFA Key'},400);
-
-      ctx.waitUntil((async()=>{
-        try{
-          // Base64编码查询语法
-          const qbase64=btoa(g.fofaQuery);
-          const size=g.fofaSize||10000;
-          const url=`https://fofoapi.com/api/v1/search/all?qbase64=${qbase64}&key=${cfg.fofaKey}&size=${size}&fields=ip,port,as_number,as_organization,city,country`;
-
-          const res=await fetch(url);
-          const data=await res.json();
-
-          if(!data.results||!data.results.length)return;
-
-          // 解析结果并转换为IP格式
-          const newIPs=data.results.map(r=>{
-            const[ip,port,asn,org,city,country]=r;
-            return{
-              ipPort:`${ip}:${port}`,
-              ip,
-              port:+port,
-              asn:asn||'',
-              org:org||'',
-              city:city||'',
-              country:country||'',
-              status:'unchecked',
-              lastCheck:'',
-              checkLatency:9999,
-              colo:'',
-              riskLevel:'',
-              riskScore:'',
-              latency:9999,
-              company:''
-            };
-          });
-
-          // 去重：排除现有IP和回收站IP
-          const old=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
-          const groupTrash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
-          const existingIPs=new Set(old.map(i=>i.ipPort));
-          const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
-          const toAdd=newIPs.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
-
-          if(!toAdd.length)return;
-
-          // 检测新IP
-          await env.KV.put('check_progress',JSON.stringify({phase:'checking',checked:0,total:toAdd.length,valid:0,invalid:0,group:g.name+' FOFA'}));
-          const checked=await batchCheck(toAdd,async(p)=>{
-            await env.KV.put('check_progress',JSON.stringify({...p,group:g.name+' FOFA'}));
-          });
-
-          // 分类处理
-          const valid=checked.filter(i=>i.status==='valid');
-          const invalid=checked.filter(i=>i.status==='invalid');
-
-          // 有效IP添加到分组
-          if(valid.length){
-            await env.KV.put('ips:'+groupId,JSON.stringify([...old,...valid]));
-          }
-
-          // 失效IP添加到回收站
-          if(invalid.length){
-            const now=new Date().toISOString();
-            invalid.forEach(ip=>{
-              groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
-            });
-            await env.KV.put('trash:'+groupId,JSON.stringify(groupTrash));
-          }
-
-          await env.KV.put('check_progress',JSON.stringify({phase:'done',checked:checked.length,total:toAdd.length,valid:valid.length,invalid:invalid.length,group:g.name+' FOFA'}));
-
-          // 发送通知
-          let tgMsg=`<b>🔍 FOFA搜索报告 [${g.name}]</b>\n`;
-          tgMsg+=`⏰ ${new Date().toISOString()}\n`;
-          tgMsg+=`📊 搜索到: ${newIPs.length} | 新增: ${toAdd.length}\n`;
-          tgMsg+=`✅ 有效: ${valid.length} | ❌ 失效: ${invalid.length}`;
-          await sendTG(cfg,tgMsg);
-        }catch(e){
-          console.error('FOFA搜索失败:',e);
-        }
-      })());
-
-      return json({ok:1,msg:'FOFA搜索已触发'});
     }
     return json({error:'Not Found'},404);
   }
@@ -572,13 +447,6 @@
   <button class="btn p" onclick="resGrpBtn(this)">🌐 自动解析最优</button>
   <button class="btn d" onclick="delSel()">删除选中</button>
   </div>
-  <div id="pagination" class="row" style="margin-bottom:6px;justify-content:center;display:none">
-  <button class="btn" onclick="goPage(1)" id="btn-first">首页</button>
-  <button class="btn" onclick="goPage(currentPage-1)" id="btn-prev">上一页</button>
-  <span style="color:var(--dm);padding:0 12px" id="page-info">第1页/共1页</span>
-  <button class="btn" onclick="goPage(currentPage+1)" id="btn-next">下一页</button>
-  <button class="btn" onclick="goPage(totalPages)" id="btn-last">末页</button>
-  </div>
   <div class="tw"><table><thead><tr>
   <th><input type="checkbox" id="ca" onchange="togA(this)"></th>
   <th>IP:端口</th><th>ASN</th><th>延迟</th><th>机房</th><th>城市</th><th>组织</th><th>状态</th><th>失效原因</th>
@@ -599,9 +467,6 @@
   </select>
   <label>每次解析数</label><input id="g-ct" type="number" value="8" min="1" max="50">
   <label>ASN过滤(点选,不选=全部)</label><div id="g-asn" class="row"></div>
-  <label>FOFA搜索语法 <span style="color:var(--dm);font-size:11px">(可选,留空则不使用FOFA)</span></label>
-  <input id="g-fofa-q" placeholder='如: country="KR" && port="443"'>
-  <label>FOFA搜索数量</label><input id="g-fofa-sz" type="number" value="10000" min="100" max="10000">
   <div class="fe"><button class="btn" onclick="clrGF()">清空</button><button class="btn p" onclick="saveGrp()">保存分组</button></div>
   </div><div id="gl"></div>
   </div>
@@ -616,9 +481,6 @@
   <div class="cd"><h3>回收站 <span id="trash-c" style="color:var(--dm)"></span></h3>
   <p style="color:var(--dm);font-size:11px;margin-bottom:6px">检测失效的IP会自动移到这里，不再参与检测</p>
   <div class="row" style="margin-bottom:6px">
-  <select id="trash-grp" onchange="loadTrash()" style="flex:1;margin-right:6px">
-    <option value="">选择分组</option>
-  </select>
   <button class="btn" onclick="selATrash()">全选</button>
   <button class="btn p" onclick="restoreTrash()">恢复选中</button>
   <button class="btn d" onclick="clearTrash()">清空回收站</button>
@@ -639,18 +501,13 @@
   <label>Bot Token</label><input id="c-tt" type="password">
   <label>Chat ID</label><input id="c-tc">
   </div>
-  <div class="cd"><h3>FOFA API配置</h3>
-  <label>FOFA Key</label><input id="c-fofa-key" type="password" placeholder="pji6u9f70263l3lkudd2fb7hhjiw1wmp">
-  <p style="color:var(--dm);font-size:11px;margin-top:4px">用于自动搜索代理IP</p>
-  </div>
   <div class="cd"><h3>修改密码</h3><label>新密码(留空不改)</label><input id="c-pw" type="password"></div>
   <div class="fe"><button class="btn p" onclick="saveCfg()">保存设置</button></div>
   </div>
   </div></div>
   <script>
-  let P=localStorage.getItem('_pp')||'',GRPS=[],CG='',IPS=[],ASNS=[],SA=new Set(),GA=new Set(),TRASH=[],TG='',currentPage=1;
+  let P=localStorage.getItem('_pp')||'',GRPS=[],CG='',IPS=[],ASNS=[],SA=new Set(),GA=new Set();
   const $=id=>document.getElementById(id);
-  const PAGE_SIZE=100;
   function tt(m,ok=1){const d=document.createElement('div');d.className='tt '+(ok?'ok':'er');d.textContent=m;document.body.appendChild(d);setTimeout(()=>d.remove(),3000)}
   async function api(u,o={}){const r=await fetch(u,{...o,headers:{...o.headers,'X-Auth':P}});const d=await r.json();if(!r.ok)throw new Error(d.error||'失败');return d}
   function dis(b,v){if(b)b.disabled=v}
@@ -683,48 +540,30 @@
     GRPS=await api('/api/groups');renderGrps();
     const opts=GRPS.map(g=>'<option value="'+g.id+'">'+g.name+'('+g.id+')</option>').join('');
     $('ip-grp').innerHTML='<option value="">请选择</option>'+opts;
-    $('trash-grp').innerHTML='<option value="">选择分组</option>'+opts;
     if(CG&&GRPS.find(g=>g.id===CG)){$('ip-grp').value=CG;chgGrp()}
     $('hi').textContent=GRPS.length?GRPS.length+'个分组':'未配置分组';
   }
   function renderGrps(){
-    $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> '+(g.fofaQuery?'<button class="btn p" onclick="fofaSearch('+Q+g.id+Q+',this)">🔍FOFA</button> ':'')+' <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+(g.fofaQuery?' | FOFA:'+g.fofaSize:'')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
+    $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
   }
   // IP管理(按分组)
   async function chgGrp(){
     CG=$('ip-grp').value;
     if(!CG){$('ip-panel').classList.add('hid');return}
-    $('ip-panel').classList.remove('hid');SA.clear();currentPage=1;
+    $('ip-panel').classList.remove('hid');SA.clear();
     const{ips}=await api('/api/ips?groupId='+CG);IPS=ips;
     ASNS=await api('/api/asns?groupId='+CG);renderChips();renderTbl();
   }
   function renderChips(){$('asn-c').innerHTML=ASNS.map(a=>'<span class="ch'+(SA.has(a.asn)?' s':'')+'" onclick="togF('+Q+a.asn+Q+')">AS'+a.asn+'('+a.count+')</span>').join('')||'<span style="color:var(--dm)">暂无</span>'}
   function renderGAChips(){$('g-asn').innerHTML=ASNS.length?ASNS.map(a=>'<span class="ch'+(GA.has(a.asn)?' s':'')+'" onclick="togGA('+Q+a.asn+Q+')">AS'+a.asn+'('+a.count+')</span>').join(''):'<span style="color:var(--dm)">先上传CSV到分组</span>'}
-  function togF(a){SA.has(a)?SA.delete(a):SA.add(a);renderChips();currentPage=1;renderTbl()}
+  function togF(a){SA.has(a)?SA.delete(a):SA.add(a);renderChips();renderTbl()}
   function togGA(a){GA.has(a)?GA.delete(a):GA.add(a);renderGAChips()}
   function renderTbl(){
     let l=SA.size?IPS.filter(i=>SA.has(i.asn)):IPS;
     l=[...l].sort((a,b)=>(a.checkLatency||9999)-(b.checkLatency||9999));
-    const totalPages=Math.ceil(l.length/PAGE_SIZE);
-    if(currentPage>totalPages)currentPage=totalPages||1;
-    const start=(currentPage-1)*PAGE_SIZE;
-    const end=start+PAGE_SIZE;
-    const pageData=l.slice(start,end);
     $('ipc').textContent='('+l.length+'/'+IPS.length+')';
-    $('tb').innerHTML=pageData.map(i=>'<tr><td><input type="checkbox" class="ck" value="'+i.ipPort+'"></td><td>'+i.ipPort+'</td><td>AS'+i.asn+'</td><td>'+(i.checkLatency<9999?i.checkLatency+'ms':i.latency+'ms')+'</td><td>'+i.colo+'</td><td>'+i.city+'</td><td>'+(i.org||'')+'</td><td><span class="tg '+(i.status==='valid'?'v':i.status==='invalid'?'i':'u')+'">'+(i.status==='valid'?'有效':i.status==='invalid'?'失效':'未检测')+'</span></td><td style="color:var(--rd);font-size:11px">'+(i.status==='invalid'&&i.failReason?i.failReason:'')+'</td></tr>').join('');
-    if(l.length>PAGE_SIZE){
-      $('pagination').style.display='flex';
-      $('page-info').textContent='第'+currentPage+'页/共'+totalPages+'页';
-      $('btn-first').disabled=currentPage===1;
-      $('btn-prev').disabled=currentPage===1;
-      $('btn-next').disabled=currentPage===totalPages;
-      $('btn-last').disabled=currentPage===totalPages;
-      window.totalPages=totalPages;
-    }else{
-      $('pagination').style.display='none';
-    }
+    $('tb').innerHTML=l.map(i=>'<tr><td><input type="checkbox" class="ck" value="'+i.ipPort+'"></td><td>'+i.ipPort+'</td><td>AS'+i.asn+'</td><td>'+(i.checkLatency<9999?i.checkLatency+'ms':i.latency+'ms')+'</td><td>'+i.colo+'</td><td>'+i.city+'</td><td>'+(i.org||'')+'</td><td><span class="tg '+(i.status==='valid'?'v':i.status==='invalid'?'i':'u')+'">'+(i.status==='valid'?'有效':i.status==='invalid'?'失效':'未检测')+'</span></td><td style="color:var(--rd);font-size:11px">'+(i.status==='invalid'&&i.failReason?i.failReason:'')+'</td></tr>').join('');
   }
-  function goPage(p){if(p<1||p>window.totalPages)return;currentPage=p;renderTbl()}
   function togA(e){document.querySelectorAll('.ck').forEach(c=>c.checked=e.checked)}
   function selA(){document.querySelectorAll('.ck').forEach(c=>c.checked=true);if($('ca'))$('ca').checked=true}
   function getSel(){return[...document.querySelectorAll('.ck:checked')].map(c=>c.value)}
@@ -788,16 +627,15 @@
   function upCSV(input){if(!CG)return tt('请先选择分组',0);const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:r.result})});tt('新增'+d.added+'条,总计'+d.total);chgGrp()}catch(e){tt(e.message,0)}};r.readAsText(f);input.value=''}
   const dz=$('dz');if(dz){dz.ondragover=e=>{e.preventDefault();dz.classList.add('drag')};dz.ondragleave=()=>dz.classList.remove('drag');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('drag');if(!CG)return tt('请先选择分组',0);const f=e.dataTransfer.files[0];if(f){const rd=new FileReader();rd.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:rd.result})});tt('新增'+d.added+'条');chgGrp()}catch(e2){tt(e2.message,0)}};rd.readAsText(f)}}}
   // 分组管理
-  function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;$('g-fofa-q').value=g.fofaQuery||'';$('g-fofa-sz').value=g.fofaSize||10000;GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
-  function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;$('g-fofa-q').value='';$('g-fofa-sz').value=10000;GA.clear();renderGAChips()}
+  function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
+  function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;GA.clear();renderGAChips()}
   async function saveGrp(){
-    const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,recordType:$('g-rt').value||'TXT',resolveCount:+$('g-ct').value||8,fofaQuery:$('g-fofa-q').value.trim(),fofaSize:+$('g-fofa-sz').value||10000,selectedAsns:[...GA]};
+    const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,recordType:$('g-rt').value||'TXT',resolveCount:+$('g-ct').value||8,selectedAsns:[...GA]};
     if(!g.id)return tt('需要分组ID',0);
     try{await api('/api/groups',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(g)});tt('分组已保存');clrGF();loadGrps()}catch(e){tt(e.message,0)}
   }
   async function delGrp(id){if(!confirm('删除分组'+id+'及其所有IP？'))return;try{await api('/api/delete-group',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});tt('已删除');if(CG===id){CG='';$('ip-grp').value='';$('ip-panel').classList.add('hid')}loadGrps()}catch(e){tt(e.message,0)}}
   async function resGrp(id,b){dis(b,1);try{const r=await api('/api/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt('已解析: '+r.resolved.join(', '));loadSt()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
-  async function fofaSearch(id,b){if(!confirm('确认使用FOFA搜索并检测新IP？'))return;dis(b,1);try{await api('/api/fofa-search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt('FOFA搜索已触发，请稍后查看结果');sw('ov');$('pg-box').classList.remove('hid');startPoll()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
 
   // 触发GitHub Actions
   async function triggerActions(b){
@@ -813,9 +651,9 @@
   }
 
   // 设置
-  async function loadCfg(){try{const c=await api('/api/config');$('c-gh-token').value=c.githubToken||'';$('c-gh-repo').value=c.githubRepo||'';$('c-tt').value=c.tgToken||'';$('c-tc').value=c.tgChatId||'';$('c-fofa-key').value=c.fofaKey||''}catch{}}
+  async function loadCfg(){try{const c=await api('/api/config');$('c-gh-token').value=c.githubToken||'';$('c-gh-repo').value=c.githubRepo||'';$('c-tt').value=c.tgToken||'';$('c-tc').value=c.tgChatId||''}catch{}}
   async function saveCfg(){
-    const c={githubToken:$('c-gh-token').value,githubRepo:$('c-gh-repo').value,tgToken:$('c-tt').value,tgChatId:$('c-tc').value,fofaKey:$('c-fofa-key').value};
+    const c={githubToken:$('c-gh-token').value,githubRepo:$('c-gh-repo').value,tgToken:$('c-tt').value,tgChatId:$('c-tc').value};
     const pw=$('c-pw').value;if(pw){c.password=pw;P=pw;localStorage.setItem('_pp',pw)}
     try{await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});tt('设置已保存');$('c-pw').value='';loadSt()}catch(e){tt(e.message,0)}
   }
@@ -825,33 +663,27 @@
     try{await api('/api/blacklist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({blacklist:b})});tt('黑名单已保存');loadSt()}catch(e){tt(e.message,0)}
   }
   // 回收站
+  let TRASH=[];
   async function loadTrash(){
-    TG=$('trash-grp').value;
-    if(!TG){$('trash-c').textContent='';$('tb-trash').innerHTML='';return}
     try{
-      TRASH=await api('/api/trash?groupId='+TG);
+      TRASH=await api('/api/trash');
       $('trash-c').textContent='('+TRASH.length+'条)';
       $('tb-trash').innerHTML=TRASH.map(i=>'<tr><td><input type="checkbox" class="ck-trash" value="'+i.ipPort+'"></td><td>'+i.ipPort+'</td><td>AS'+i.asn+'</td><td>'+i.country+'</td><td style="color:var(--rd);font-size:11px">'+i.deletedReason+'</td><td style="color:var(--dm);font-size:11px">'+new Date(i.deletedAt).toLocaleString()+'</td></tr>').join('');
-    }catch(e){
-      console.error('加载回收站失败:',e);
-      $('trash-c').textContent='(加载失败)';
-      $('tb-trash').innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--rd)">'+e.message+'</td></tr>';
-    }
+    }catch{}
   }
   function togATrash(e){document.querySelectorAll('.ck-trash').forEach(c=>c.checked=e.checked)}
   function selATrash(){document.querySelectorAll('.ck-trash').forEach(c=>c.checked=true);if($('ca-trash'))$('ca-trash').checked=true}
   function getSelTrash(){return[...document.querySelectorAll('.ck-trash:checked')].map(c=>c.value)}
   async function restoreTrash(){
     const s=getSelTrash();if(!s.length)return tt('请先选择',0);
-    if(!TG)return tt('请先选择分组',0);
-    const g=GRPS.find(x=>x.id===TG);
-    if(!confirm('恢复'+s.length+'条IP到分组['+g.name+']？'))return;
-    try{await api('/api/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ipPorts:s,groupId:TG})});tt('已恢复'+s.length+'条');loadTrash();if(CG===TG)chgGrp()}catch(e){tt(e.message,0)}
+    if(!GRPS.length)return tt('请先创建分组',0);
+    const gid=GRPS[0].id;
+    if(!confirm('恢复'+s.length+'条IP到分组['+GRPS[0].name+']？'))return;
+    try{await api('/api/restore',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({ipPorts:s,groupId:gid})});tt('已恢复'+s.length+'条');loadTrash()}catch(e){tt(e.message,0)}
   }
   async function clearTrash(){
-    if(!TG)return tt('请先选择分组',0);
-    if(!confirm('确认清空该分组的回收站？'))return;
-    try{await api('/api/trash?groupId='+TG,{method:'DELETE'});tt('回收站已清空');loadTrash()}catch(e){tt(e.message,0)}
+    if(!confirm('确认清空回收站？'))return;
+    try{await api('/api/trash',{method:'DELETE'});tt('回收站已清空');loadTrash()}catch(e){tt(e.message,0)}
   }
   init();
   </script></body></html>`;

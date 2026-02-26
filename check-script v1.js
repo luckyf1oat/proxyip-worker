@@ -22,7 +22,7 @@ const headers = {
 
 // 从KV读取数据
 async function kvGet(key) {
-  const url = `${KV_API}/values/${encodeURIComponent(key)}`;
+  const url = `${KV_API}/values/${key}`;
   const res = await fetch(url, { headers });
   if (!res.ok) return null;
   return await res.text();
@@ -30,7 +30,7 @@ async function kvGet(key) {
 
 // 写入KV
 async function kvPut(key, value) {
-  const url = `${KV_API}/values/${encodeURIComponent(key)}`;
+  const url = `${KV_API}/values/${key}`;
   const res = await fetch(url, {
     method: 'PUT',
     headers,
@@ -271,19 +271,14 @@ async function main() {
   console.log(`📊 分组数: ${groups.length}`);
   console.log(`🚫 黑名单: ${blacklist.size} 个IP\n`);
 
-  // 收集所有IP (排除回收站中的IP)
+  // 收集所有IP
   const allMap = new Map();
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
     if (!ipsStr) continue;
 
-    // 读取该分组的回收站
-    const groupTrashStr = await kvGet('trash:' + g.id);
-    const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
-    const trashIPs = new Set(groupTrash.map(t => t.ipPort));
-
     let gips = JSON.parse(ipsStr);
-    let filtered = gips.filter(ip => !blacklist.has(ip.ip) && !trashIPs.has(ip.ipPort));
+    let filtered = gips.filter(ip => !blacklist.has(ip.ip));
     if (g.selectedAsns?.length) {
       filtered = filtered.filter(ip => g.selectedAsns.includes(ip.asn));
     }
@@ -305,30 +300,16 @@ async function main() {
   const resultMap = new Map(checked.map(i => [i.ipPort, i]));
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
 
-  // 收集失效IP到各分组的回收站
+  // 收集失效IP到回收站
+  const trashStr = await kvGet('trash');
+  const trash = trashStr ? JSON.parse(trashStr) : [];
   const invalidIPs = checked.filter(i => i.status === 'invalid');
   const now = new Date().toISOString();
-
-  for (const g of groups) {
-    const ipsStr = await kvGet('ips:' + g.id);
-    if (!ipsStr) continue;
-
-    const gips = JSON.parse(ipsStr);
-    const groupInvalidIPs = invalidIPs.filter(ip => gips.some(gip => gip.ipPort === ip.ipPort));
-
-    if (groupInvalidIPs.length > 0) {
-      const groupTrashStr = await kvGet('trash:' + g.id);
-      const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
-
-      groupInvalidIPs.forEach(ip => {
-        groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
-      });
-
-      await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
-      console.log(`🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP到回收站`);
-    }
-  }
-  console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP到回收站`);
+  invalidIPs.forEach(ip => {
+    trash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
+  });
+  await kvPut('trash', JSON.stringify(trash));
+  console.log(`\n🗑️ 已移除 ${invalidIPs.length} 个失效IP到回收站`);
 
   // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
