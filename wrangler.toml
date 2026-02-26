@@ -1,0 +1,11 @@
+name = "proxyip-manager"
+main = "worker.js"
+compatibility_date = "2024-09-01"
+
+[triggers]
+crons = ["0 */4 * * *"]
+
+[[kv_namespaces]]
+binding = "KV"
+id = "你的KV_ID"          # wrangler kv namespace create KV 获取
+preview_id = "预览KV_ID"   # 可选
