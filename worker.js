@@ -392,7 +392,7 @@
   <div class="cd"><h3>快捷操作</h3><div class="row">
   <button class="btn p" onclick="doChk(this)">🔍 Workers检测 (快速)</button>
   <button class="btn p" onclick="triggerActions(this)">🚀 GitHub Actions检测 (推荐)</button>
-  </div><p style="color:var(--dm);font-size:11px;margin-top:6px">Workers: 30秒限制 | Actions: 无限制，每4小时自动运行</p></div>
+  </div><p style="color:var(--dm);font-size:11px;margin-top:6px">Workers: 30秒限制 | Actions: 无限制，每2小时自动运行</p></div>
   <div class="cd hid" id="pg-box"><h3>检测进度</h3><div class="pg">
   <div class="row" style="justify-content:space-between"><b id="pg-phase">准备中...</b><span class="dm" id="pg-num">0/0</span></div>
   <div class="pb" style="margin-top:6px"><div class="pf" id="pg-bar" style="width:0%">0%</div></div>
@@ -664,7 +664,7 @@
       if(p.startsWith('/api/')){try{return await handleAPI(p,request,env,ctx)}catch(e){return json({error:e.message},500)}}
       return new Response('Not Found',{status:404});
     }
-    // Workers自动检测已禁用，改用GitHub Actions每4小时自动检测
+    // Workers自动检测已禁用，改用GitHub Actions每2小时自动检测
     // 保留手动检测功能: 在Web界面点击"检测"按钮仍可使用
     // async scheduled(_,env,ctx){ctx.waitUntil(autoCheckAndResolve(env))}
   };
