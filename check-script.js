@@ -252,12 +252,15 @@ async function batchCheck(list) {
     }
   }
 
+  const kept = new Set([...ipMap.values()].map(i => i.ipPort));
   const deduplicated = [...ipMap.values()];
-  if (deduplicated.length < out.length) {
-    console.log(`[+] 去重完成: ${out.length} -> ${deduplicated.length} (移除 ${out.length - deduplicated.length} 个重复IP)`);
+  const dupRemoved = out.filter(i => !kept.has(i.ipPort));
+
+  if (dupRemoved.length > 0) {
+    console.log(`[+] 去重完成: ${out.length} -> ${deduplicated.length} (移除 ${dupRemoved.length} 个重复端口IP)`);
   }
 
-  return deduplicated;
+  return { results: deduplicated, dupRemoved };
 }
 
 // 发送Telegram通知
@@ -329,11 +332,13 @@ async function main() {
   }
 
   // 检测
-  const checked = await batchCheck(toCheck);
+  const checkResult = await batchCheck(toCheck);
+  const checked = checkResult.results;
+  const dupRemoved = checkResult.dupRemoved;
   const resultMap = new Map(checked.map(i => [i.ipPort, i]));
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
 
-  // 收集失效IP到各分组的回收站
+  // 收集失效IP和重复端口IP到各分组的回收站
   const invalidIPs = checked.filter(i => i.status === 'invalid');
   const now = new Date().toISOString();
 
@@ -343,8 +348,9 @@ async function main() {
 
     const gips = JSON.parse(ipsStr);
     const groupInvalidIPs = invalidIPs.filter(ip => gips.some(gip => gip.ipPort === ip.ipPort));
+    const groupDupIPs = dupRemoved.filter(ip => gips.some(gip => gip.ipPort === ip.ipPort));
 
-    if (groupInvalidIPs.length > 0) {
+    if (groupInvalidIPs.length > 0 || groupDupIPs.length > 0) {
       const groupTrashStr = await kvGet('trash:' + g.id);
       const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
 
@@ -352,11 +358,15 @@ async function main() {
         groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
       });
 
+      groupDupIPs.forEach(ip => {
+        groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port' });
+      });
+
       await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
-      console.log(`🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP到回收站`);
+      console.log(`🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP + ${groupDupIPs.length} 个重复端口到回收站`);
     }
   }
-  console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP到回收站`);
+  console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP + ${dupRemoved.length} 个重复端口到回收站`);
 
   // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
@@ -368,8 +378,9 @@ async function main() {
     let gips = JSON.parse(ipsStr);
     gips = gips.map(ip => resultMap.get(ip.ipPort) || ip);
 
-    // 移除失效IP
-    const validIPs = gips.filter(i => i.status !== 'invalid');
+    // 移除失效IP和重复端口IP
+    const dupRemovedSet = new Set(dupRemoved.map(i => i.ipPort));
+    const validIPs = gips.filter(i => i.status !== 'invalid' && !dupRemovedSet.has(i.ipPort));
     const removedCount = gips.length - validIPs.length;
 
     await kvPut('ips:' + g.id, JSON.stringify(validIPs));
