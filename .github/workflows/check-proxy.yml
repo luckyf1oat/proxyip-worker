@@ -2,8 +2,8 @@ name: ProxyIP检测
 
 on:
   schedule:
-    # 每4小时运行一次 (UTC时间)
-    - cron: '0 */4 * * *'
+    # 每2小时运行一次 (UTC时间)
+    - cron: '0 */2 * * *'
 
   # 允许手动触发
   workflow_dispatch:
