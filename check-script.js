@@ -80,6 +80,40 @@ async function checkIP(ipPort) {
   return { ok: false, reason: lastReason };
 }
 
+// 解析到Cloudflare DNS
+async function resolveToCloudflare(g, ips) {
+  if (!g.cfToken || !g.zoneId || !g.domain) {
+    throw new Error(`[${g.id}]缺少CF配置`);
+  }
+  const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
+  const headers = {
+    'Authorization': `Bearer ${g.cfToken}`,
+    'Content-Type': 'application/json'
+  };
+  const base = `https://api.cloudflare.com/client/v4/zones/${g.zoneId}/dns_records`;
+
+  // 查询现有记录
+  const listRes = await fetch(`${base}?name=${g.domain}&type=TXT`, { headers });
+  const listData = await listRes.json();
+  if (!listData.success) {
+    throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
+  }
+
+  const existing = listData.result?.[0];
+  const body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
+
+  // 更新或创建记录
+  const updateRes = existing
+    ? await fetch(`${base}/${existing.id}`, { method: 'PUT', headers, body })
+    : await fetch(base, { method: 'POST', headers, body });
+
+  const updateData = await updateRes.json();
+  if (!updateData.success) {
+    throw new Error('CF写入失败:' + JSON.stringify(updateData.errors));
+  }
+  return true;
+}
+
 // 批量检测
 async function batchCheck(list) {
   const out = [];
@@ -250,8 +284,9 @@ async function main() {
   await kvPut('trash', JSON.stringify(trash));
   console.log(`\n🗑️ 已移除 ${invalidIPs.length} 个失效IP到回收站`);
 
-  // 更新各分组
+  // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
+  const groupResults = [];
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
     if (!ipsStr) continue;
@@ -264,7 +299,36 @@ async function main() {
     const removedCount = gips.length - validIPs.length;
 
     await kvPut('ips:' + g.id, JSON.stringify(validIPs));
-    console.log(`  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}`);
+
+    // 选择延迟最低的IP进行DNS解析
+    let gv = validIPs.filter(i => i.status === 'valid');
+    if (g.selectedAsns?.length) {
+      gv = gv.filter(i => g.selectedAsns.includes(i.asn));
+    }
+    const sorted = [...gv].sort((a, b) => a.checkLatency - b.checkLatency);
+    const resolved = sorted.slice(0, g.resolveCount || 8);
+
+    let ok = false, err = '';
+    if (resolved.length) {
+      try {
+        ok = await resolveToCloudflare(g, resolved);
+      } catch (e) {
+        err = e.message;
+      }
+    }
+
+    groupResults.push({
+      id: g.id,
+      name: g.name,
+      domain: g.domain,
+      ok,
+      err,
+      count: validIPs.length,
+      removed: removedCount,
+      resolved: resolved.map(i => i.ipPort + '(' + i.checkLatency + 'ms)')
+    });
+
+    console.log(`  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}, 解析: ${resolved.length}个IP`);
   }
 
   // 保存结果
@@ -305,43 +369,15 @@ async function main() {
     }
 
     // 显示每个分组的详细信息
-    for (const g of groups) {
-      const ipsStr = await kvGet('ips:' + g.id);
-      if (!ipsStr) continue;
-      const gips = JSON.parse(ipsStr);
+    for (const gr of groupResults) {
+      msg += `📦<b>${gr.name}</b>→${gr.domain || 'N/A'} ${gr.ok ? '✅' : '❌'}${gr.err ? ' ' + gr.err : ''}\n`;
 
-      // 获取该分组的有效IP（按延迟排序）
-      const validInGroup = gips
-        .filter(ip => ip.status === 'valid' && ip.checkLatency)
-        .sort((a, b) => a.checkLatency - b.checkLatency);
-
-      // 获取该分组移除的IP
-      const removedInGroup = invalidIPs.filter(ip =>
-        gips.some(g => g.ipPort === ip.ipPort)
-      );
-
-      msg += `📦<b>${g.name}</b>→${g.domain || 'N/A'}\n`;
-
-      if (validInGroup.length > 0) {
-        msg += `✅ 有效IP (${validInGroup.length}个):\n`;
-        // 显示前5个最快的IP
-        validInGroup.slice(0, 5).forEach(ip => {
-          msg += `  ${ip.ipPort} (${ip.checkLatency}ms, ${ip.colo || 'UNK'})\n`;
-        });
-        if (validInGroup.length > 5) {
-          msg += `  ...还有${validInGroup.length - 5}个\n`;
-        }
+      if (gr.resolved && gr.resolved.length > 0) {
+        msg += `🌐 已解析: ${gr.resolved.join(', ')}\n`;
       }
 
-      if (removedInGroup.length > 0) {
-        msg += `🗑️ 已移除${removedInGroup.length}个失效IP:\n`;
-        // 显示前3个移除的IP
-        removedInGroup.slice(0, 3).forEach(ip => {
-          msg += `  ${ip.ipPort} (${ip.failReason || 'unknown'})\n`;
-        });
-        if (removedInGroup.length > 3) {
-          msg += `  ...还有${removedInGroup.length - 3}个\n`;
-        }
+      if (gr.removed > 0) {
+        msg += `🗑️ 已移除${gr.removed}个失效IP\n`;
       }
 
       msg += `\n`;
