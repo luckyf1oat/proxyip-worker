@@ -461,7 +461,7 @@
   <label>DNS记录类型</label>
   <select id="g-rt">
     <option value="TXT">TXT记录 (多IP逗号分隔)</option>
-    <option value="A">A记录 (仅第一个IP)</option>
+    <option value="A">A记录 (多条记录)</option>
   </select>
   <label>每次解析数</label><input id="g-ct" type="number" value="8" min="1" max="50">
   <label>ASN过滤(点选,不选=全部)</label><div id="g-asn" class="row"></div>
