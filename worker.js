@@ -390,7 +390,7 @@
       await env.KV.put('ips:'+groupId,JSON.stringify(gips));
       return json({ok:1,restored:toRestore.length});
     }
-    // FOFA搜索API
+    // FOFA搜索API - 只搜索并保存，不检测
     if(path==='/api/fofa-search'&&req.method==='POST'){
       const{groupId}=await req.json();
       if(!groupId)return json({error:'需要分组ID'},400);
@@ -400,87 +400,55 @@
       if(!g.fofaQuery)return json({error:'未配置FOFA查询语法'},400);
       if(!cfg.fofaKey)return json({error:'未配置FOFA Key'},400);
 
-      ctx.waitUntil((async()=>{
-        try{
-          // Base64编码查询语法
-          const qbase64=btoa(g.fofaQuery);
-          const size=g.fofaSize||10000;
-          const url=`https://fofoapi.com/api/v1/search/all?qbase64=${qbase64}&key=${cfg.fofaKey}&size=${size}&fields=ip,port,as_number,as_organization,city,country`;
+      try{
+        const qbase64=btoa(g.fofaQuery);
+        const size=g.fofaSize||10000;
+        const url=`https://fofoapi.com/api/v1/search/all?qbase64=${qbase64}&key=${cfg.fofaKey}&size=${size}&fields=ip,port,as_number,as_organization,city,country`;
 
-          const res=await fetch(url);
-          const data=await res.json();
+        const res=await fetch(url);
+        const data=await res.json();
 
-          if(!data.results||!data.results.length)return;
+        if(!data.results||!data.results.length)return json({ok:1,found:0,added:0,msg:'FOFA未搜索到结果'});
 
-          // 解析结果并转换为IP格式
-          const newIPs=data.results.map(r=>{
-            const[ip,port,asn,org,city,country]=r;
-            return{
-              ipPort:`${ip}:${port}`,
-              ip,
-              port:+port,
-              asn:asn||'',
-              org:org||'',
-              city:city||'',
-              country:country||'',
-              status:'unchecked',
-              lastCheck:'',
-              checkLatency:9999,
-              colo:'',
-              riskLevel:'',
-              riskScore:'',
-              latency:9999,
-              company:''
-            };
-          });
+        const newIPs=data.results.map(r=>{
+          const[ip,port,asn,org,city,country]=r;
+          return{ipPort:`${ip}:${port}`,ip,port:+port,asn:asn||'',org:org||'',city:city||'',country:country||'',
+            status:'unchecked',lastCheck:'',checkLatency:9999,colo:'',riskLevel:'',riskScore:'',latency:9999,company:''};
+        });
 
-          // 去重：排除现有IP和回收站IP
-          const old=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
-          const groupTrash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
-          const existingIPs=new Set(old.map(i=>i.ipPort));
-          const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
-          const toAdd=newIPs.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
+        // 去重：排除现有IP和回收站IP
+        const old=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
+        const groupTrash=JSON.parse(await env.KV.get('trash:'+groupId)||'[]');
+        const existingIPs=new Set(old.map(i=>i.ipPort));
+        const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
+        const toAdd=newIPs.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
 
-          if(!toAdd.length)return;
+        if(!toAdd.length)return json({ok:1,found:data.results.length,added:0,msg:'无新增IP(全部重复或在回收站中)'});
 
-          // 检测新IP
-          await env.KV.put('check_progress',JSON.stringify({phase:'checking',checked:0,total:toAdd.length,valid:0,invalid:0,group:g.name+' FOFA'}));
-          const checked=await batchCheck(toAdd,async(p)=>{
-            await env.KV.put('check_progress',JSON.stringify({...p,group:g.name+' FOFA'}));
-          });
+        // 直接保存到IP列表
+        await env.KV.put('ips:'+groupId,JSON.stringify([...old,...toAdd]));
 
-          // 分类处理
-          const valid=checked.filter(i=>i.status==='valid');
-          const invalid=checked.filter(i=>i.status==='invalid');
-
-          // 有效IP添加到分组
-          if(valid.length){
-            await env.KV.put('ips:'+groupId,JSON.stringify([...old,...valid]));
-          }
-
-          // 失效IP添加到回收站
-          if(invalid.length){
-            const now=new Date().toISOString();
-            invalid.forEach(ip=>{
-              groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
+        // 自动触发GitHub Actions检测
+        let actionsTriggered=false;
+        if(cfg.githubToken&&cfg.githubRepo){
+          try{
+            const r=await fetch(`https://api.github.com/repos/${cfg.githubRepo}/actions/workflows/check-proxy.yml/dispatches`,{
+              method:'POST',headers:{'Authorization':`Bearer ${cfg.githubToken}`,'Content-Type':'application/json','User-Agent':'ProxyIP-Manager'},
+              body:JSON.stringify({ref:'main'})
             });
-            await env.KV.put('trash:'+groupId,JSON.stringify(groupTrash));
-          }
-
-          await env.KV.put('check_progress',JSON.stringify({phase:'done',checked:checked.length,total:toAdd.length,valid:valid.length,invalid:invalid.length,group:g.name+' FOFA'}));
-
-          // 发送通知
-          let tgMsg=`<b>🔍 FOFA搜索报告 [${g.name}]</b>\n`;
-          tgMsg+=`⏰ ${new Date().toISOString()}\n`;
-          tgMsg+=`📊 搜索到: ${newIPs.length} | 新增: ${toAdd.length}\n`;
-          tgMsg+=`✅ 有效: ${valid.length} | ❌ 失效: ${invalid.length}`;
-          await sendTG(cfg,tgMsg);
-        }catch(e){
-          console.error('FOFA搜索失败:',e);
+            actionsTriggered=r.ok;
+          }catch{}
         }
-      })());
 
-      return json({ok:1,msg:'FOFA搜索已触发'});
+        // 发送通知
+        let tgMsg=`<b>🔍 FOFA搜索完成 [${g.name}]</b>\n`;
+        tgMsg+=`⏰ ${new Date().toISOString()}\n`;
+        tgMsg+=`📊 搜索到: ${data.results.length} | 新增: ${toAdd.length}\n`;
+        tgMsg+=actionsTriggered?'🚀 已自动触发GitHub Actions检测':'⚠️ 未配置GitHub Actions，请手动检测';
+        await sendTG(cfg,tgMsg);
+
+        return json({ok:1,found:data.results.length,added:toAdd.length,actionsTriggered,msg:'已保存'+toAdd.length+'个新IP'+(actionsTriggered?'，已触发Actions检测':'')});
+      }catch(e){return json({error:'FOFA搜索失败: '+e.message},500)}
     }
     return json({error:'Not Found'},404);
   }
@@ -797,7 +765,7 @@
   }
   async function delGrp(id){if(!confirm('删除分组'+id+'及其所有IP？'))return;try{await api('/api/delete-group',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});tt('已删除');if(CG===id){CG='';$('ip-grp').value='';$('ip-panel').classList.add('hid')}loadGrps()}catch(e){tt(e.message,0)}}
   async function resGrp(id,b){dis(b,1);try{const r=await api('/api/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt('已解析: '+r.resolved.join(', '));loadSt()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
-  async function fofaSearch(id,b){if(!confirm('确认使用FOFA搜索并检测新IP？'))return;dis(b,1);try{await api('/api/fofa-search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt('FOFA搜索已触发，请稍后查看结果');sw('ov');$('pg-box').classList.remove('hid');startPoll()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
+  async function fofaSearch(id,b){if(!confirm('确认使用FOFA搜索？搜索到的IP将保存到列表并自动触发Actions检测'))return;dis(b,1);try{const r=await api('/api/fofa-search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt(r.msg);if(r.added>0&&CG===id)chgGrp()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
 
   // 触发GitHub Actions
   async function triggerActions(b){
