@@ -312,7 +312,9 @@
         await env.KV.put('check_progress',JSON.stringify({phase:'done',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size,group:g.name}));
         let tgMsg='<b>🔍 ['+g.name+']检测报告</b>\n⏰'+result.time+'\n📊 总:'+toCheck.length+' ✅'+validSet.size+' ❌'+(checked.length-validSet.size);
         if(reasonStr)tgMsg+='\n📋 失效原因: '+reasonStr;
-        tgMsg+='\n'+(ok?'✅':'❌')+(err?' '+err:'')+'\n'+(resolved.length?resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)').join('\n'):'无有效IP');
+        const recordType=g.recordType||'TXT';
+        tgMsg+='\n🌐 DNS类型: '+recordType+' '+(ok?'✅':'❌')+(err?' '+err:'');
+        tgMsg+='\n'+(resolved.length?resolved.map(i=>i.ipPort+'('+i.checkLatency+'ms)').join('\n'):'无有效IP');
         await sendTG(cf,tgMsg);
       })());
       return json({ok:1,msg:'分组检测已触发'});

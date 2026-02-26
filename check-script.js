@@ -348,6 +348,7 @@ async function main() {
       id: g.id,
       name: g.name,
       domain: g.domain,
+      recordType: g.recordType || 'TXT',
       ok,
       err,
       count: validIPs.length,
@@ -397,10 +398,12 @@ async function main() {
 
     // 显示每个分组的详细信息
     for (const gr of groupResults) {
-      msg += `📦<b>${gr.name}</b>→${gr.domain || 'N/A'} ${gr.ok ? '✅' : '❌'}${gr.err ? ' ' + gr.err : ''}\n`;
+      const recordType = gr.recordType || 'TXT';
+      msg += `📦<b>${gr.name}</b>→${gr.domain || 'N/A'}\n`;
+      msg += `🌐 DNS类型: ${recordType} ${gr.ok ? '✅' : '❌'}${gr.err ? ' ' + gr.err : ''}\n`;
 
       if (gr.resolved && gr.resolved.length > 0) {
-        msg += `🌐 已解析:\n`;
+        msg += `已解析:\n`;
         gr.resolved.forEach(ip => {
           msg += `  ${ip.ipPort} | ${ip.checkLatency}ms | AS${ip.asn} ${ip.org || ''}\n`;
         });
