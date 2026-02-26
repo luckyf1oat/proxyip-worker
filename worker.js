@@ -102,13 +102,26 @@
   }
   async function resolveToCloudflare(g,ips){
     if(!g.cfToken||!g.zoneId||!g.domain)throw new Error('['+g.id+']缺少CF配置');
-    const content='"'+ips.map(i=>i.ipPort).join(',')+'"';
+    const recordType=g.recordType||'TXT';
     const h={'Authorization':'Bearer '+g.cfToken,'Content-Type':'application/json'};
     const base='https://api.cloudflare.com/client/v4/zones/'+g.zoneId+'/dns_records';
-    const lr=await(await fetch(base+'?name='+g.domain+'&type=TXT',{headers:h})).json();
+
+    // 查询现有记录
+    const lr=await(await fetch(base+'?name='+g.domain+'&type='+recordType,{headers:h})).json();
     if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
     const ext=lr.result?.[0];
-    const body=JSON.stringify({type:'TXT',name:g.domain,content,ttl:60});
+
+    let body;
+    if(recordType==='A'){
+      // A记录：只解析第一个IP的IP部分（去掉端口）
+      const firstIP=ips[0].ipPort.split(':')[0];
+      body=JSON.stringify({type:'A',name:g.domain,content:firstIP,ttl:60,proxied:false});
+    }else{
+      // TXT记录：多个IP用逗号分隔
+      const content='"'+ips.map(i=>i.ipPort).join(',')+'"';
+      body=JSON.stringify({type:'TXT',name:g.domain,content,ttl:60});
+    }
+
     const res=ext?await(await fetch(base+'/'+ext.id,{method:'PUT',headers:h,body})).json()
       :await(await fetch(base,{method:'POST',headers:h,body})).json();
     if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
@@ -434,6 +447,11 @@
   <label>CF API Token</label><input id="g-tk" type="password">
   <label>Zone ID</label><input id="g-zn">
   <label>解析域名</label><input id="g-dm" placeholder="proxy.example.com">
+  <label>DNS记录类型</label>
+  <select id="g-rt">
+    <option value="TXT">TXT记录 (多IP逗号分隔)</option>
+    <option value="A">A记录 (仅第一个IP)</option>
+  </select>
   <label>每次解析数</label><input id="g-ct" type="number" value="8" min="1" max="50">
   <label>ASN过滤(点选,不选=全部)</label><div id="g-asn" class="row"></div>
   <div class="fe"><button class="btn" onclick="clrGF()">清空</button><button class="btn p" onclick="saveGrp()">保存分组</button></div>
@@ -596,10 +614,10 @@
   function upCSV(input){if(!CG)return tt('请先选择分组',0);const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:r.result})});tt('新增'+d.added+'条,总计'+d.total);chgGrp()}catch(e){tt(e.message,0)}};r.readAsText(f);input.value=''}
   const dz=$('dz');if(dz){dz.ondragover=e=>{e.preventDefault();dz.classList.add('drag')};dz.ondragleave=()=>dz.classList.remove('drag');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('drag');if(!CG)return tt('请先选择分组',0);const f=e.dataTransfer.files[0];if(f){const rd=new FileReader();rd.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:rd.result})});tt('新增'+d.added+'条');chgGrp()}catch(e2){tt(e2.message,0)}};rd.readAsText(f)}}}
   // 分组管理
-  function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-ct').value=g.resolveCount||8;GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
-  function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-ct').value=8;GA.clear();renderGAChips()}
+  function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
+  function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;GA.clear();renderGAChips()}
   async function saveGrp(){
-    const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,resolveCount:+$('g-ct').value||8,selectedAsns:[...GA]};
+    const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,recordType:$('g-rt').value||'TXT',resolveCount:+$('g-ct').value||8,selectedAsns:[...GA]};
     if(!g.id)return tt('需要分组ID',0);
     try{await api('/api/groups',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(g)});tt('分组已保存');clrGF();loadGrps()}catch(e){tt(e.message,0)}
   }

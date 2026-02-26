@@ -85,7 +85,7 @@ async function resolveToCloudflare(g, ips) {
   if (!g.cfToken || !g.zoneId || !g.domain) {
     throw new Error(`[${g.id}]缺少CF配置`);
   }
-  const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
+  const recordType = g.recordType || 'TXT';
   const headers = {
     'Authorization': `Bearer ${g.cfToken}`,
     'Content-Type': 'application/json'
@@ -93,14 +93,24 @@ async function resolveToCloudflare(g, ips) {
   const base = `https://api.cloudflare.com/client/v4/zones/${g.zoneId}/dns_records`;
 
   // 查询现有记录
-  const listRes = await fetch(`${base}?name=${g.domain}&type=TXT`, { headers });
+  const listRes = await fetch(`${base}?name=${g.domain}&type=${recordType}`, { headers });
   const listData = await listRes.json();
   if (!listData.success) {
     throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
   }
 
   const existing = listData.result?.[0];
-  const body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
+  let body;
+
+  if (recordType === 'A') {
+    // A记录：只解析第一个IP的IP部分（去掉端口）
+    const firstIP = ips[0].ipPort.split(':')[0];
+    body = JSON.stringify({ type: 'A', name: g.domain, content: firstIP, ttl: 60, proxied: false });
+  } else {
+    // TXT记录：多个IP用逗号分隔
+    const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
+    body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
+  }
 
   // 更新或创建记录
   const updateRes = existing
