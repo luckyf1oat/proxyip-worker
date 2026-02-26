@@ -226,7 +226,6 @@
       const groups=JSON.parse(await env.KV.get('groups')||'[]');
       const now=new Date();
       const hour=now.getUTCHours();
-      let totalAdded=0;
       for(const g of groups){
         if(!g.fofaQuery||!g.fofaCron)continue;
         const interval=parseInt(g.fofaCron);
@@ -237,7 +236,14 @@
           const url=`https://fofoapi.com/api/v1/search/all?qbase64=${qbase64}&key=${cfg.fofaKey}&size=${size}&fields=ip,port,as_number,as_organization,city,country`;
           const res=await fetch(url);
           const data=await res.json();
-          if(!data.results||!data.results.length)continue;
+          if(data.error){
+            await sendTG(cfg,`<b>⏰ FOFA定时搜索 [${g.name}]</b>\n❌ API错误: ${data.errmsg||data.error}`);
+            continue;
+          }
+          if(!data.results||!data.results.length){
+            await sendTG(cfg,`<b>⏰ FOFA定时搜索 [${g.name}]</b>\n📊 搜索到: 0 条结果\n🔍 语法: <code>${g.fofaQuery}</code>`);
+            continue;
+          }
           const newIPs=data.results.map(r=>{
             const[ip,port,asn,org,city,country]=r;
             return{ipPort:`${ip}:${port}`,ip,port:+port,asn:asn||'',org:org||'',city:city||'',country:country||'',
@@ -248,14 +254,30 @@
           const existingIPs=new Set(old.map(i=>i.ipPort));
           const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
           const toAdd=newIPs.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
-          if(!toAdd.length)continue;
-          await env.KV.put('ips:'+g.id,JSON.stringify([...old,...toAdd]));
-          totalAdded+=toAdd.length;
+          const dupCount=newIPs.filter(i=>existingIPs.has(i.ipPort)).length;
+          const trashCount=newIPs.filter(i=>trashIPs.has(i.ipPort)).length;
+          // 统计国家和ASN分布
+          const countryMap={},asnMap={};
+          toAdd.forEach(i=>{if(i.country)countryMap[i.country]=(countryMap[i.country]||0)+1;if(i.asn)asnMap[i.asn]=(asnMap[i.asn]||0)+1});
+          const countryStr=Object.entries(countryMap).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([k,v])=>k+':'+v).join(' | ');
+          const asnStr=Object.entries(asnMap).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([k,v])=>'AS'+k+':'+v).join(' | ');
           let tgMsg=`<b>⏰ FOFA定时搜索 [${g.name}]</b>\n`;
+          tgMsg+=`🔍 语法: <code>${g.fofaQuery}</code>\n`;
           tgMsg+=`📊 搜索到: ${data.results.length} | 新增: ${toAdd.length}\n`;
-          tgMsg+=`💾 已保存到IP列表，等待下次检测`;
+          tgMsg+=`🔄 重复: ${dupCount} | 🗑️ 回收站过滤: ${trashCount}\n`;
+          tgMsg+=`📦 现有IP: ${old.length} → ${old.length+toAdd.length}\n`;
+          if(countryStr)tgMsg+=`🌍 国家: ${countryStr}\n`;
+          if(asnStr)tgMsg+=`🏢 ASN: ${asnStr}\n`;
+          if(toAdd.length>0){
+            await env.KV.put('ips:'+g.id,JSON.stringify([...old,...toAdd]));
+            tgMsg+=`✅ 已保存${toAdd.length}个新IP，等待下次检测`;
+          }else{
+            tgMsg+=`⚠️ 无新增IP`;
+          }
           await sendTG(cfg,tgMsg);
-        }catch(e){console.error('FOFA定时搜索失败['+g.id+']:',e)}
+        }catch(e){
+          await sendTG(cfg,`<b>⏰ FOFA定时搜索 [${g.name}]</b>\n❌ 失败: ${e.message}`);
+        }
       }
     }
 
