@@ -425,25 +425,19 @@ async function main() {
     reasonMap[r] = (reasonMap[r] || 0) + 1;
   });
 
-  // 统计去重移除的IP原因
-  if (dupRemoved.length > 0) {
-    reasonMap['duplicate_port'] = dupRemoved.length;
-  }
-
   const result = {
     time: new Date().toISOString(),
     total: toCheck.length,
-    checked: checked.length + dupRemoved.length, // 实际检测的总数（包括被去重的）
+    checked: checked.length,
     valid: validSet.size,
-    invalid: failedIPs.length,
-    duplicates: dupRemoved.length, // 新增：去重移除的数量
+    invalid: checked.length - validSet.size,
     failReasons: reasonMap
   };
 
   await kvPut('last_result', JSON.stringify(result));
   console.log('\n=== 检测任务完成 ===');
   console.log(`⏰ 时间: ${result.time}`);
-  console.log(`📊 总计: ${result.total}, 检测: ${result.checked}, 有效: ${result.valid}, 失效: ${result.invalid}, 去重: ${result.duplicates}`);
+  console.log(`📊 总计: ${result.total}, 有效: ${result.valid}, 失效: ${result.invalid}`);
 
   // 发送Telegram通知
   const config = configStr ? JSON.parse(configStr) : {};
@@ -454,7 +448,7 @@ async function main() {
 
     let msg = `🔍 <b>ProxyIP检测报告</b>\n`;
     msg += `⏰ ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}\n`;
-    msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid} 🔄${result.duplicates}\n\n`;
+    msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid}\n\n`;
 
     if (reasonText) {
       msg += `📋 失效原因: ${reasonText}\n\n`;
