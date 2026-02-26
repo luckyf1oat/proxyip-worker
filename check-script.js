@@ -2,7 +2,7 @@
 const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
 const CHECK_TIMEOUT = 10000;
 const RETRY = 1;
-const BATCH = 30;
+const BATCH = 60;
 
 // 从环境变量获取配置
 const ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
@@ -229,7 +229,35 @@ async function batchCheck(list) {
   }
 
   console.log(`\n[+] 检测完成: 总计 ${out.length}, 有效 ${valid}, 失效 ${invalid}`);
-  return out;
+
+  // 去重：同一个IP不同端口只保留延迟最低的
+  const ipMap = new Map();
+  for (const item of out) {
+    const ip = item.ipPort.split(':')[0];
+    const existing = ipMap.get(ip);
+
+    if (!existing) {
+      ipMap.set(ip, item);
+    } else {
+      // 比较延迟，保留延迟更低的
+      const existingLatency = existing.checkLatency || 99999;
+      const currentLatency = item.checkLatency || 99999;
+
+      if (currentLatency < existingLatency) {
+        console.log(`[*] IP去重: ${ip} 保留 ${item.ipPort}(${currentLatency}ms) 移除 ${existing.ipPort}(${existingLatency}ms)`);
+        ipMap.set(ip, item);
+      } else {
+        console.log(`[*] IP去重: ${ip} 保留 ${existing.ipPort}(${existingLatency}ms) 移除 ${item.ipPort}(${currentLatency}ms)`);
+      }
+    }
+  }
+
+  const deduplicated = [...ipMap.values()];
+  if (deduplicated.length < out.length) {
+    console.log(`[+] 去重完成: ${out.length} -> ${deduplicated.length} (移除 ${out.length - deduplicated.length} 个重复IP)`);
+  }
+
+  return deduplicated;
 }
 
 // 发送Telegram通知
