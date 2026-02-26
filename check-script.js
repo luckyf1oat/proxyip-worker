@@ -92,34 +92,51 @@ async function resolveToCloudflare(g, ips) {
   };
   const base = `https://api.cloudflare.com/client/v4/zones/${g.zoneId}/dns_records`;
 
-  // 查询现有记录
-  const listRes = await fetch(`${base}?name=${g.domain}&type=${recordType}`, { headers });
-  const listData = await listRes.json();
-  if (!listData.success) {
-    throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
-  }
-
-  const existing = listData.result?.[0];
-  let body;
-
   if (recordType === 'A') {
-    // A记录：只解析第一个IP的IP部分（去掉端口）
-    const firstIP = ips[0].ipPort.split(':')[0];
-    body = JSON.stringify({ type: 'A', name: g.domain, content: firstIP, ttl: 60, proxied: false });
+    // A记录：为每个IP创建一条A记录
+    // 1. 查询所有现有的A记录
+    const listRes = await fetch(`${base}?name=${g.domain}&type=A`, { headers });
+    const listData = await listRes.json();
+    if (!listData.success) {
+      throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
+    }
+    const existing = listData.result || [];
+
+    // 2. 删除所有现有的A记录
+    for (const record of existing) {
+      await fetch(`${base}/${record.id}`, { method: 'DELETE', headers });
+    }
+
+    // 3. 为每个IP创建新的A记录（去掉端口）
+    for (const ip of ips) {
+      const ipOnly = ip.ipPort.split(':')[0];
+      const body = JSON.stringify({ type: 'A', name: g.domain, content: ipOnly, ttl: 60, proxied: false });
+      const res = await fetch(base, { method: 'POST', headers, body });
+      const resData = await res.json();
+      if (!resData.success) {
+        throw new Error('CF写入失败:' + JSON.stringify(resData.errors));
+      }
+    }
   } else {
     // TXT记录：多个IP用逗号分隔
+    const listRes = await fetch(`${base}?name=${g.domain}&type=TXT`, { headers });
+    const listData = await listRes.json();
+    if (!listData.success) {
+      throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
+    }
+
+    const existing = listData.result?.[0];
     const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
-    body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
-  }
+    const body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
 
-  // 更新或创建记录
-  const updateRes = existing
-    ? await fetch(`${base}/${existing.id}`, { method: 'PUT', headers, body })
-    : await fetch(base, { method: 'POST', headers, body });
+    const updateRes = existing
+      ? await fetch(`${base}/${existing.id}`, { method: 'PUT', headers, body })
+      : await fetch(base, { method: 'POST', headers, body });
 
-  const updateData = await updateRes.json();
-  if (!updateData.success) {
-    throw new Error('CF写入失败:' + JSON.stringify(updateData.errors));
+    const updateData = await updateRes.json();
+    if (!updateData.success) {
+      throw new Error('CF写入失败:' + JSON.stringify(updateData.errors));
+    }
   }
   return true;
 }

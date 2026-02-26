@@ -106,25 +106,36 @@
     const h={'Authorization':'Bearer '+g.cfToken,'Content-Type':'application/json'};
     const base='https://api.cloudflare.com/client/v4/zones/'+g.zoneId+'/dns_records';
 
-    // 查询现有记录
-    const lr=await(await fetch(base+'?name='+g.domain+'&type='+recordType,{headers:h})).json();
-    if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
-    const ext=lr.result?.[0];
-
-    let body;
     if(recordType==='A'){
-      // A记录：只解析第一个IP的IP部分（去掉端口）
-      const firstIP=ips[0].ipPort.split(':')[0];
-      body=JSON.stringify({type:'A',name:g.domain,content:firstIP,ttl:60,proxied:false});
+      // A记录：为每个IP创建一条A记录
+      // 1. 查询所有现有的A记录
+      const lr=await(await fetch(base+'?name='+g.domain+'&type=A',{headers:h})).json();
+      if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
+      const existing=lr.result||[];
+
+      // 2. 删除所有现有的A记录
+      for(const record of existing){
+        await fetch(base+'/'+record.id,{method:'DELETE',headers:h});
+      }
+
+      // 3. 为每个IP创建新的A记录（去掉端口）
+      for(const ip of ips){
+        const ipOnly=ip.ipPort.split(':')[0];
+        const body=JSON.stringify({type:'A',name:g.domain,content:ipOnly,ttl:60,proxied:false});
+        const res=await(await fetch(base,{method:'POST',headers:h,body})).json();
+        if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
+      }
     }else{
       // TXT记录：多个IP用逗号分隔
+      const lr=await(await fetch(base+'?name='+g.domain+'&type=TXT',{headers:h})).json();
+      if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
+      const ext=lr.result?.[0];
       const content='"'+ips.map(i=>i.ipPort).join(',')+'"';
-      body=JSON.stringify({type:'TXT',name:g.domain,content,ttl:60});
+      const body=JSON.stringify({type:'TXT',name:g.domain,content,ttl:60});
+      const res=ext?await(await fetch(base+'/'+ext.id,{method:'PUT',headers:h,body})).json()
+        :await(await fetch(base,{method:'POST',headers:h,body})).json();
+      if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
     }
-
-    const res=ext?await(await fetch(base+'/'+ext.id,{method:'PUT',headers:h,body})).json()
-      :await(await fetch(base,{method:'POST',headers:h,body})).json();
-    if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
     return true;
   }
 
