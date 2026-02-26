@@ -171,6 +171,25 @@ async function batchCheck(list) {
   return out;
 }
 
+// 发送Telegram通知
+async function sendTelegram(cfg, msg) {
+  if (!cfg.tgToken || !cfg.tgChatId) return;
+  try {
+    await fetch(`https://api.telegram.org/bot${cfg.tgToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chat_id: cfg.tgChatId,
+        text: msg,
+        parse_mode: 'HTML'
+      })
+    });
+    console.log('✅ Telegram通知已发送');
+  } catch (e) {
+    console.log('⚠️ Telegram通知发送失败:', e.message);
+  }
+}
+
 // 主函数
 async function main() {
   console.log('=== GitHub Actions 检测开始 ===\n');
@@ -269,6 +288,38 @@ async function main() {
   console.log('\n=== 检测任务完成 ===');
   console.log(`⏰ 时间: ${result.time}`);
   console.log(`📊 总计: ${result.total}, 有效: ${result.valid}, 失效: ${result.invalid}`);
+
+  // 发送Telegram通知
+  const config = configStr ? JSON.parse(configStr) : {};
+  if (config.tgToken && config.tgChatId) {
+    const reasonText = Object.entries(reasonMap)
+      .map(([k, v]) => `${k}:${v}`)
+      .join(' | ');
+
+    let msg = `🔍 <b>ProxyIP检测报告</b>\n`;
+    msg += `⏰ ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}\n`;
+    msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid}\n\n`;
+
+    if (reasonText) {
+      msg += `📋 失效原因: ${reasonText}\n\n`;
+    }
+
+    // 显示每个分组的移除情况
+    for (const g of groups) {
+      const ipsStr = await kvGet('ips:' + g.id);
+      if (!ipsStr) continue;
+      const gips = JSON.parse(ipsStr);
+      const removedInGroup = invalidIPs.filter(ip =>
+        toCheck.some(t => t.ipPort === ip.ipPort && t.groupId === g.id)
+      );
+      if (removedInGroup.length > 0) {
+        msg += `📦${g.name}→${g.domain || 'N/A'}\n`;
+        msg += `🗑️ 已移除${removedInGroup.length}个失效IP\n`;
+      }
+    }
+
+    await sendTelegram(config, msg);
+  }
 }
 
 main().catch(err => {
