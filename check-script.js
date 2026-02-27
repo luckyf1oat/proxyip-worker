@@ -306,8 +306,9 @@ async function main() {
   console.log(`🚫 黑名单: ${blacklistRaw.length} 条`);
   console.log('');
 
-  // 收集所有IP (排除回收站中的IP)
+  // 收集所有IP (排除回收站中的IP，但包含因延迟超标的IP以便重新检测)
   const allMap = new Map();
+  const overLatencyRetryMap = new Map(); // 记录哪些IP是从回收站中因延迟超标而重新检测的
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
     if (!ipsStr) continue;
@@ -316,6 +317,17 @@ async function main() {
     const groupTrashStr = await kvGet('trash:' + g.id);
     const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
     const trashIPs = new Set(groupTrash.map(t => t.ipPort));
+
+    // 找出回收站中因延迟超标的IP，准备重新检测
+    const overLatencyTrash = groupTrash.filter(t => t.deletedReason && t.deletedReason.startsWith('over_latency_'));
+    overLatencyTrash.forEach(ip => {
+      if (!blacklistIP.has(ip.ip) && !blacklistIPPort.has(ip.ipPort)) {
+        if (!allMap.has(ip.ipPort)) {
+          allMap.set(ip.ipPort, ip);
+          overLatencyRetryMap.set(ip.ipPort, g.id); // 记录这个IP属于哪个分组
+        }
+      }
+    });
 
     let gips = JSON.parse(ipsStr);
     let filtered = gips.filter(ip => !blacklistIP.has(ip.ip) && !blacklistIPPort.has(ip.ipPort) && !trashIPs.has(ip.ipPort));
@@ -343,8 +355,11 @@ async function main() {
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
 
   // 收集失效IP、重复端口IP和超过延迟上限的IP到各分组的回收站
+  // 同时处理回收站中因延迟超标的IP：达标则放回IP池
   const invalidIPs = checked.filter(i => i.status === 'invalid');
   const now = new Date().toISOString();
+  let totalRestored = 0;
+  const restoredPerGroup = {}; // 记录每个分组恢复的IP数
 
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
@@ -365,24 +380,55 @@ async function main() {
       );
     }
 
-    if (groupInvalidIPs.length > 0 || groupDupIPs.length > 0 || groupOverLatencyIPs.length > 0) {
-      const groupTrashStr = await kvGet('trash:' + g.id);
-      const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
+    // 处理回收站：找出因延迟超标重新检测后达标的IP，放回IP池
+    const groupTrashStr = await kvGet('trash:' + g.id);
+    let groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
+    const restoredIPs = [];
 
-      groupInvalidIPs.forEach(ip => {
-        groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
+    groupTrash = groupTrash.filter(t => {
+      if (!t.deletedReason || !t.deletedReason.startsWith('over_latency_')) return true;
+      const result = resultMap.get(t.ipPort);
+      if (!result) return true; // 没有检测结果，保留在回收站
+      if (result.status !== 'valid') return true; // 检测失效，保留
+      if (groupMaxLatency && result.checkLatency > groupMaxLatency) return true; // 仍然超标，保留
+      // 达标了，从回收站移除，准备放回IP池
+      restoredIPs.push(result);
+      return false;
+    });
+
+    if (restoredIPs.length > 0) {
+      totalRestored += restoredIPs.length;
+      restoredPerGroup[g.id] = restoredIPs.length;
+      console.log(`♻️ [${g.name}] ${restoredIPs.length} 个IP延迟达标，从回收站放回IP池`);
+    }
+
+    // 添加新的失效/重复/超延迟IP到回收站
+    groupInvalidIPs.forEach(ip => {
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
+    });
+    groupDupIPs.forEach(ip => {
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port' });
+    });
+    groupOverLatencyIPs.forEach(ip => {
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms` });
+    });
+
+    await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
+
+    // 将达标IP放回该分组的IP列表
+    if (restoredIPs.length > 0) {
+      const currentIPs = JSON.parse(await kvGet('ips:' + g.id) || '[]');
+      const existingSet = new Set(currentIPs.map(i => i.ipPort));
+      restoredIPs.forEach(ip => {
+        if (!existingSet.has(ip.ipPort)) {
+          currentIPs.push(ip);
+        }
       });
+      await kvPut('ips:' + g.id, JSON.stringify(currentIPs));
+    }
 
-      groupDupIPs.forEach(ip => {
-        groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port' });
-      });
-
-      groupOverLatencyIPs.forEach(ip => {
-        groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms` });
-      });
-
-      await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
-
+    const removedCount = groupInvalidIPs.length + groupDupIPs.length + groupOverLatencyIPs.length;
+    if (removedCount > 0) {
       let logMsg = `🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP`;
       if (groupDupIPs.length > 0) logMsg += ` + ${groupDupIPs.length} 个重复端口`;
       if (groupOverLatencyIPs.length > 0) logMsg += ` + ${groupOverLatencyIPs.length} 个超延迟(>${groupMaxLatency}ms)`;
@@ -409,6 +455,9 @@ async function main() {
   }
 
   console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP + ${dupRemoved.length} 个重复端口 + ${totalOverLatency} 个超延迟到回收站`);
+  if (totalRestored > 0) {
+    console.log(`♻️ 总计恢复 ${totalRestored} 个延迟达标IP从回收站放回IP池`);
+  }
 
   // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
@@ -467,6 +516,7 @@ async function main() {
       err,
       count: validIPs.length,
       removed: removedCount,
+      restored: restoredPerGroup[g.id] || 0,
       resolved: resolved  // 保存完整的IP对象
     });
 
@@ -517,6 +567,7 @@ async function main() {
     msg += `⏰ ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}\n`;
     msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid} 🔄${result.duplicates}`;
     if (result.overLatency > 0) msg += ` ⏱️${result.overLatency}`;
+    if (totalRestored > 0) msg += ` ♻️${totalRestored}`;
     msg += `\n\n`;
 
     if (reasonText) {
@@ -538,6 +589,9 @@ async function main() {
 
       if (gr.removed > 0) {
         msg += `🗑️ 已移除${gr.removed}个失效IP\n`;
+      }
+      if (gr.restored > 0) {
+        msg += `♻️ 已恢复${gr.restored}个延迟达标IP\n`;
       }
 
       msg += `\n`;

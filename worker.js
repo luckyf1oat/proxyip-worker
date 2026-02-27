@@ -154,12 +154,16 @@
       const blIP=new Set(blRaw.map(b=>b.split(':')[0]));
       const blIPPort=new Set(blRaw.filter(b=>b.includes(':')));
       if(!groups.length)return;
-      // 收集所有分组IP(去重，排除回收站中的IP)
+      // 收集所有分组IP(去重，排除回收站中的IP，但包含因延迟超标的IP以便重新检测)
       const allMap=new Map();
       for(const g of groups){
         let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
         const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
         const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
+        // 找出回收站中因延迟超标的IP，重新检测
+        groupTrash.filter(t=>t.deletedReason&&t.deletedReason.startsWith('over_latency_')).forEach(ip=>{
+          if(!blIP.has(ip.ipPort.split(':')[0])&&!blIPPort.has(ip.ipPort)&&!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip);
+        });
         let filtered=gips.filter(ip=>!blIP.has(ip.ipPort.split(':')[0])&&!blIPPort.has(ip.ipPort)&&!trashIPs.has(ip.ipPort));
         if(g.selectedAsns?.length)filtered=filtered.filter(ip=>g.selectedAsns.includes(ip.asn));
         filtered.forEach(ip=>{if(!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip)});
@@ -174,13 +178,29 @@
       });
       const resultMap=new Map(checked.map(i=>[i.ipPort,i]));
       const validSet=new Set(checked.filter(i=>i.status==='valid').map(i=>i.ipPort));
-      // 收集失效IP到各分组回收站
+      // 收集失效IP到各分组回收站，同时处理延迟达标的IP恢复
       const now=new Date().toISOString();
       const invalidIPs=checked.filter(i=>i.status==='invalid');
       for(const g of groups){
-        const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
+        let groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
         const gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
         const groupInvalidIPs=invalidIPs.filter(ip=>gips.some(gip=>gip.ipPort===ip.ipPort));
+        // 处理回收站：找出因延迟超标重新检测后达标的IP，放回IP池
+        const restoredIPs=[];
+        groupTrash=groupTrash.filter(t=>{
+          if(!t.deletedReason||!t.deletedReason.startsWith('over_latency_'))return true;
+          const result=resultMap.get(t.ipPort);
+          if(!result||result.status!=='valid')return true;
+          if(g.maxLatency&&result.checkLatency>g.maxLatency)return true;
+          restoredIPs.push(result);return false;
+        });
+        // 将达标IP放回IP池
+        if(restoredIPs.length>0){
+          const currentIPs=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+          const existingSet=new Set(currentIPs.map(i=>i.ipPort));
+          restoredIPs.forEach(ip=>{if(!existingSet.has(ip.ipPort))currentIPs.push(ip)});
+          await env.KV.put('ips:'+g.id,JSON.stringify(currentIPs));
+        }
         groupInvalidIPs.forEach(ip=>{
           groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
         });
