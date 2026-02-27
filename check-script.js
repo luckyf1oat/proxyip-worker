@@ -297,11 +297,13 @@ async function main() {
   }
 
   const groups = JSON.parse(groupsStr);
-  const blacklist = new Set(blacklistStr ? JSON.parse(blacklistStr) : []);
+  const blacklistRaw = blacklistStr ? JSON.parse(blacklistStr) : [];
+  const blacklistIP = new Set(blacklistRaw.map(b => b.split(':')[0]));
+  const blacklistIPPort = new Set(blacklistRaw.filter(b => b.includes(':')));
   const config = configStr ? JSON.parse(configStr) : {};
 
   console.log(`📊 分组数: ${groups.length}`);
-  console.log(`🚫 黑名单: ${blacklist.size} 个IP`);
+  console.log(`🚫 黑名单: ${blacklistRaw.length} 条`);
   console.log('');
 
   // 收集所有IP (排除回收站中的IP)
@@ -316,7 +318,7 @@ async function main() {
     const trashIPs = new Set(groupTrash.map(t => t.ipPort));
 
     let gips = JSON.parse(ipsStr);
-    let filtered = gips.filter(ip => !blacklist.has(ip.ip) && !trashIPs.has(ip.ipPort));
+    let filtered = gips.filter(ip => !blacklistIP.has(ip.ip) && !blacklistIPPort.has(ip.ipPort) && !trashIPs.has(ip.ipPort));
     if (g.selectedAsns?.length) {
       filtered = filtered.filter(ip => g.selectedAsns.includes(ip.asn));
     }
