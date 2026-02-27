@@ -636,6 +636,8 @@
       <option value="A">A记录 (多条记录)</option>
     </select>
     <label>每次解析数</label><input id="g-ct" type="number" value="8" min="1" max="50">
+    <label>延迟上限 (ms) <span style="color:var(--dm);font-size:11px">(可选,超过此延迟的IP将被移入回收站)</span></label>
+    <input id="g-max-lat" type="number" placeholder="3000" min="100" max="10000">
     <label>ASN过滤(点选,不选=全部)</label><div id="g-asn" class="row"></div>
     <label>FOFA搜索语法 <span style="color:var(--dm);font-size:11px">(可选,留空则不使用FOFA)</span></label>
     <input id="g-fofa-q" placeholder='如: country="KR" && port="443"'>
@@ -683,6 +685,10 @@
     <div class="cd"><h3>FOFA API配置</h3>
     <label>FOFA Key</label><input id="c-fofa-key" type="password" placeholder="pji6u9f70263l3lkudd2fb7hhjiw1wmp">
     <p style="color:var(--dm);font-size:11px;margin-top:4px">用于自动搜索代理IP</p>
+    </div>
+    <div class="cd"><h3>检测配置</h3>
+    <label>延迟上限 (ms)</label><input id="c-max-latency" type="number" placeholder="3000" min="100" max="10000">
+    <p style="color:var(--dm);font-size:11px;margin-top:4px">超过此延迟的IP将被移入回收站 (留空不限制)</p>
     </div>
     <div class="cd"><h3>修改密码</h3><label>新密码(留空不改)</label><input id="c-pw" type="password"></div>
     <div class="fe"><button class="btn p" onclick="saveCfg()">保存设置</button></div>
@@ -826,10 +832,11 @@
     function upCSV(input){if(!CG)return tt('请先选择分组',0);const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:r.result})});tt('新增'+d.added+'条,总计'+d.total);chgGrp()}catch(e){tt(e.message,0)}};r.readAsText(f);input.value=''}
     const dz=$('dz');if(dz){dz.ondragover=e=>{e.preventDefault();dz.classList.add('drag')};dz.ondragleave=()=>dz.classList.remove('drag');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('drag');if(!CG)return tt('请先选择分组',0);const f=e.dataTransfer.files[0];if(f){const rd=new FileReader();rd.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:rd.result})});tt('新增'+d.added+'条');chgGrp()}catch(e2){tt(e2.message,0)}};rd.readAsText(f)}}}
     // 分组管理
-    function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;$('g-fofa-q').value=g.fofaQuery||'';$('g-fofa-sz').value=g.fofaSize||10000;$('g-fofa-cron').value=g.fofaCron||'';GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
-    function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;$('g-fofa-q').value='';$('g-fofa-sz').value=10000;$('g-fofa-cron').value='';GA.clear();renderGAChips()}
+    function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;$('g-max-lat').value=g.maxLatency||'';$('g-fofa-q').value=g.fofaQuery||'';$('g-fofa-sz').value=g.fofaSize||10000;$('g-fofa-cron').value=g.fofaCron||'';GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
+    function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;$('g-max-lat').value='';$('g-fofa-q').value='';$('g-fofa-sz').value=10000;$('g-fofa-cron').value='';GA.clear();renderGAChips()}
     async function saveGrp(){
       const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,recordType:$('g-rt').value||'TXT',resolveCount:+$('g-ct').value||8,fofaQuery:$('g-fofa-q').value.trim(),fofaSize:+$('g-fofa-sz').value||10000,fofaCron:$('g-fofa-cron').value||'',selectedAsns:[...GA]};
+      const ml=$('g-max-lat').value;if(ml)g.maxLatency=parseInt(ml);
       if(!g.id)return tt('需要分组ID',0);
       try{await api('/api/groups',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(g)});tt('分组已保存');clrGF();loadGrps()}catch(e){tt(e.message,0)}
     }
@@ -851,9 +858,10 @@
     }
 
     // 设置
-    async function loadCfg(){try{const c=await api('/api/config');$('c-gh-token').value=c.githubToken||'';$('c-gh-repo').value=c.githubRepo||'';$('c-tt').value=c.tgToken||'';$('c-tc').value=c.tgChatId||'';$('c-fofa-key').value=c.fofaKey||''}catch{}}
+    async function loadCfg(){try{const c=await api('/api/config');$('c-gh-token').value=c.githubToken||'';$('c-gh-repo').value=c.githubRepo||'';$('c-tt').value=c.tgToken||'';$('c-tc').value=c.tgChatId||'';$('c-fofa-key').value=c.fofaKey||'';$('c-max-latency').value=c.maxLatency||''}catch{}}
     async function saveCfg(){
       const c={githubToken:$('c-gh-token').value,githubRepo:$('c-gh-repo').value,tgToken:$('c-tt').value,tgChatId:$('c-tc').value,fofaKey:$('c-fofa-key').value};
+      const ml=$('c-max-latency').value;if(ml)c.maxLatency=parseInt(ml);
       const pw=$('c-pw').value;if(pw){c.password=pw;P=pw;localStorage.setItem('_pp',pw)}
       try{await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});tt('设置已保存');$('c-pw').value='';loadSt()}catch(e){tt(e.message,0)}
     }

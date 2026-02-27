@@ -298,9 +298,11 @@ async function main() {
 
   const groups = JSON.parse(groupsStr);
   const blacklist = new Set(blacklistStr ? JSON.parse(blacklistStr) : []);
+  const config = configStr ? JSON.parse(configStr) : {};
 
   console.log(`📊 分组数: ${groups.length}`);
-  console.log(`🚫 黑名单: ${blacklist.size} 个IP\n`);
+  console.log(`🚫 黑名单: ${blacklist.size} 个IP`);
+  console.log('');
 
   // 收集所有IP (排除回收站中的IP)
   const allMap = new Map();
@@ -338,7 +340,7 @@ async function main() {
   const resultMap = new Map(checked.map(i => [i.ipPort, i]));
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
 
-  // 收集失效IP和重复端口IP到各分组的回收站
+  // 收集失效IP、重复端口IP和超过延迟上限的IP到各分组的回收站
   const invalidIPs = checked.filter(i => i.status === 'invalid');
   const now = new Date().toISOString();
 
@@ -350,7 +352,18 @@ async function main() {
     const groupInvalidIPs = invalidIPs.filter(ip => gips.some(gip => gip.ipPort === ip.ipPort));
     const groupDupIPs = dupRemoved.filter(ip => gips.some(gip => gip.ipPort === ip.ipPort));
 
-    if (groupInvalidIPs.length > 0 || groupDupIPs.length > 0) {
+    // 检查该分组是否设置了延迟上限
+    const groupMaxLatency = g.maxLatency || null;
+    let groupOverLatencyIPs = [];
+    if (groupMaxLatency) {
+      groupOverLatencyIPs = checked.filter(ip =>
+        ip.status === 'valid' &&
+        ip.checkLatency > groupMaxLatency &&
+        gips.some(gip => gip.ipPort === ip.ipPort)
+      );
+    }
+
+    if (groupInvalidIPs.length > 0 || groupDupIPs.length > 0 || groupOverLatencyIPs.length > 0) {
       const groupTrashStr = await kvGet('trash:' + g.id);
       const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
 
@@ -362,11 +375,38 @@ async function main() {
         groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port' });
       });
 
+      groupOverLatencyIPs.forEach(ip => {
+        groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms` });
+      });
+
       await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
-      console.log(`🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP + ${groupDupIPs.length} 个重复端口到回收站`);
+
+      let logMsg = `🗑️ [${g.name}] 已移除 ${groupInvalidIPs.length} 个失效IP`;
+      if (groupDupIPs.length > 0) logMsg += ` + ${groupDupIPs.length} 个重复端口`;
+      if (groupOverLatencyIPs.length > 0) logMsg += ` + ${groupOverLatencyIPs.length} 个超延迟(>${groupMaxLatency}ms)`;
+      logMsg += ' 到回收站';
+      console.log(logMsg);
     }
   }
-  console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP + ${dupRemoved.length} 个重复端口到回收站`);
+
+  // 统计总移除数量（包括超延迟的）
+  let totalOverLatency = 0;
+  for (const g of groups) {
+    if (g.maxLatency) {
+      const ipsStr = await kvGet('ips:' + g.id);
+      if (ipsStr) {
+        const gips = JSON.parse(ipsStr);
+        const count = checked.filter(ip =>
+          ip.status === 'valid' &&
+          ip.checkLatency > g.maxLatency &&
+          gips.some(gip => gip.ipPort === ip.ipPort)
+        ).length;
+        totalOverLatency += count;
+      }
+    }
+  }
+
+  console.log(`\n🗑️ 总计移除 ${invalidIPs.length} 个失效IP + ${dupRemoved.length} 个重复端口 + ${totalOverLatency} 个超延迟到回收站`);
 
   // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
@@ -378,9 +418,20 @@ async function main() {
     let gips = JSON.parse(ipsStr);
     gips = gips.map(ip => resultMap.get(ip.ipPort) || ip);
 
-    // 移除失效IP和重复端口IP
+    // 移除失效IP、重复端口IP和超过延迟上限的IP
     const dupRemovedSet = new Set(dupRemoved.map(i => i.ipPort));
-    const validIPs = gips.filter(i => i.status !== 'invalid' && !dupRemovedSet.has(i.ipPort));
+    const groupMaxLatency = g.maxLatency || null;
+
+    let validIPs = gips.filter(i => {
+      // 移除失效IP
+      if (i.status === 'invalid') return false;
+      // 移除重复端口IP
+      if (dupRemovedSet.has(i.ipPort)) return false;
+      // 移除超过延迟上限的IP
+      if (groupMaxLatency && i.status === 'valid' && i.checkLatency > groupMaxLatency) return false;
+      return true;
+    });
+
     const removedCount = gips.length - validIPs.length;
 
     await kvPut('ips:' + g.id, JSON.stringify(validIPs));
@@ -430,23 +481,28 @@ async function main() {
     reasonMap['duplicate_port'] = dupRemoved.length;
   }
 
+  // 统计超延迟移除的IP
+  if (totalOverLatency > 0) {
+    reasonMap['over_latency'] = totalOverLatency;
+  }
+
   const result = {
     time: new Date().toISOString(),
     total: toCheck.length,
-    checked: checked.length + dupRemoved.length, // 实际检测的总数（包括被去重的）
-    valid: validSet.size,
+    checked: checked.length + dupRemoved.length,
+    valid: validSet.size - totalOverLatency, // 有效数量要减去超延迟的
     invalid: failedIPs.length,
-    duplicates: dupRemoved.length, // 新增：去重移除的数量
+    duplicates: dupRemoved.length,
+    overLatency: totalOverLatency, // 新增：超延迟移除的数量
     failReasons: reasonMap
   };
 
   await kvPut('last_result', JSON.stringify(result));
   console.log('\n=== 检测任务完成 ===');
   console.log(`⏰ 时间: ${result.time}`);
-  console.log(`📊 总计: ${result.total}, 检测: ${result.checked}, 有效: ${result.valid}, 失效: ${result.invalid}, 去重: ${result.duplicates}`);
+  console.log(`📊 总计: ${result.total}, 检测: ${result.checked}, 有效: ${result.valid}, 失效: ${result.invalid}, 去重: ${result.duplicates}, 超延迟: ${result.overLatency}`);
 
   // 发送Telegram通知
-  const config = configStr ? JSON.parse(configStr) : {};
   if (config.tgToken && config.tgChatId) {
     const reasonText = Object.entries(reasonMap)
       .map(([k, v]) => `${k}:${v}`)
@@ -454,7 +510,9 @@ async function main() {
 
     let msg = `🔍 <b>ProxyIP检测报告</b>\n`;
     msg += `⏰ ${new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}\n`;
-    msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid} 🔄${result.duplicates}\n\n`;
+    msg += `📊 总:${result.total} ✅${result.valid} ❌${result.invalid} 🔄${result.duplicates}`;
+    if (result.overLatency > 0) msg += ` ⏱️${result.overLatency}`;
+    msg += `\n\n`;
 
     if (reasonText) {
       msg += `📋 失效原因: ${reasonText}\n\n`;
