@@ -2,7 +2,7 @@
 const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
 const CHECK_TIMEOUT = 10000;
 const RETRY = 1;
-const BATCH = 60;
+const BATCH = 80;
 
 // 从环境变量获取配置
 const ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
