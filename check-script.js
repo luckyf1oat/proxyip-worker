@@ -425,6 +425,9 @@ async function main() {
     const groupMaxLatency = g.maxLatency || null;
 
     let validIPs = gips.filter(i => {
+      // 移除黑名单IP
+      const ip = i.ipPort.split(':')[0];
+      if (blacklistIP.has(ip) || blacklistIPPort.has(i.ipPort)) return false;
       // 移除失效IP
       if (i.status === 'invalid') return false;
       // 移除重复端口IP
