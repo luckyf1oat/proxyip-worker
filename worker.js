@@ -150,7 +150,9 @@
     async function autoCheckAndResolve(env){
       const cfg=JSON.parse(await env.KV.get('config')||'{}');
       const groups=JSON.parse(await env.KV.get('groups')||'[]');
-      const bl=new Set(JSON.parse(await env.KV.get('blacklist')||'[]'));
+      const blRaw=JSON.parse(await env.KV.get('blacklist')||'[]');
+      const blIP=new Set(blRaw.map(b=>b.split(':')[0]));
+      const blIPPort=new Set(blRaw.filter(b=>b.includes(':')));
       if(!groups.length)return;
       // 收集所有分组IP(去重，排除回收站中的IP)
       const allMap=new Map();
@@ -158,7 +160,7 @@
         let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
         const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
         const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
-        let filtered=gips.filter(ip=>!bl.has(ip.ip)&&!trashIPs.has(ip.ipPort));
+        let filtered=gips.filter(ip=>!blIP.has(ip.ipPort.split(':')[0])&&!blIPPort.has(ip.ipPort)&&!trashIPs.has(ip.ipPort));
         if(g.selectedAsns?.length)filtered=filtered.filter(ip=>g.selectedAsns.includes(ip.asn));
         filtered.forEach(ip=>{if(!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip)});
       }
@@ -190,8 +192,8 @@
       for(const g of groups){
         let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
         gips=gips.map(ip=>resultMap.get(ip.ipPort)||ip);
-        // 移除失效IP
-        const validIPs=gips.filter(i=>i.status!=='invalid');
+        // 移除失效IP和黑名单IP
+        const validIPs=gips.filter(i=>i.status!=='invalid'&&!blIP.has(i.ipPort.split(':')[0])&&!blIPPort.has(i.ipPort));
         const removedCount=gips.length-validIPs.length;
         await env.KV.put('ips:'+g.id,JSON.stringify(validIPs));
         let gv=validIPs.filter(i=>i.status==='valid');
@@ -360,9 +362,11 @@
         ctx.waitUntil((async()=>{
           const cf=JSON.parse(await env.KV.get('config')||'{}');
           const gs=JSON.parse(await env.KV.get('groups')||'[]');const g=gs.find(x=>x.id===groupId);if(!g)return;
-          const bl=new Set(JSON.parse(await env.KV.get('blacklist')||'[]'));
+          const blRaw2=JSON.parse(await env.KV.get('blacklist')||'[]');
+          const blIP2=new Set(blRaw2.map(b=>b.split(':')[0]));
+          const blIPPort2=new Set(blRaw2.filter(b=>b.includes(':')));
           let gips=JSON.parse(await env.KV.get('ips:'+groupId)||'[]');
-          let toCheck=gips.filter(ip=>!bl.has(ip.ip));
+          let toCheck=gips.filter(ip=>!blIP2.has(ip.ipPort.split(':')[0])&&!blIPPort2.has(ip.ipPort));
           if(!toCheck.length)return;
           await env.KV.put('check_progress',JSON.stringify({phase:'checking',checked:0,total:toCheck.length,valid:0,invalid:0,group:g.name}));
           const checked=await batchCheck(toCheck,async(p)=>{
@@ -382,9 +386,9 @@
             await env.KV.put('trash:'+groupId,JSON.stringify(groupTrash));
           }
 
-          // 更新IP列表，移除失效IP
+          // 更新IP列表，移除失效IP和黑名单IP
           gips=gips.map(ip=>resultMap.get(ip.ipPort)||ip);
-          const validIPs=gips.filter(i=>i.status!=='invalid');
+          const validIPs=gips.filter(i=>i.status!=='invalid'&&!blIP2.has(i.ipPort.split(':')[0])&&!blIPPort2.has(i.ipPort));
           await env.KV.put('ips:'+groupId,JSON.stringify(validIPs));
 
           await env.KV.put('check_progress',JSON.stringify({phase:'resolving',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size,group:g.name}));
@@ -415,8 +419,10 @@
       if(path==='/api/resolve'&&req.method==='POST'){
         const{groupId}=await req.json();const gs=JSON.parse(await env.KV.get('groups')||'[]');const g=gs.find(x=>x.id===groupId);
         if(!g)return json({error:'分组不存在'},400);
-        const bl=new Set(JSON.parse(await env.KV.get('blacklist')||'[]'));
-        let v=JSON.parse(await env.KV.get('ips:'+groupId)||'[]').filter(i=>i.status==='valid'&&!bl.has(i.ip));
+        const blRaw3=JSON.parse(await env.KV.get('blacklist')||'[]');
+        const blIP3=new Set(blRaw3.map(b=>b.split(':')[0]));
+        const blIPPort3=new Set(blRaw3.filter(b=>b.includes(':')));
+        let v=JSON.parse(await env.KV.get('ips:'+groupId)||'[]').filter(i=>i.status==='valid'&&!blIP3.has(i.ipPort.split(':')[0])&&!blIPPort3.has(i.ipPort));
         if(g.selectedAsns?.length)v=v.filter(i=>g.selectedAsns.includes(i.asn));
         v.sort((a,b)=>a.checkLatency-b.checkLatency);const toR=v.slice(0,g.resolveCount||8);
         if(!toR.length)return json({error:'无有效IP'},400);
