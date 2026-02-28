@@ -390,7 +390,13 @@ async function main() {
       const result = resultMap.get(t.ipPort);
       if (!result) return true; // 没有检测结果，保留在回收站
       if (result.status !== 'valid') return true; // 检测失效，保留
-      if (groupMaxLatency && result.checkLatency > groupMaxLatency) return true; // 仍然超标，保留
+      if (groupMaxLatency && result.checkLatency > groupMaxLatency) {
+        // 仍然超标，更新回收站中的延迟值和原因
+        t.checkLatency = result.checkLatency;
+        t.deletedReason = `over_latency_${groupMaxLatency}ms`;
+        t.deletedAt = now;
+        return true;
+      }
       // 达标了，从回收站移除，准备放回IP池
       restoredIPs.push(result);
       return false;
@@ -509,6 +515,11 @@ async function main() {
       }
     }
 
+    // 收集该分组的超延迟IP（从回收站读取）
+    const groupTrashStr2 = await kvGet('trash:' + g.id);
+    const groupTrash2 = groupTrashStr2 ? JSON.parse(groupTrashStr2) : [];
+    const overLatencyIPs = groupTrash2.filter(t => t.deletedReason && t.deletedReason.startsWith('over_latency_'));
+
     groupResults.push({
       id: g.id,
       name: g.name,
@@ -519,7 +530,9 @@ async function main() {
       count: validIPs.length,
       removed: removedCount,
       restored: restoredPerGroup[g.id] || 0,
-      resolved: resolved  // 保存完整的IP对象
+      resolved: resolved,  // 保存完整的IP对象
+      overLatencyIPs: overLatencyIPs,  // 超延迟IP列表
+      maxLatency: g.maxLatency || null  // 延迟上限
     });
 
     console.log(`  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}, 解析: ${resolved.length}个IP`);
@@ -594,6 +607,16 @@ async function main() {
       }
       if (gr.restored > 0) {
         msg += `♻️ 已恢复${gr.restored}个延迟达标IP\n`;
+      }
+      if (gr.overLatencyIPs && gr.overLatencyIPs.length > 0) {
+        msg += `⏱️ 延迟超标IP (上限${gr.maxLatency}ms):\n`;
+        gr.overLatencyIPs.slice(0, 5).forEach(ip => {
+          const exceed = ip.checkLatency - gr.maxLatency;
+          msg += `  ${ip.ipPort} | ${ip.checkLatency}ms (+${exceed}ms)\n`;
+        });
+        if (gr.overLatencyIPs.length > 5) {
+          msg += `  ...还有${gr.overLatencyIPs.length - 5}个\n`;
+        }
       }
 
       msg += `\n`;

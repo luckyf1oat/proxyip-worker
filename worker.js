@@ -192,7 +192,13 @@
           if(!t.deletedReason||!t.deletedReason.startsWith('over_latency_'))return true;
           const result=resultMap.get(t.ipPort);
           if(!result||result.status!=='valid')return true;
-          if(g.maxLatency&&result.checkLatency>g.maxLatency)return true;
+          if(g.maxLatency&&result.checkLatency>g.maxLatency){
+            // 仍然超标，更新延迟值和原因
+            t.checkLatency=result.checkLatency;
+            t.deletedReason='over_latency_'+g.maxLatency+'ms';
+            t.deletedAt=now;
+            return true;
+          }
           restoredIPs.push(result);return false;
         });
         // 将达标IP放回IP池
@@ -650,6 +656,13 @@
   <button class="btn" onclick="goPage(totalPages)">末页</button>
   </div>
   </div>
+  <!-- 延迟超标IP列表 -->
+  <div class="cd" id="over-latency-box" style="display:none">
+    <h3>延迟超标IP <span id="over-lat-c" style="color:var(--dm)"></span></h3>
+    <div class="tw"><table><thead><tr>
+    <th>IP:端口</th><th>ASN</th><th>延迟</th><th>延迟上限</th><th>超出</th><th>机房</th><th>城市</th><th>组织</th>
+    </tr></thead><tbody id="over-lat-tb"></tbody></table></div>
+  </div>
     </div></div>
     <!-- 分组管理 -->
     <div class="tab" id="t-gr">
@@ -720,6 +733,13 @@
     <p style="color:var(--dm);font-size:11px;margin-top:4px">超过此延迟的IP将被移入回收站 (留空不限制)</p>
     </div>
     <div class="cd"><h3>修改密码</h3><label>新密码(留空不改)</label><input id="c-pw" type="password"></div>
+    <div class="cd"><h3>数据导出</h3>
+    <p style="color:var(--dm);font-size:11px;margin-bottom:6px">导出配置和IP库数据</p>
+    <div class="row">
+      <button class="btn" onclick="exportConfig()">📥 导出配置</button>
+      <button class="btn" onclick="exportIPDB()">📥 导出IP库</button>
+    </div>
+    </div>
     <div class="fe"><button class="btn p" onclick="saveCfg()">保存设置</button></div>
     </div>
     </div></div>
@@ -786,6 +806,10 @@
       const pageData=l.slice((currentPage-1)*PAGE_SIZE,currentPage*PAGE_SIZE);
       $('ipc').textContent='('+l.length+'/'+IPS.length+')';
       $('tb').innerHTML=pageData.map(i=>'<tr><td><input type="checkbox" class="ck" value="'+i.ipPort+'"></td><td>'+i.ipPort+'</td><td>AS'+i.asn+'</td><td>'+(i.checkLatency<9999?i.checkLatency+'ms':i.latency+'ms')+'</td><td>'+i.colo+'</td><td>'+i.city+'</td><td>'+(i.org||'')+'</td><td><span class="tg '+(i.status==='valid'?'v':i.status==='invalid'?'i':'u')+'">'+(i.status==='valid'?'有效':i.status==='invalid'?'失效':'未检测')+'</span></td><td style="color:var(--rd);font-size:11px">'+(i.status==='invalid'&&i.failReason?i.failReason:'')+'</td></tr>').join('');
+
+      // 渲染延迟超标IP列表
+      renderOverLatencyIPs();
+
       window.totalPages=tp;
       var show=l.length>PAGE_SIZE;
       var info='第'+currentPage+'页/共'+tp+'页 (共'+l.length+'条)';
@@ -796,6 +820,28 @@
         $('btn-first').disabled=currentPage===1;$('btn-prev').disabled=currentPage===1;
         $('btn-next').disabled=currentPage>=tp;$('btn-last').disabled=currentPage>=tp;
       }
+    }
+
+    async function renderOverLatencyIPs(){
+      if(!CG)return;
+      try{
+        const gs=await api('/api/groups');
+        const g=gs.find(x=>x.id===CG);
+        if(!g||!g.maxLatency){$('over-latency-box').style.display='none';return}
+
+        // 从回收站读取延迟超标的IP
+        const trash=await api('/api/trash?groupId='+CG);
+        const overLatIPs=trash.filter(t=>t.deletedReason&&t.deletedReason.startsWith('over_latency_'));
+
+        if(overLatIPs.length===0){$('over-latency-box').style.display='none';return}
+
+        $('over-latency-box').style.display='block';
+        $('over-lat-c').textContent='('+overLatIPs.length+'个)';
+        $('over-lat-tb').innerHTML=overLatIPs.map(i=>{
+          const exceed=i.checkLatency-g.maxLatency;
+          return '<tr><td>'+i.ipPort+'</td><td>AS'+i.asn+'</td><td style="color:var(--rd)">'+i.checkLatency+'ms</td><td>'+g.maxLatency+'ms</td><td style="color:var(--rd)">+'+exceed+'ms</td><td>'+i.colo+'</td><td>'+i.city+'</td><td>'+(i.org||'')+'</td></tr>';
+        }).join('');
+      }catch(e){console.error(e)}
     }
     function goPage(p){if(p<1||p>window.totalPages)return;currentPage=p;renderTbl()}
     function togA(e){document.querySelectorAll('.ck').forEach(c=>c.checked=e.checked)}
@@ -899,6 +945,45 @@
       const b=$('blt').value.split('\\x0a').map(s=>s.trim()).filter(Boolean);
       try{await api('/api/blacklist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({blacklist:b})});tt('黑名单已保存');loadSt()}catch(e){tt(e.message,0)}
     }
+
+    // 导出功能
+    async function exportConfig(){
+      try{
+        const config=await api('/api/config');
+        const groups=await api('/api/groups');
+        const blacklist=await api('/api/blacklist');
+        const exportData={config,groups,blacklist,exportTime:new Date().toISOString()};
+        const blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url;
+        a.download='proxyip-config-'+new Date().toISOString().split('T')[0]+'.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        tt('配置已导出');
+      }catch(e){tt('导出失败: '+e.message,0)}
+    }
+
+    async function exportIPDB(){
+      try{
+        const groups=await api('/api/groups');
+        const ipdb={};
+        for(const g of groups){
+          const{ips}=await api('/api/ips?groupId='+g.id);
+          ipdb[g.id]={name:g.name,ips};
+        }
+        const exportData={ipdb,exportTime:new Date().toISOString(),totalGroups:groups.length,totalIPs:Object.values(ipdb).reduce((sum,g)=>sum+g.ips.length,0)};
+        const blob=new Blob([JSON.stringify(exportData,null,2)],{type:'application/json'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url;
+        a.download='proxyip-db-'+new Date().toISOString().split('T')[0]+'.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        tt('IP库已导出');
+      }catch(e){tt('导出失败: '+e.message,0)}
+    }
+
     // 回收站
     async function loadTrash(){
       TG=$('trash-grp').value;
