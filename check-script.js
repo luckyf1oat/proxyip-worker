@@ -486,7 +486,9 @@ async function main() {
       return true;
     });
 
-    const removedCount = gips.length - validIPs.length;
+    // 计算移除数量时，要排除恢复的IP（因为它们是新增的，不应该算在移除里）
+    const restoredCount = restoredPerGroup[g.id] || 0;
+    const removedCount = gips.length - validIPs.length - restoredCount;
 
     await kvPut('ips:' + g.id, JSON.stringify(validIPs));
 

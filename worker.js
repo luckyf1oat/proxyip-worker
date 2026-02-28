@@ -181,6 +181,7 @@
       // 收集失效IP到各分组回收站，同时处理延迟达标的IP恢复
       const now=new Date().toISOString();
       const invalidIPs=checked.filter(i=>i.status==='invalid');
+      const restoredPerGroup={};
       for(const g of groups){
         let groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
         const gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
@@ -200,6 +201,7 @@
           const existingSet=new Set(currentIPs.map(i=>i.ipPort));
           restoredIPs.forEach(ip=>{if(!existingSet.has(ip.ipPort))currentIPs.push(ip)});
           await env.KV.put('ips:'+g.id,JSON.stringify(currentIPs));
+          restoredPerGroup[g.id]=restoredIPs.length;
         }
         groupInvalidIPs.forEach(ip=>{
           groupTrash.push({...ip,deletedAt:now,deletedReason:ip.failReason||'unknown'});
@@ -214,7 +216,8 @@
         gips=gips.map(ip=>resultMap.get(ip.ipPort)||ip);
         // 移除失效IP和黑名单IP
         const validIPs=gips.filter(i=>i.status!=='invalid'&&!blIP.has(i.ipPort.split(':')[0])&&!blIPPort.has(i.ipPort));
-        const removedCount=gips.length-validIPs.length;
+        const restoredCount=restoredPerGroup[g.id]||0;
+        const removedCount=gips.length-validIPs.length-restoredCount;
         await env.KV.put('ips:'+g.id,JSON.stringify(validIPs));
         let gv=validIPs.filter(i=>i.status==='valid');
         if(g.selectedAsns?.length)gv=gv.filter(i=>g.selectedAsns.includes(i.asn));
