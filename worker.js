@@ -322,7 +322,7 @@
         const b=await req.json();if(!b.password)return json({error:'需要密码'},400);
         await env.KV.put('config',JSON.stringify({...cfg,...b}));return json({ok:1});
       }
-      if(cfg.password&&req.headers.get('X-Auth')!==cfg.password)return json({error:'密码错误'},401);
+      if(path!=='/telegram/webhook'&&cfg.password&&req.headers.get('X-Auth')!==cfg.password)return json({error:'密码错误'},401);
       if(path==='/api/config'){
         if(req.method==='POST'){const b=await req.json();if(b.password==='')delete b.password;await env.KV.put('config',JSON.stringify({...cfg,...b}));return json({ok:1})}
         const{password,...safe}=cfg;return json(safe);
@@ -488,42 +488,241 @@
         return json({ok:1,restored:toRestore.length});
       }
       // Telegram Bot Webhook
-      if(path==='/api/telegram'&&req.method==='POST'){
+      if(path==='/telegram/webhook'&&req.method==='POST'){
         try{
           const update=await req.json();
-          if(!update.message||!update.message.text)return json({ok:true});
+          console.log('Telegram update received:',JSON.stringify(update));
+
+          if(!update.message||!update.message.text){
+            console.log('No message or text in update');
+            return json({ok:true});
+          }
+
           const chatId=update.message.chat.id;
           const text=update.message.text.trim();
+          console.log('Chat ID:',chatId,'Text:',text,'Configured Chat ID:',cfg.tgChatId);
 
           // 验证是否是配置的 Chat ID
           if(cfg.tgChatId&&chatId.toString()!==cfg.tgChatId.toString()){
+            console.log('Chat ID mismatch, ignoring');
+            await sendTG(cfg,'⚠️ 未授权的用户尝试使用 Bot (Chat ID: '+chatId+')');
             return json({ok:true}); // 忽略非授权用户
           }
 
           // 处理命令
           if(text==='/check'||text==='检测'){
+            console.log('Triggering check...');
             ctx.waitUntil(autoCheckAndResolve(env));
-            await sendTG(cfg,`🔍 <b>检测已触发</b>\n正在检测所有分组的IP，请稍后查看结果...`);
+            await sendTG(cfg,'🔍 <b>检测已触发</b>\n正在检测所有分组的IP，请稍后查看结果...');
           }else if(text==='/status'||text==='状态'){
+            console.log('Getting status...');
             const result=JSON.parse(await env.KV.get('last_result')||'{}');
             if(!result.time){
-              await sendTG(cfg,`📊 <b>状态查询</b>\n暂无检测记录`);
+              await sendTG(cfg,'📊 <b>状态查询</b>\n暂无检测记录');
             }else{
-              let msg=`📊 <b>最近检测状态</b>\n⏰ ${result.time}\n📊 总:${result.total} ✅${result.valid} ❌${result.invalid}`;
+              let msg='📊 <b>最近检测状态</b>\n⏰ '+result.time+'\n📊 总:'+result.total+' ✅'+result.valid+' ❌'+result.invalid;
+              if(result.failReasons){
+                const rl={timeout:'超时',network_error:'网络错误',api_fail:'API失败',unknown:'未知'};
+                msg+='\n\n<b>📋 失效原因:</b>';
+                Object.entries(result.failReasons).forEach(([k,v])=>{
+                  msg+='\n  • '+(rl[k]||k)+': '+v+'个';
+                });
+              }
               if(result.groups&&result.groups.length>0){
-                msg+=`\n\n<b>分组状态:</b>`;
+                msg+='\n\n<b>分组状态:</b>';
                 result.groups.forEach(g=>{
-                  msg+=`\n📦 ${g.name}: ${g.count}个IP`;
+                  msg+='\n📦 '+g.name+': '+g.count+'个IP';
+                  if(g.topIPs&&g.topIPs.length>0){
+                    msg+='\n  最优: '+g.topIPs.slice(0,3).join(', ');
+                  }
                 });
               }
               await sendTG(cfg,msg);
             }
+          }else if(text==='/groups'||text==='分组'){
+            console.log('Getting groups...');
+            const groups=JSON.parse(await env.KV.get('groups')||'[]');
+            if(!groups.length){
+              await sendTG(cfg,'📦 <b>分组列表</b>\n暂无分组');
+            }else{
+              let msg='📦 <b>分组列表</b> ('+groups.length+'个)\n\n';
+              for(const g of groups){
+                const ips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+                const validIPs=ips.filter(i=>i.status==='valid');
+                msg+='<b>'+g.name+'</b> ('+g.id+')\n';
+                msg+='  🌐 '+g.domain+'\n';
+                msg+='  📊 IP: '+ips.length+' | ✅ '+validIPs.length+'\n';
+                msg+='  🔢 解析数: '+g.resolveCount+'\n';
+                if(g.maxLatency)msg+='  ⏱ 延迟上限: '+g.maxLatency+'ms\n';
+                msg+='\n';
+              }
+              await sendTG(cfg,msg);
+            }
+          }else if(text.startsWith('/group ')||text.startsWith('分组 ')){
+            const groupId=text.split(' ')[1];
+            if(!groupId){
+              await sendTG(cfg,'❌ 请指定分组ID\n用法: /group <分组ID>');
+            }else{
+              const groups=JSON.parse(await env.KV.get('groups')||'[]');
+              const g=groups.find(x=>x.id===groupId);
+              if(!g){
+                await sendTG(cfg,'❌ 分组不存在: '+groupId);
+              }else{
+                const ips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+                const validIPs=ips.filter(i=>i.status==='valid');
+                const invalidIPs=ips.filter(i=>i.status==='invalid');
+                const uncheckedIPs=ips.filter(i=>i.status==='unchecked');
+                const trash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
+
+                let msg='📦 <b>'+g.name+'</b> ('+g.id+')\n\n';
+                msg+='🌐 域名: '+g.domain+'\n';
+                msg+='📊 总IP: '+ips.length+'\n';
+                msg+='  ✅ 有效: '+validIPs.length+'\n';
+                msg+='  ❌ 失效: '+invalidIPs.length+'\n';
+                msg+='  ⏳ 未检测: '+uncheckedIPs.length+'\n';
+                msg+='🗑️ 回收站: '+trash.length+'\n';
+                msg+='🔢 解析数: '+g.resolveCount+'\n';
+                if(g.maxLatency)msg+='⏱ 延迟上限: '+g.maxLatency+'ms\n';
+                if(g.recordType)msg+='📝 DNS类型: '+g.recordType+'\n';
+
+                if(validIPs.length>0){
+                  const sorted=[...validIPs].sort((a,b)=>a.checkLatency-b.checkLatency);
+                  const top5=sorted.slice(0,5);
+                  msg+='\n<b>🏆 最优IP (前5):</b>\n';
+                  top5.forEach((ip,i)=>{
+                    msg+=(i+1)+'. '+ip.ipPort+' ('+ip.checkLatency+'ms)\n';
+                  });
+                }
+
+                await sendTG(cfg,msg);
+              }
+            }
+          }else if(text.startsWith('/check ')||text.startsWith('检测 ')){
+            const groupId=text.split(' ')[1];
+            if(!groupId){
+              await sendTG(cfg,'❌ 请指定分组ID\n用法: /check <分组ID>');
+            }else{
+              const groups=JSON.parse(await env.KV.get('groups')||'[]');
+              const g=groups.find(x=>x.id===groupId);
+              if(!g){
+                await sendTG(cfg,'❌ 分组不存在: '+groupId);
+              }else{
+                ctx.waitUntil((async()=>{
+                  try{
+                    await fetch(new URL('/api/check-group',new URL(req.url).origin).href,{
+                      method:'POST',
+                      headers:{'Content-Type':'application/json','X-Auth':cfg.password||''},
+                      body:JSON.stringify({groupId})
+                    });
+                  }catch(e){console.error(e)}
+                })());
+                await sendTG(cfg,'🔍 <b>检测已触发</b>\n分组: '+g.name+'\n正在检测，请稍后查看结果...');
+              }
+            }
+          }else if(text==='/trash'||text==='回收站'){
+            const groups=JSON.parse(await env.KV.get('groups')||'[]');
+            let msg='🗑️ <b>回收站统计</b>\n\n';
+            let totalTrash=0;
+            for(const g of groups){
+              const trash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
+              if(trash.length>0){
+                totalTrash+=trash.length;
+                msg+='<b>'+g.name+'</b>: '+trash.length+'个\n';
+                const reasons={};
+                trash.forEach(t=>{
+                  const r=t.deletedReason||'unknown';
+                  reasons[r]=(reasons[r]||0)+1;
+                });
+                const rl={timeout:'超时',network_error:'网络错误',api_fail:'API失败',unknown:'未知'};
+                Object.entries(reasons).forEach(([k,v])=>{
+                  if(k.startsWith('over_latency_')){
+                    msg+='  • 延迟超标: '+v+'个\n';
+                  }else{
+                    msg+='  • '+(rl[k]||k)+': '+v+'个\n';
+                  }
+                });
+              }
+            }
+            if(totalTrash===0){
+              msg+='回收站为空';
+            }else{
+              msg+='\n总计: '+totalTrash+'个';
+            }
+            await sendTG(cfg,msg);
+          }else if(text==='/progress'||text==='进度'){
+            const p=JSON.parse(await env.KV.get('check_progress')||'{"phase":"idle"}');
+            const phases={checking:'🔍 检测中',rechecking:'🔄 失效重测',resolving:'🌐 解析中',done:'✅ 完成',idle:'⏸ 空闲'};
+            let msg='📊 <b>检测进度</b>\n\n';
+            msg+='状态: '+(phases[p.phase]||p.phase)+'\n';
+            if(p.group)msg+='分组: '+p.group+'\n';
+            if(p.phase!=='idle'){
+              const isRecheck=p.phase==='rechecking';
+              const pct=isRecheck?(p.recheckTotal>0?Math.round(p.recheck/p.recheckTotal*100):0):(p.total>0?Math.round(p.checked/p.total*100):0);
+              msg+='进度: '+pct+'%\n';
+              msg+='已检测: '+(isRecheck?p.recheck:p.checked)+'/'+(isRecheck?p.recheckTotal:p.total)+'\n';
+              msg+='✅ 有效: '+(p.valid||0)+'\n';
+              msg+='❌ 失效: '+(p.invalid||0)+'\n';
+            }
+            await sendTG(cfg,msg);
+          }else if(text==='/top'||text==='最优'){
+            const groups=JSON.parse(await env.KV.get('groups')||'[]');
+            let msg='🏆 <b>各分组最优IP</b>\n\n';
+            for(const g of groups){
+              const ips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+              const validIPs=ips.filter(i=>i.status==='valid');
+              if(validIPs.length>0){
+                const sorted=[...validIPs].sort((a,b)=>a.checkLatency-b.checkLatency);
+                const top3=sorted.slice(0,3);
+                msg+='<b>'+g.name+'</b>\n';
+                top3.forEach((ip,i)=>{
+                  msg+=(i+1)+'. <code>'+ip.ipPort+'</code> ('+ip.checkLatency+'ms)\n';
+                });
+                msg+='\n';
+              }
+            }
+            await sendTG(cfg,msg);
+          }else if(text==='/stats'||text==='统计'){
+            const groups=JSON.parse(await env.KV.get('groups')||'[]');
+            let totalIPs=0,totalValid=0,totalInvalid=0,totalUnchecked=0,totalTrash=0;
+            for(const g of groups){
+              const ips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+              const trash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
+              totalIPs+=ips.length;
+              totalValid+=ips.filter(i=>i.status==='valid').length;
+              totalInvalid+=ips.filter(i=>i.status==='invalid').length;
+              totalUnchecked+=ips.filter(i=>i.status==='unchecked').length;
+              totalTrash+=trash.length;
+            }
+            let msg='📈 <b>全局统计</b>\n\n';
+            msg+='📦 分组数: '+groups.length+'\n';
+            msg+='📊 总IP: '+totalIPs+'\n';
+            msg+='  ✅ 有效: '+totalValid+' ('+Math.round(totalValid/totalIPs*100)+'%)\n';
+            msg+='  ❌ 失效: '+totalInvalid+' ('+Math.round(totalInvalid/totalIPs*100)+'%)\n';
+            msg+='  ⏳ 未检测: '+totalUnchecked+' ('+Math.round(totalUnchecked/totalIPs*100)+'%)\n';
+            msg+='🗑️ 回收站: '+totalTrash+'\n';
+            await sendTG(cfg,msg);
           }else if(text==='/help'||text==='帮助'){
-            const helpMsg=`🤖 <b>ProxyIP Bot 命令</b>\n\n`+
-              `/check 或 检测 - 触发全部检测\n`+
-              `/status 或 状态 - 查看检测状态\n`+
-              `/help 或 帮助 - 显示此帮助`;
+            console.log('Sending help...');
+            const helpMsg='🤖 <b>ProxyIP Bot 命令大全</b>\n\n'+
+              '<b>📊 查询命令:</b>\n'+
+              '/status 或 状态 - 最近检测状态\n'+
+              '/progress 或 进度 - 当前检测进度\n'+
+              '/groups 或 分组 - 所有分组列表\n'+
+              '/group &lt;ID&gt; - 查看指定分组详情\n'+
+              '/stats 或 统计 - 全局统计信息\n'+
+              '/top 或 最优 - 各分组最优IP\n'+
+              '/trash 或 回收站 - 回收站统计\n\n'+
+              '<b>🔧 操作命令:</b>\n'+
+              '/check 或 检测 - 触发全部检测\n'+
+              '/check &lt;ID&gt; - 检测指定分组\n\n'+
+              '<b>💡 使用示例:</b>\n'+
+              '<code>/group kr</code> - 查看kr分组\n'+
+              '<code>/check kr</code> - 检测kr分组\n\n'+
+              '当前 Chat ID: '+chatId;
             await sendTG(cfg,helpMsg);
+          }else{
+            console.log('Unknown command:',text);
+            await sendTG(cfg,'❓ 未知命令: '+text+'\n发送 /help 查看可用命令');
           }
 
           return json({ok:true});
@@ -766,19 +965,22 @@
     <p style="color:var(--dm);font-size:11px;margin-top:4px">Token权限: repo > actions (write)</p>
     </div>
     <div class="cd"><h3>Telegram通知</h3>
-    <label>Bot Token</label><input id="c-tt" type="password">
+    <label>Bot Token</label><input id="c-tt" type="text">
     <label>Chat ID</label><input id="c-tc">
     <p style="color:var(--dm);font-size:11px;margin-top:4px">
       配置后可接收检测通知。<br>
       <b>Telegram Bot 命令:</b><br>
-      • 发送 <code>/check</code> 或 <code>检测</code> - 手动触发检测<br>
-      • 发送 <code>/status</code> 或 <code>状态</code> - 查看检测状态<br>
-      • 发送 <code>/help</code> 或 <code>帮助</code> - 显示帮助<br>
-      <b>Webhook URL:</b> <code id="webhook-url" style="user-select:all"></code>
+      <b>📊 查询:</b> /status /progress /groups /group &lt;ID&gt; /stats /top /trash<br>
+      <b>🔧 操作:</b> /check /check &lt;ID&gt;<br>
+      <b>💡 帮助:</b> /help - 查看完整命令列表<br>
+      <b>Webhook URL:</b> <code id="webhook-url" style="user-select:all"></code><br>
+      <button class="btn" onclick="setTgWebhook()" style="margin-top:6px">🔗 设置 Telegram Webhook</button>
+      <button class="btn" onclick="testTgWebhook()" style="margin-top:6px">🧪 测试 Webhook</button>
+      <button class="btn" onclick="copyWebhookUrl()" style="margin-top:6px">📋 复制 Webhook URL</button>
     </p>
     </div>
     <div class="cd"><h3>FOFA API配置</h3>
-    <label>FOFA Key</label><input id="c-fofa-key" type="password" placeholder="pji6u9f70263l3lkudd2fb7hhjiw1wmp">
+    <label>FOFA Key</label><input id="c-fofa-key" type="text" placeholder="pji6u9f70263l3lkudd2fb7hhjiw1wmp">
     <p style="color:var(--dm);font-size:11px;margin-top:4px">用于自动搜索代理IP</p>
     </div>
     <div class="cd"><h3>检测配置</h3>
@@ -997,7 +1199,7 @@
         $('c-max-latency').value=c.maxLatency||'';
 
         // 显示 Webhook URL
-        const webhookUrl=window.location.origin+'/api/telegram';
+        const webhookUrl=window.location.origin+'/telegram/webhook';
         if($('webhook-url'))$('webhook-url').textContent=webhookUrl;
       }catch{}
     }
@@ -1007,34 +1209,70 @@
       const pw=$('c-pw').value;if(pw){c.password=pw;P=pw;localStorage.setItem('_pp',pw)}
       try{
         await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});
-
-        // 如果配置了 TG Token，自动设置 Webhook
-        if(c.tgToken){
-          try{
-            const webhookUrl=window.location.origin+'/api/telegram';
-            const setWebhookUrl='https://api.telegram.org/bot'+c.tgToken+'/setWebhook?url='+encodeURIComponent(webhookUrl);
-            const res=await fetch(setWebhookUrl);
-            const data=await res.json();
-            if(data.ok){
-              tt('设置已保存，Telegram Webhook已配置');
-            }else{
-              tt('设置已保存，但Webhook配置失败: '+data.description,0);
-            }
-          }catch(e){
-            tt('设置已保存，但Webhook配置失败: '+e.message,0);
-          }
-        }else{
-          tt('设置已保存');
-        }
-
+        tt('设置已保存');
         $('c-pw').value='';
         loadSt();
       }catch(e){tt(e.message,0)}
     }
-    async function loadBL(){try{const b=await api('/api/blacklist');$('blt').value=b.join('\\x0a')}catch{}}
+    async function loadBL(){try{const b=await api('/api/blacklist');$('blt').value=b.join('\\n')}catch{}}
     async function saveBL(){
-      const b=$('blt').value.split('\\x0a').map(s=>s.trim()).filter(Boolean);
+      const b=$('blt').value.split('\\n').map(s=>s.trim()).filter(Boolean);
       try{await api('/api/blacklist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({blacklist:b})});tt('黑名单已保存');loadSt()}catch(e){tt(e.message,0)}
+    }
+
+    // Telegram Webhook 设置
+    async function setTgWebhook(){
+      const token=$('c-tt').value;
+      if(!token)return tt('请先填写 Bot Token',0);
+      try{
+        const webhookUrl=window.location.origin+'/telegram/webhook';
+        const setWebhookUrl='https://api.telegram.org/bot'+token+'/setWebhook?url='+encodeURIComponent(webhookUrl);
+        const res=await fetch(setWebhookUrl);
+        const data=await res.json();
+        if(data.ok){
+          tt('Telegram Webhook 已设置成功');
+        }else{
+          tt('Webhook 设置失败: '+data.description,0);
+        }
+      }catch(e){
+        tt('Webhook 设置失败: '+e.message,0);
+      }
+    }
+
+    async function testTgWebhook(){
+      const token=$('c-tt').value;
+      if(!token)return tt('请先填写 Bot Token',0);
+      try{
+        const getWebhookUrl='https://api.telegram.org/bot'+token+'/getWebhookInfo';
+        const res=await fetch(getWebhookUrl);
+        const data=await res.json();
+        if(data.ok){
+          const info=data.result;
+          let msg='Webhook 信息:\\n';
+          msg+='URL: '+(info.url||'未设置')+'\\n';
+          msg+='待处理更新: '+info.pending_update_count+'\\n';
+          if(info.last_error_message){
+            msg+='最后错误: '+info.last_error_message+'\\n';
+            msg+='错误时间: '+new Date(info.last_error_date*1000).toLocaleString();
+          }else{
+            msg+='状态: 正常';
+          }
+          alert(msg);
+        }else{
+          tt('获取 Webhook 信息失败: '+data.description,0);
+        }
+      }catch(e){
+        tt('测试失败: '+e.message,0);
+      }
+    }
+
+    function copyWebhookUrl(){
+      const webhookUrl=window.location.origin+'/telegram/webhook';
+      navigator.clipboard.writeText(webhookUrl).then(()=>{
+        tt('Webhook URL 已复制到剪贴板');
+      }).catch(()=>{
+        tt('复制失败，请手动复制',0);
+      });
     }
 
     // 导出功能
@@ -1111,6 +1349,7 @@
       async fetch(request,env,ctx){
         const p=new URL(request.url).pathname;
         if(p==='/'||p==='')return new Response(HTML,{headers:{'Content-Type':'text/html;charset=utf-8'}});
+        if(p==='/telegram/webhook'){try{return await handleAPI(p,request,env,ctx)}catch(e){return json({error:e.message},500)}}
         if(p.startsWith('/api/')){try{return await handleAPI(p,request,env,ctx)}catch(e){return json({error:e.message},500)}}
         return new Response('Not Found',{status:404});
       },
