@@ -487,6 +487,51 @@
         await env.KV.put('ips:'+groupId,JSON.stringify(gips));
         return json({ok:1,restored:toRestore.length});
       }
+      // Telegram Bot Webhook
+      if(path==='/api/telegram'&&req.method==='POST'){
+        try{
+          const update=await req.json();
+          if(!update.message||!update.message.text)return json({ok:true});
+          const chatId=update.message.chat.id;
+          const text=update.message.text.trim();
+
+          // 验证是否是配置的 Chat ID
+          if(cfg.tgChatId&&chatId.toString()!==cfg.tgChatId.toString()){
+            return json({ok:true}); // 忽略非授权用户
+          }
+
+          // 处理命令
+          if(text==='/check'||text==='检测'){
+            ctx.waitUntil(autoCheckAndResolve(env));
+            await sendTG(cfg,`🔍 <b>检测已触发</b>\n正在检测所有分组的IP，请稍后查看结果...`);
+          }else if(text==='/status'||text==='状态'){
+            const result=JSON.parse(await env.KV.get('last_result')||'{}');
+            if(!result.time){
+              await sendTG(cfg,`📊 <b>状态查询</b>\n暂无检测记录`);
+            }else{
+              let msg=`📊 <b>最近检测状态</b>\n⏰ ${result.time}\n📊 总:${result.total} ✅${result.valid} ❌${result.invalid}`;
+              if(result.groups&&result.groups.length>0){
+                msg+=`\n\n<b>分组状态:</b>`;
+                result.groups.forEach(g=>{
+                  msg+=`\n📦 ${g.name}: ${g.count}个IP`;
+                });
+              }
+              await sendTG(cfg,msg);
+            }
+          }else if(text==='/help'||text==='帮助'){
+            const helpMsg=`🤖 <b>ProxyIP Bot 命令</b>\n\n`+
+              `/check 或 检测 - 触发全部检测\n`+
+              `/status 或 状态 - 查看检测状态\n`+
+              `/help 或 帮助 - 显示此帮助`;
+            await sendTG(cfg,helpMsg);
+          }
+
+          return json({ok:true});
+        }catch(e){
+          console.error('Telegram webhook error:',e);
+          return json({ok:true}); // 总是返回 ok 避免 Telegram 重试
+        }
+      }
       // FOFA搜索API - 只搜索并保存，不检测
       if(path==='/api/fofa-search'&&req.method==='POST'){
         const{groupId}=await req.json();
@@ -723,6 +768,14 @@
     <div class="cd"><h3>Telegram通知</h3>
     <label>Bot Token</label><input id="c-tt" type="password">
     <label>Chat ID</label><input id="c-tc">
+    <p style="color:var(--dm);font-size:11px;margin-top:4px">
+      配置后可接收检测通知。<br>
+      <b>Telegram Bot 命令:</b><br>
+      • 发送 <code>/check</code> 或 <code>检测</code> - 手动触发检测<br>
+      • 发送 <code>/status</code> 或 <code>状态</code> - 查看检测状态<br>
+      • 发送 <code>/help</code> 或 <code>帮助</code> - 显示帮助<br>
+      <b>Webhook URL:</b> <code id="webhook-url" style="user-select:all"></code>
+    </p>
     </div>
     <div class="cd"><h3>FOFA API配置</h3>
     <label>FOFA Key</label><input id="c-fofa-key" type="password" placeholder="pji6u9f70263l3lkudd2fb7hhjiw1wmp">
@@ -933,12 +986,50 @@
     }
 
     // 设置
-    async function loadCfg(){try{const c=await api('/api/config');$('c-gh-token').value=c.githubToken||'';$('c-gh-repo').value=c.githubRepo||'';$('c-tt').value=c.tgToken||'';$('c-tc').value=c.tgChatId||'';$('c-fofa-key').value=c.fofaKey||'';$('c-max-latency').value=c.maxLatency||''}catch{}}
+    async function loadCfg(){
+      try{
+        const c=await api('/api/config');
+        $('c-gh-token').value=c.githubToken||'';
+        $('c-gh-repo').value=c.githubRepo||'';
+        $('c-tt').value=c.tgToken||'';
+        $('c-tc').value=c.tgChatId||'';
+        $('c-fofa-key').value=c.fofaKey||'';
+        $('c-max-latency').value=c.maxLatency||'';
+
+        // 显示 Webhook URL
+        const webhookUrl=window.location.origin+'/api/telegram';
+        if($('webhook-url'))$('webhook-url').textContent=webhookUrl;
+      }catch{}
+    }
     async function saveCfg(){
       const c={githubToken:$('c-gh-token').value,githubRepo:$('c-gh-repo').value,tgToken:$('c-tt').value,tgChatId:$('c-tc').value,fofaKey:$('c-fofa-key').value};
       const ml=$('c-max-latency').value;if(ml)c.maxLatency=parseInt(ml);
       const pw=$('c-pw').value;if(pw){c.password=pw;P=pw;localStorage.setItem('_pp',pw)}
-      try{await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});tt('设置已保存');$('c-pw').value='';loadSt()}catch(e){tt(e.message,0)}
+      try{
+        await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(c)});
+
+        // 如果配置了 TG Token，自动设置 Webhook
+        if(c.tgToken){
+          try{
+            const webhookUrl=window.location.origin+'/api/telegram';
+            const setWebhookUrl='https://api.telegram.org/bot'+c.tgToken+'/setWebhook?url='+encodeURIComponent(webhookUrl);
+            const res=await fetch(setWebhookUrl);
+            const data=await res.json();
+            if(data.ok){
+              tt('设置已保存，Telegram Webhook已配置');
+            }else{
+              tt('设置已保存，但Webhook配置失败: '+data.description,0);
+            }
+          }catch(e){
+            tt('设置已保存，但Webhook配置失败: '+e.message,0);
+          }
+        }else{
+          tt('设置已保存');
+        }
+
+        $('c-pw').value='';
+        loadSt();
+      }catch(e){tt(e.message,0)}
     }
     async function loadBL(){try{const b=await api('/api/blacklist');$('blt').value=b.join('\\x0a')}catch{}}
     async function saveBL(){
