@@ -146,7 +146,7 @@ async function batchCheck(list) {
   const out = [];
   let valid = 0, invalid = 0;
   const startTime = Date.now();
-  const MAX_TIME = 270000; // 4.5分钟
+  const MAX_TIME = 500000; // 4.5分钟
 
   console.log(`[*] 第一阶段(测速)开始: ${list.length} 个IP`);
 
