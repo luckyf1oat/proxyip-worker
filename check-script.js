@@ -230,9 +230,11 @@ async function batchCheck(list) {
 
   console.log(`\n[+] 检测完成: 总计 ${out.length}, 有效 ${valid}, 失效 ${invalid}`);
 
-  // 去重：同一个IP不同端口只保留延迟最低的
+  // 去重：同一个IP不同端口只保留延迟最低的（只对有效IP去重）
   const ipMap = new Map();
-  for (const item of out) {
+  const validIPs = out.filter(i => i.status === 'valid');
+
+  for (const item of validIPs) {
     const ip = item.ipPort.split(':')[0];
     const existing = ipMap.get(ip);
 
@@ -254,13 +256,17 @@ async function batchCheck(list) {
 
   const kept = new Set([...ipMap.values()].map(i => i.ipPort));
   const deduplicated = [...ipMap.values()];
-  const dupRemoved = out.filter(i => !kept.has(i.ipPort));
+  // dupRemoved 包含被去重移除的有效IP
+  const dupRemoved = validIPs.filter(i => !kept.has(i.ipPort));
+  // 将失效IP也加入到最终结果中（不参与去重）
+  const invalidIPs_temp = out.filter(i => i.status === 'invalid');
+  const finalResults = [...deduplicated, ...invalidIPs_temp];
 
   if (dupRemoved.length > 0) {
-    console.log(`[+] 去重完成: ${out.length} -> ${deduplicated.length} (移除 ${dupRemoved.length} 个重复端口IP)`);
+    console.log(`[+] 去重完成: ${validIPs.length} -> ${deduplicated.length} (移除 ${dupRemoved.length} 个重复端口IP)`);
   }
 
-  return { results: deduplicated, dupRemoved };
+  return { results: finalResults, dupRemoved };
 }
 
 // 发送Telegram通知
