@@ -218,18 +218,20 @@
       await env.KV.put('check_progress',JSON.stringify({phase:'updating',checked:checked.length,total:toCheck.length,valid:validSet.size,invalid:checked.length-validSet.size}));
       const gr=[];
       for(const g of groups){
+        // 注意：这里读取的是已经包含恢复IP的最新数据
         let gips=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+        const beforeCount=gips.length;
         gips=gips.map(ip=>resultMap.get(ip.ipPort)||ip);
         // 移除失效IP和黑名单IP
         const validIPs=gips.filter(i=>i.status!=='invalid'&&!blIP.has(i.ipPort.split(':')[0])&&!blIPPort.has(i.ipPort));
         const restoredCount=restoredPerGroup[g.id]||0;
-        const removedCount=gips.length-validIPs.length-restoredCount;
+        const removedCount=beforeCount-validIPs.length;
         await env.KV.put('ips:'+g.id,JSON.stringify(validIPs));
         let gv=validIPs.filter(i=>i.status==='valid');
         if(g.selectedAsns?.length)gv=gv.filter(i=>g.selectedAsns.includes(i.asn));
         const sorted=[...gv].sort((a,b)=>a.checkLatency-b.checkLatency);
         const topIPs=sorted.slice(0,g.resolveCount||8);
-        gr.push({id:g.id,name:g.name,domain:g.domain,count:validIPs.length,removed:removedCount,topIPs:topIPs.map(i=>i.ipPort+'('+i.checkLatency+'ms)')});
+        gr.push({id:g.id,name:g.name,domain:g.domain,count:validIPs.length,removed:removedCount,restored:restoredCount,topIPs:topIPs.map(i=>i.ipPort+'('+i.checkLatency+'ms)')});
       }
       // 统计失效原因
       const failedIPs=checked.filter(i=>i.status==='invalid');
@@ -244,6 +246,7 @@
       for(const g of gr){
         tm+='\n\n<b>📦'+g.name+'</b>→'+g.domain;
         if(g.removed>0)tm+='\n🗑️ 已移除'+g.removed+'个失效IP';
+        if(g.restored>0)tm+='\n♻️ 已恢复'+g.restored+'个延迟达标IP';
         tm+='\n'+(g.topIPs.length?g.topIPs.map(r=>'  '+r).join('\n'):'  无有效IP');
       }
       await sendTG(cfg,tm);
@@ -511,9 +514,26 @@
 
           // 处理命令
           if(text==='/check'||text==='检测'){
-            console.log('Triggering check...');
-            ctx.waitUntil(autoCheckAndResolve(env));
-            await sendTG(cfg,'🔍 <b>检测已触发</b>\n正在检测所有分组的IP，请稍后查看结果...');
+            console.log('Triggering GitHub Actions check...');
+            if(!cfg.githubToken||!cfg.githubRepo){
+              await sendTG(cfg,'❌ <b>检测失败</b>\n未配置 GitHub Token 或仓库\n请在设置中配置后重试');
+            }else{
+              try{
+                const r=await fetch(`https://api.github.com/repos/${cfg.githubRepo}/actions/workflows/check-proxy.yml/dispatches`,{
+                  method:'POST',
+                  headers:{'Authorization':`Bearer ${cfg.githubToken}`,'Content-Type':'application/json','User-Agent':'ProxyIP-Manager'},
+                  body:JSON.stringify({ref:'main'})
+                });
+                if(r.ok){
+                  await sendTG(cfg,'🚀 <b>GitHub Actions 检测已触发</b>\n正在检测所有分组的IP，请稍后查看结果...\n\n💡 提示: 发送 /progress 查看进度');
+                }else{
+                  const errText=await r.text();
+                  await sendTG(cfg,'❌ <b>触发失败</b>\nHTTP '+r.status+': '+errText);
+                }
+              }catch(e){
+                await sendTG(cfg,'❌ <b>触发失败</b>\n'+e.message);
+              }
+            }
           }else if(text==='/status'||text==='状态'){
             console.log('Getting status...');
             const result=JSON.parse(await env.KV.get('last_result')||'{}');

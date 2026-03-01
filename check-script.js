@@ -469,10 +469,12 @@ async function main() {
   console.log('\n📦 更新分组数据...');
   const groupResults = [];
   for (const g of groups) {
+    // 注意：这里读取的是已经包含恢复IP的最新数据
     const ipsStr = await kvGet('ips:' + g.id);
     if (!ipsStr) continue;
 
     let gips = JSON.parse(ipsStr);
+    const beforeCount = gips.length;
     gips = gips.map(ip => resultMap.get(ip.ipPort) || ip);
 
     // 移除失效IP、重复端口IP和超过延迟上限的IP
@@ -492,9 +494,9 @@ async function main() {
       return true;
     });
 
-    // 计算移除数量时，要排除恢复的IP（因为它们是新增的，不应该算在移除里）
+    // 计算实际移除数量
     const restoredCount = restoredPerGroup[g.id] || 0;
-    const removedCount = gips.length - validIPs.length - restoredCount;
+    const removedCount = beforeCount - validIPs.length;
 
     await kvPut('ips:' + g.id, JSON.stringify(validIPs));
 
@@ -535,7 +537,10 @@ async function main() {
       maxLatency: g.maxLatency || null  // 延迟上限
     });
 
-    console.log(`  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}, 解析: ${resolved.length}个IP`);
+    let logMsg = `  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}`;
+    if (restoredCount > 0) logMsg += `, 恢复: ${restoredCount}`;
+    logMsg += `, 解析: ${resolved.length}个IP`;
+    console.log(logMsg);
   }
 
   // 保存结果
