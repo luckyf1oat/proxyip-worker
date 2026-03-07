@@ -542,7 +542,17 @@ async function main() {
     const beforeCount = gips.length;
     gips = gips.map(ip => resultMap.get(ip.ipPort) || ip);
 
-    // 移除失效IP、重复端口IP和超过延迟上限的IP
+    // 读取回收站，用于排除已在回收站中的非延迟超标IP
+    const groupTrashStr = await kvGet('trash:' + g.id);
+    const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
+    // 只排除非延迟超标的回收站IP（延迟超标的IP会被重新检测和恢复）
+    const nonOverLatencyTrashIPs = new Set(
+      groupTrash
+        .filter(t => !t.deletedReason || !t.deletedReason.startsWith('over_latency_'))
+        .map(t => t.ipPort)
+    );
+
+    // 移除失效IP、重复端口IP、超过延迟上限的IP和回收站中的非延迟超标IP
     const dupRemovedSet = new Set(dupRemoved.map(i => i.ipPort));
     const groupMaxLatency = g.maxLatency || null;
 
@@ -556,6 +566,8 @@ async function main() {
       if (dupRemovedSet.has(i.ipPort)) return false;
       // 移除超过延迟上限的IP
       if (groupMaxLatency && i.status === 'valid' && i.checkLatency > groupMaxLatency) return false;
+      // 移除回收站中的非延迟超标IP
+      if (nonOverLatencyTrashIPs.has(i.ipPort)) return false;
       return true;
     });
 
