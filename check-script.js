@@ -400,10 +400,21 @@ async function main() {
   const lastFailedStr = await kvGet('last_failed_ips');
   const lastFailed = lastFailedStr ? JSON.parse(lastFailedStr) : [];
   const currentFailed = checked.filter(i => i.status === 'invalid').map(i => i.ipPort);
+
+  // 区分新失效IP和持续失效IP
+  const newFailed = currentFailed.filter(ip => !lastFailed.includes(ip));
   const persistentFailed = currentFailed.filter(ip => lastFailed.includes(ip));
 
+  if (newFailed.length > 0) {
+    console.log(`\n[!] 新失效的IP (${newFailed.length}个):`);
+    newFailed.forEach(ip => {
+      const ipData = checked.find(i => i.ipPort === ip);
+      console.log(`    ${ip} - ${ipData?.failReason || 'unknown'}`);
+    });
+  }
+
   if (persistentFailed.length > 0) {
-    console.log(`\n[!] 持续失效的IP (${persistentFailed.length}个):`);
+    console.log(`\n[!] 持续失效的IP (${persistentFailed.length}个，本次后将不再重试):`);
     persistentFailed.forEach(ip => {
       const ipData = checked.find(i => i.ipPort === ip);
       console.log(`    ${ip} - ${ipData?.failReason || 'unknown'}`);
