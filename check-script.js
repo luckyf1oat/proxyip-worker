@@ -1,8 +1,8 @@
 // GitHub Actions检测脚本 - 从KV读取IP并检测
 const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
-const CHECK_TIMEOUT = 5000;
-const RETRY = 1;
-const BATCH = 50;
+const CHECK_TIMEOUT = 10000;
+const RETRY = 2;
+const BATCH = 60;
 
 // 从环境变量获取配置
 const ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
@@ -76,14 +76,6 @@ async function checkIP(ipPort) {
     const r = await fetchCheck(ipPort);
     if (r.ok) return r;
     lastReason = r.reason;
-
-    // 对于http_502等服务器错误，额外重试一次
-    if (lastReason.startsWith('http_5') && i === RETRY) {
-      console.log(`    [*] ${ipPort} 返回${lastReason}，额外重试一次`);
-      const extraRetry = await fetchCheck(ipPort);
-      if (extraRetry.ok) return extraRetry;
-      lastReason = extraRetry.reason;
-    }
   }
   return { ok: false, reason: lastReason };
 }
@@ -468,36 +460,20 @@ async function main() {
       const result = resultMap.get(t.ipPort);
       if (!result) return true; // 没有检测结果，保留在回收站
       if (result.status !== 'valid') {
-        // 对于http_5xx错误，可能是临时问题，保持over_latency状态继续重试
-        if (result.failReason && result.failReason.startsWith('http_5')) {
-          console.log(`    [!] 延迟超标IP重测遇到服务器错误: ${t.ipPort} - ${result.failReason}，保持延迟超标状态继续重试`);
-          t.checkLatency = result.checkLatency || t.checkLatency;
-          t.lastCheck = result.lastCheck;
-          // 保持原来的over_latency原因，下次继续重试
-          return true;
-        }
-        // 其他失效原因（如timeout、network_error等），记录失效次数
-        t.failCount = (t.failCount || 0) + 1;
+        // 检测失效，更新失效原因，不再作为延迟超标IP重试
         t.checkLatency = result.checkLatency;
         t.failReason = result.failReason;
+        t.deletedReason = result.failReason || 'unknown';
+        t.deletedAt = now;
         t.lastCheck = result.lastCheck;
-
-        // 连续失效3次才更新为真正失效
-        if (t.failCount >= 3) {
-          t.deletedReason = result.failReason || 'unknown';
-          t.deletedAt = now;
-          console.log(`    [!] 延迟超标IP连续失效${t.failCount}次: ${t.ipPort} - ${t.deletedReason}，不再重试`);
-        } else {
-          console.log(`    [!] 延迟超标IP重测失效: ${t.ipPort} - ${result.failReason} (${t.failCount}/3次)，继续重试`);
-        }
-        return true; // 保留在回收站
+        console.log(`    [!] 延迟超标IP重测失效: ${t.ipPort} - ${t.deletedReason}`);
+        return true; // 保留在回收站，但原因已更新
       }
       if (groupMaxLatency && result.checkLatency > groupMaxLatency) {
-        // 仍然超标，更新回收站中的延迟值和原因，重置失效计数
+        // 仍然超标，更新回收站中的延迟值和原因
         t.checkLatency = result.checkLatency;
         t.deletedReason = `over_latency_${groupMaxLatency}ms`;
         t.deletedAt = now;
-        t.failCount = 0; // 重置失效计数
         return true;
       }
       // 达标了，从回收站移除，准备放回IP池
