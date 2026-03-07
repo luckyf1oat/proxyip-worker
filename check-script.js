@@ -198,6 +198,11 @@ async function batchCheck(list) {
   const failed = out.filter(i => i.status === 'invalid');
   if (failed.length > 0 && Date.now() - startTime < MAX_TIME) {
     console.log(`[*] 第二阶段(失效重测)开始: ${failed.length} 个IP`);
+    console.log(`[*] 等待20秒后开始重测...`);
+
+    // 等待20秒，给失效的IP一个缓冲期
+    await new Promise(resolve => setTimeout(resolve, 20000));
+
     const RECHECK_BATCH = 15;
     let rechecked = 0;
 
