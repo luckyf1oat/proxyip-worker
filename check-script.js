@@ -1,8 +1,8 @@
 // GitHub Actions检测脚本 - 从KV读取IP并检测
 const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
 const CHECK_TIMEOUT = 10000;
-const RETRY = 1;
-const BATCH = 80;
+const RETRY = 2;
+const BATCH = 60;
 
 // 从环境变量获取配置
 const ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
@@ -471,9 +471,15 @@ async function main() {
     console.log(`♻️ 总计恢复 ${totalRestored} 个延迟达标IP从回收站放回IP池`);
   }
 
+  // 读取上次的分组统计数据
+  const lastGroupStatsStr = await kvGet('last_group_stats');
+  const lastGroupStats = lastGroupStatsStr ? JSON.parse(lastGroupStatsStr) : {};
+
   // 更新各分组并解析DNS
   console.log('\n📦 更新分组数据...');
   const groupResults = [];
+  const currentGroupStats = {};
+
   for (const g of groups) {
     // 注意：这里读取的是已经包含恢复IP的最新数据
     const ipsStr = await kvGet('ips:' + g.id);
@@ -528,6 +534,21 @@ async function main() {
     const groupTrash2 = groupTrashStr2 ? JSON.parse(groupTrashStr2) : [];
     const overLatencyIPs = groupTrash2.filter(t => t.deletedReason && t.deletedReason.startsWith('over_latency_'));
 
+    // 统计该分组的IP数量
+    const totalIPs = validIPs.length;
+    const aliveIPs = gv.length;
+    const overLatencyCount = overLatencyIPs.length;
+
+    // 保存当前统计数据
+    currentGroupStats[g.id] = {
+      total: totalIPs,
+      alive: aliveIPs,
+      overLatency: overLatencyCount
+    };
+
+    // 获取上次统计数据
+    const lastStats = lastGroupStats[g.id] || { total: totalIPs, alive: aliveIPs, overLatency: overLatencyCount };
+
     groupResults.push({
       id: g.id,
       name: g.name,
@@ -540,7 +561,15 @@ async function main() {
       restored: restoredPerGroup[g.id] || 0,
       resolved: resolved,  // 保存完整的IP对象
       overLatencyIPs: overLatencyIPs,  // 超延迟IP列表
-      maxLatency: g.maxLatency || null  // 延迟上限
+      maxLatency: g.maxLatency || null,  // 延迟上限
+      stats: {
+        total: totalIPs,
+        alive: aliveIPs,
+        overLatency: overLatencyCount,
+        totalChange: totalIPs - lastStats.total,
+        aliveChange: aliveIPs - lastStats.alive,
+        overLatencyChange: overLatencyCount - lastStats.overLatency
+      }
     });
 
     let logMsg = `  ✅ [${g.name}] 剩余: ${validIPs.length}, 移除: ${removedCount}`;
@@ -548,6 +577,9 @@ async function main() {
     logMsg += `, 解析: ${resolved.length}个IP`;
     console.log(logMsg);
   }
+
+  // 保存当前分组统计数据
+  await kvPut('last_group_stats', JSON.stringify(currentGroupStats));
 
   // 保存结果
   const failedIPs = checked.filter(i => i.status === 'invalid');
@@ -603,13 +635,29 @@ async function main() {
     // 显示每个分组的详细信息
     for (const gr of groupResults) {
       const recordType = gr.recordType || 'TXT';
-      msg += `📦<b>${gr.name}</b>→${gr.domain || 'N/A'}\n`;
+      const stats = gr.stats;
+
+      // 格式化变化量
+      const formatChange = (change) => {
+        if (change > 0) return `(+${change})`;
+        if (change < 0) return `(${change})`;
+        return '';
+      };
+
+      msg += `📦<b>${gr.name}</b>→<code>${gr.domain || 'N/A'}</code>\n`;
       msg += `🌐 DNS类型: ${recordType} ${gr.ok ? '✅' : '❌'}${gr.err ? ' ' + gr.err : ''}\n`;
+
+      // 显示IP统计信息
+      msg += `📊 总IP:${stats.total}${formatChange(stats.totalChange)} | 存活:${stats.alive}${formatChange(stats.aliveChange)}`;
+      if (stats.overLatency > 0 || stats.overLatencyChange !== 0) {
+        msg += ` | 超标:${stats.overLatency}${formatChange(stats.overLatencyChange)}`;
+      }
+      msg += `\n`;
 
       if (gr.resolved && gr.resolved.length > 0) {
         msg += `已解析:\n`;
         gr.resolved.forEach(ip => {
-          msg += `  ${ip.ipPort} | ${ip.checkLatency}ms | AS${ip.asn} ${ip.org || ''}\n`;
+          msg += `  <code>${ip.ipPort}</code> | ${ip.checkLatency}ms | AS${ip.asn} ${ip.org || ''}\n`;
         });
       }
 
@@ -623,7 +671,7 @@ async function main() {
         msg += `⏱️ 延迟超标IP (上限${gr.maxLatency}ms):\n`;
         gr.overLatencyIPs.slice(0, 5).forEach(ip => {
           const exceed = ip.checkLatency - gr.maxLatency;
-          msg += `  ${ip.ipPort} | ${ip.checkLatency}ms (+${exceed}ms)\n`;
+          msg += `  <code>${ip.ipPort}</code> | ${ip.checkLatency}ms (+${exceed}ms)\n`;
         });
         if (gr.overLatencyIPs.length > 5) {
           msg += `  ...还有${gr.overLatencyIPs.length - 5}个\n`;
