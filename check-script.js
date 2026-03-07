@@ -448,7 +448,16 @@ async function main() {
       if (!t.deletedReason || !t.deletedReason.startsWith('over_latency_')) return true;
       const result = resultMap.get(t.ipPort);
       if (!result) return true; // 没有检测结果，保留在回收站
-      if (result.status !== 'valid') return true; // 检测失效，保留
+      if (result.status !== 'valid') {
+        // 检测失效，更新失效原因，不再作为延迟超标IP重试
+        t.checkLatency = result.checkLatency;
+        t.failReason = result.failReason;
+        t.deletedReason = result.failReason || 'unknown';
+        t.deletedAt = now;
+        t.lastCheck = result.lastCheck;
+        console.log(`    [!] 延迟超标IP重测失效: ${t.ipPort} - ${t.deletedReason}`);
+        return true; // 保留在回收站，但原因已更新
+      }
       if (groupMaxLatency && result.checkLatency > groupMaxLatency) {
         // 仍然超标，更新回收站中的延迟值和原因
         t.checkLatency = result.checkLatency;
