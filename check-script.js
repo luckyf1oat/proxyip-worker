@@ -230,6 +230,42 @@ async function batchCheck(list) {
 
   console.log(`\n[+] 检测完成: 总计 ${out.length}, 有效 ${valid}, 失效 ${invalid}`);
 
+  // 统计失效原因
+  const failReasons = {};
+  out.filter(i => i.status === 'invalid').forEach(i => {
+    const reason = i.failReason || 'unknown';
+    failReasons[reason] = (failReasons[reason] || 0) + 1;
+  });
+
+  if (Object.keys(failReasons).length > 0) {
+    console.log('\n[!] 失效原因统计:');
+    Object.entries(failReasons).forEach(([reason, count]) => {
+      console.log(`    ${reason}: ${count}个`);
+    });
+
+    // 列出所有失效的IP
+    console.log('\n[!] 失效IP列表:');
+    const failedIPs = out.filter(i => i.status === 'invalid');
+    failedIPs.forEach(i => {
+      console.log(`    ${i.ipPort} - ${i.failReason || 'unknown'} | AS${i.asn} | ${i.country || 'N/A'} | ${i.org || 'N/A'}`);
+    });
+
+    // 统计失效IP的ASN分布
+    const asnMap = {};
+    failedIPs.forEach(i => {
+      if (i.asn) {
+        asnMap[i.asn] = (asnMap[i.asn] || 0) + 1;
+      }
+    });
+    if (Object.keys(asnMap).length > 0) {
+      console.log('\n[!] 失效IP的ASN分布:');
+      Object.entries(asnMap).sort((a, b) => b[1] - a[1]).forEach(([asn, count]) => {
+        const sample = failedIPs.find(i => i.asn === asn);
+        console.log(`    AS${asn} (${sample?.org || 'N/A'}): ${count}个`);
+      });
+    }
+  }
+
   // 去重：同一个IP不同端口只保留延迟最低的（只对有效IP去重）
   const ipMap = new Map();
   const validIPs = out.filter(i => i.status === 'valid');
@@ -359,6 +395,23 @@ async function main() {
   const dupRemoved = checkResult.dupRemoved;
   const resultMap = new Map(checked.map(i => [i.ipPort, i]));
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
+
+  // 读取上次的失效IP记录，对比是否是同一批IP一直失效
+  const lastFailedStr = await kvGet('last_failed_ips');
+  const lastFailed = lastFailedStr ? JSON.parse(lastFailedStr) : [];
+  const currentFailed = checked.filter(i => i.status === 'invalid').map(i => i.ipPort);
+  const persistentFailed = currentFailed.filter(ip => lastFailed.includes(ip));
+
+  if (persistentFailed.length > 0) {
+    console.log(`\n[!] 持续失效的IP (${persistentFailed.length}个):`);
+    persistentFailed.forEach(ip => {
+      const ipData = checked.find(i => i.ipPort === ip);
+      console.log(`    ${ip} - ${ipData?.failReason || 'unknown'}`);
+    });
+  }
+
+  // 保存本次失效IP列表供下次对比
+  await kvPut('last_failed_ips', JSON.stringify(currentFailed));
 
   // 收集失效IP、重复端口IP和超过延迟上限的IP到各分组的回收站
   // 同时处理回收站中因延迟超标的IP：达标则放回IP池
