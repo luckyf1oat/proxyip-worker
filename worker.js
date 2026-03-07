@@ -721,6 +721,27 @@
             msg+='  ⏳ 未检测: '+totalUnchecked+' ('+Math.round(totalUnchecked/totalIPs*100)+'%)\n';
             msg+='🗑️ 回收站: '+totalTrash+'\n';
             await sendTG(cfg,msg);
+          }else if(text==='/fofa'||text==='FOFA搜索'||text==='fofa'){
+            console.log('Triggering FOFA search all...');
+            if(!cfg.fofaKey){
+              await sendTG(cfg,'❌ <b>FOFA搜索失败</b>\n未配置 FOFA Key\n请在设置中配置后重试');
+            }else{
+              const groups=JSON.parse(await env.KV.get('groups')||'[]');
+              const groupsWithFofa=groups.filter(g=>g.fofaQuery);
+              if(!groupsWithFofa.length){
+                await sendTG(cfg,'❌ <b>FOFA搜索失败</b>\n没有配置FOFA查询的分组');
+              }else{
+                await sendTG(cfg,`🔍 <b>FOFA全部搜索已触发</b>\n正在搜索 ${groupsWithFofa.length} 个分组，请稍后查看结果...\n\n💡 提示: 搜索完成后会自动发送通知`);
+                ctx.waitUntil((async()=>{
+                  try{
+                    await fetch(new URL('/api/fofa-search-all',new URL(req.url).origin).href,{
+                      method:'POST',
+                      headers:{'Content-Type':'application/json','X-Auth':cfg.password||''}
+                    });
+                  }catch(e){console.error(e)}
+                })());
+              }
+            }
           }else if(text==='/help'||text==='帮助'){
             console.log('Sending help...');
             const helpMsg='🤖 <b>ProxyIP Bot 命令大全</b>\n\n'+
@@ -734,10 +755,12 @@
               '/trash 或 回收站 - 回收站统计\n\n'+
               '<b>🔧 操作命令:</b>\n'+
               '/check 或 检测 - 触发全部检测\n'+
-              '/check &lt;ID&gt; - 检测指定分组\n\n'+
+              '/check &lt;ID&gt; - 检测指定分组\n'+
+              '/fofa - 全部FOFA搜索\n\n'+
               '<b>💡 使用示例:</b>\n'+
               '<code>/group kr</code> - 查看kr分组\n'+
-              '<code>/check kr</code> - 检测kr分组\n\n'+
+              '<code>/check kr</code> - 检测kr分组\n'+
+              '<code>/fofa</code> - 搜索所有配置了FOFA的分组\n\n'+
               '当前 Chat ID: '+chatId;
             await sendTG(cfg,helpMsg);
           }else{
@@ -810,6 +833,96 @@
 
           return json({ok:1,found:data.results.length,added:toAdd.length,actionsTriggered,msg:'已保存'+toAdd.length+'个新IP'+(actionsTriggered?'，已触发Actions检测':'')});
         }catch(e){return json({error:'FOFA搜索失败: '+e.message},500)}
+      }
+      // 全部FOFA搜索API - 搜索所有配置了FOFA的分组
+      if(path==='/api/fofa-search-all'&&req.method==='POST'){
+        if(!cfg.fofaKey)return json({error:'未配置FOFA Key'},400);
+        const gs=JSON.parse(await env.KV.get('groups')||'[]');
+        const groupsWithFofa=gs.filter(g=>g.fofaQuery);
+        if(!groupsWithFofa.length)return json({error:'没有配置FOFA查询的分组'},400);
+
+        const results=[];
+        let totalFound=0,totalAdded=0;
+
+        for(const g of groupsWithFofa){
+          try{
+            const qbase64=btoa(g.fofaQuery);
+            const size=g.fofaSize||10000;
+            const url=`https://fofoapi.com/api/v1/search/all?qbase64=${qbase64}&key=${cfg.fofaKey}&size=${size}&fields=ip,port,as_number,as_organization,city,country`;
+
+            const res=await fetch(url);
+            const data=await res.json();
+
+            if(data.error||data.errmsg){
+              results.push({groupId:g.id,groupName:g.name,success:false,error:data.errmsg||data.error,found:0,added:0});
+              continue;
+            }
+
+            if(!data.results||!data.results.length){
+              results.push({groupId:g.id,groupName:g.name,success:true,found:0,added:0});
+              continue;
+            }
+
+            const newIPs=data.results.map(r=>{
+              const[ip,port,asn,org,city,country]=r;
+              return{ipPort:`${ip}:${port}`,ip,port:+port,asn:asn||'',org:org||'',city:city||'',country:country||'',
+                status:'unchecked',lastCheck:'',checkLatency:9999,colo:'',riskLevel:'',riskScore:'',latency:9999,company:''};
+            });
+
+            // 去重
+            const old=JSON.parse(await env.KV.get('ips:'+g.id)||'[]');
+            const groupTrash=JSON.parse(await env.KV.get('trash:'+g.id)||'[]');
+            const existingIPs=new Set(old.map(i=>i.ipPort));
+            const trashIPs=new Set(groupTrash.map(t=>t.ipPort));
+            const toAdd=newIPs.filter(i=>!existingIPs.has(i.ipPort)&&!trashIPs.has(i.ipPort));
+
+            if(toAdd.length>0){
+              await env.KV.put('ips:'+g.id,JSON.stringify([...old,...toAdd]));
+            }
+
+            totalFound+=data.results.length;
+            totalAdded+=toAdd.length;
+            results.push({groupId:g.id,groupName:g.name,success:true,found:data.results.length,added:toAdd.length});
+          }catch(e){
+            results.push({groupId:g.id,groupName:g.name,success:false,error:e.message,found:0,added:0});
+          }
+        }
+
+        // 自动触发GitHub Actions检测
+        let actionsTriggered=false;
+        if(totalAdded>0&&cfg.githubToken&&cfg.githubRepo){
+          try{
+            const r=await fetch(`https://api.github.com/repos/${cfg.githubRepo}/actions/workflows/check-proxy.yml/dispatches`,{
+              method:'POST',headers:{'Authorization':`Bearer ${cfg.githubToken}`,'Content-Type':'application/json','User-Agent':'ProxyIP-Manager'},
+              body:JSON.stringify({ref:'main'})
+            });
+            actionsTriggered=r.ok;
+          }catch{}
+        }
+
+        // 发送通知
+        let tgMsg=`<b>🔍 全部FOFA搜索完成</b>\n`;
+        tgMsg+=`⏰ ${new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'})}\n`;
+        tgMsg+=`📦 搜索分组: ${groupsWithFofa.length}个\n`;
+        tgMsg+=`📊 总搜索: ${totalFound} | 总新增: ${totalAdded}\n\n`;
+
+        results.forEach(r=>{
+          const icon=r.success?'✅':'❌';
+          tgMsg+=`${icon} <b>${r.groupName}</b>\n`;
+          if(r.success){
+            tgMsg+=`   搜索: ${r.found} | 新增: ${r.added}\n`;
+          }else{
+            tgMsg+=`   错误: ${r.error}\n`;
+          }
+        });
+
+        if(totalAdded>0){
+          tgMsg+=`\n${actionsTriggered?'🚀 已自动触发GitHub Actions检测':'⚠️ 未配置GitHub Actions，请手动检测'}`;
+        }
+
+        await sendTG(cfg,tgMsg);
+
+        return json({ok:1,totalFound,totalAdded,actionsTriggered,results,msg:`已搜索${groupsWithFofa.length}个分组，新增${totalAdded}个IP`});
       }
       return json({error:'Not Found'},404);
     }
@@ -952,7 +1065,11 @@
     <select id="g-fofa-cron"><option value="">不启用</option><option value="2">每2小时</option><option value="4">每4小时</option><option value="6">每6小时</option><option value="12">每12小时</option><option value="24">每24小时</option></select>
     <p style="color:var(--dm);font-size:11px;margin-top:2px">定时只保存新IP不检测。需在Workers设置Cron触发器(如每小时: 0 * * * *)</p>
     <div class="fe"><button class="btn" onclick="clrGF()">清空</button><button class="btn p" onclick="saveGrp()">保存分组</button></div>
-    </div><div id="gl"></div>
+    </div>
+    <div class="cd"><h3>分组列表</h3>
+    <div class="fe" style="margin-bottom:8px"><button class="btn p" onclick="fofaSearchAll(this)">🔍 全部FOFA搜索</button></div>
+    <div id="gl"></div>
+    </div>
     </div>
     <!-- 黑名单 -->
     <div class="tab" id="t-bl">
@@ -1193,6 +1310,7 @@
     async function delGrp(id){if(!confirm('删除分组'+id+'及其所有IP？'))return;try{await api('/api/delete-group',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});tt('已删除');if(CG===id){CG='';$('ip-grp').value='';$('ip-panel').classList.add('hid')}loadGrps()}catch(e){tt(e.message,0)}}
     async function resGrp(id,b){dis(b,1);try{const r=await api('/api/resolve',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt('已解析: '+r.resolved.join(', '));loadSt()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
     async function fofaSearch(id,b){if(!confirm('确认使用FOFA搜索？搜索到的IP将保存到列表并自动触发Actions检测'))return;dis(b,1);try{const r=await api('/api/fofa-search',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:id})});tt(r.msg);if(r.added>0&&CG===id)chgGrp()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
+    async function fofaSearchAll(b){if(!confirm('确认对所有配置了FOFA的分组进行搜索？\\n搜索到的IP将保存到列表并自动触发Actions检测'))return;dis(b,1);try{const r=await api('/api/fofa-search-all',{method:'POST',headers:{'Content-Type':'application/json'}});tt(r.msg);if(r.totalAdded>0)loadGrps()}catch(e){tt(e.message,0)}finally{dis(b,0)}}
 
     // 触发GitHub Actions
     async function triggerActions(b){
