@@ -353,9 +353,12 @@ async function main() {
   console.log(`🚫 黑名单: ${blacklistRaw.length} 条`);
   console.log('');
 
-  // 收集所有IP (排除回收站中的IP，但包含因延迟超标的IP以便重新检测)
+  // 收集所有IP (排除回收站中的IP，但包含因延迟超标和6小时内失效的IP以便重新检测)
   const allMap = new Map();
-  const overLatencyRetryMap = new Map(); // 记录哪些IP是从回收站中因延迟超标而重新检测的
+  const retryableIPMap = new Map(); // 记录哪些IP是从回收站中重新检测的
+  const currentTime = Date.now();
+  const SIX_HOURS = 6 * 60 * 60 * 1000; // 6小时的毫秒数
+
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
     if (!ipsStr) continue;
@@ -365,13 +368,38 @@ async function main() {
     const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
     const trashIPs = new Set(groupTrash.map(t => t.ipPort));
 
-    // 找出回收站中因延迟超标的IP，准备重新检测
-    const overLatencyTrash = groupTrash.filter(t => t.deletedReason && t.deletedReason.startsWith('over_latency_'));
-    overLatencyTrash.forEach(ip => {
+    // 找出回收站中可以重新检测的IP：
+    // 1. 延迟超标的IP (over_latency_)
+    // 2. 6小时内失效的IP (且失效次数<2)
+    const retryableTrash = groupTrash.filter(t => {
+      if (!t.deletedReason) return false;
+
+      // 延迟超标的IP总是重试
+      if (t.deletedReason.startsWith('over_latency_')) return true;
+
+      // 检查是否在6小时内失效
+      const deletedTime = new Date(t.deletedAt).getTime();
+      const timeSinceDeleted = currentTime - deletedTime;
+
+      // 6小时内失效的IP，且失效次数小于2次
+      if (timeSinceDeleted <= SIX_HOURS) {
+        const failCount = t.failCount || 1; // 默认失效次数为1
+        return failCount < 2;
+      }
+
+      return false;
+    });
+
+    retryableTrash.forEach(ip => {
       if (!blacklistIP.has(ip.ip) && !blacklistIPPort.has(ip.ipPort)) {
         if (!allMap.has(ip.ipPort)) {
           allMap.set(ip.ipPort, ip);
-          overLatencyRetryMap.set(ip.ipPort, g.id); // 记录这个IP属于哪个分组
+          retryableIPMap.set(ip.ipPort, {
+            groupId: g.id,
+            isOverLatency: ip.deletedReason.startsWith('over_latency_'),
+            failCount: ip.failCount || 1,
+            lastFailReason: ip.deletedReason
+          });
         }
       }
     });
@@ -461,29 +489,60 @@ async function main() {
     const restoredIPs = [];
 
     groupTrash = groupTrash.filter(t => {
-      if (!t.deletedReason || !t.deletedReason.startsWith('over_latency_')) return true;
-      const result = resultMap.get(t.ipPort);
-      if (!result) return true; // 没有检测结果，保留在回收站
-      if (result.status !== 'valid') {
-        // 检测失效，更新失效原因，不再作为延迟超标IP重试
-        t.checkLatency = result.checkLatency;
-        t.failReason = result.failReason;
-        t.deletedReason = result.failReason || 'unknown';
-        t.deletedAt = now;
-        t.lastCheck = result.lastCheck;
-        console.log(`    [!] 延迟超标IP重测失效: ${t.ipPort} - ${t.deletedReason}`);
-        return true; // 保留在回收站，但原因已更新
+      // 处理延迟超标的IP
+      if (t.deletedReason && t.deletedReason.startsWith('over_latency_')) {
+        const result = resultMap.get(t.ipPort);
+        if (!result) return true; // 没有检测结果，保留在回收站
+        if (result.status !== 'valid') {
+          // 检测失效，更新失效原因和失效次数
+          t.checkLatency = result.checkLatency;
+          t.failReason = result.failReason;
+          t.deletedReason = result.failReason || 'unknown';
+          t.deletedAt = now;
+          t.lastCheck = result.lastCheck;
+          t.failCount = 1; // 重置失效次数为1
+          console.log(`    [!] 延迟超标IP重测失效: ${t.ipPort} - ${t.deletedReason} (失效次数: 1)`);
+          return true; // 保留在回收站，但原因已更新
+        }
+        if (groupMaxLatency && result.checkLatency > groupMaxLatency) {
+          // 仍然超标，更新回收站中的延迟值和原因
+          t.checkLatency = result.checkLatency;
+          t.deletedReason = `over_latency_${groupMaxLatency}ms`;
+          t.deletedAt = now;
+          return true;
+        }
+        // 达标了，从回收站移除，准备放回IP池
+        restoredIPs.push(result);
+        return false;
       }
-      if (groupMaxLatency && result.checkLatency > groupMaxLatency) {
-        // 仍然超标，更新回收站中的延迟值和原因
-        t.checkLatency = result.checkLatency;
-        t.deletedReason = `over_latency_${groupMaxLatency}ms`;
-        t.deletedAt = now;
-        return true;
+
+      // 处理其他失效原因的IP（6小时内失效的IP会被重新检测）
+      const retryInfo = retryableIPMap.get(t.ipPort);
+      if (retryInfo && !retryInfo.isOverLatency) {
+        // 这是一个被重新检测的失效IP
+        const result = resultMap.get(t.ipPort);
+        if (!result) return true; // 没有检测结果，保留在回收站
+
+        if (result.status === 'valid') {
+          // 检测成功，从回收站移除，准备放回IP池
+          console.log(`    [✓] 失效IP重测成功: ${t.ipPort} (之前失效原因: ${t.deletedReason})`);
+          restoredIPs.push(result);
+          return false;
+        } else {
+          // 仍然失效，增加失效次数
+          const newFailCount = (t.failCount || 1) + 1;
+          t.failCount = newFailCount;
+          t.failReason = result.failReason;
+          t.deletedReason = result.failReason || 'unknown';
+          t.deletedAt = now;
+          t.lastCheck = result.lastCheck;
+          console.log(`    [!] 失效IP重测仍失效: ${t.ipPort} - ${t.deletedReason} (失效次数: ${newFailCount})`);
+          return true; // 保留在回收站
+        }
       }
-      // 达标了，从回收站移除，准备放回IP池
-      restoredIPs.push(result);
-      return false;
+
+      // 其他IP保留在回收站
+      return true;
     });
 
     if (restoredIPs.length > 0) {
@@ -494,13 +553,13 @@ async function main() {
 
     // 添加新的失效/重复/超延迟IP到回收站
     groupInvalidIPs.forEach(ip => {
-      groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown' });
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown', failCount: 1 });
     });
     groupDupIPs.forEach(ip => {
-      groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port' });
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port', failCount: 1 });
     });
     groupOverLatencyIPs.forEach(ip => {
-      groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms` });
+      groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms`, failCount: 0 });
     });
 
     await kvPut('trash:' + g.id, JSON.stringify(groupTrash));
@@ -567,17 +626,34 @@ async function main() {
     const beforeCount = gips.length;
     gips = gips.map(ip => resultMap.get(ip.ipPort) || ip);
 
-    // 读取回收站，用于排除已在回收站中的非延迟超标IP
+    // 读取回收站，用于排除已在回收站中的IP
     const groupTrashStr = await kvGet('trash:' + g.id);
     const groupTrash = groupTrashStr ? JSON.parse(groupTrashStr) : [];
-    // 只排除非延迟超标的回收站IP（延迟超标的IP会被重新检测和恢复）
-    const nonOverLatencyTrashIPs = new Set(
+
+    // 排除回收站中的IP，但有例外：
+    // 1. 延迟超标的IP可以被重新检测
+    // 2. 6小时内失效且失效次数<2的IP可以被重新检测
+    const permanentTrashIPs = new Set(
       groupTrash
-        .filter(t => !t.deletedReason || !t.deletedReason.startsWith('over_latency_'))
+        .filter(t => {
+          // 延迟超标的IP不排除（会被重新检测）
+          if (t.deletedReason && t.deletedReason.startsWith('over_latency_')) return false;
+
+          // 检查是否在6小时内且失效次数<2
+          const deletedTime = new Date(t.deletedAt).getTime();
+          const timeSinceDeleted = currentTime - deletedTime;
+          const failCount = t.failCount || 1;
+
+          // 6小时内且失效次数<2的IP不排除（会被重新检测）
+          if (timeSinceDeleted <= SIX_HOURS && failCount < 2) return false;
+
+          // 其他IP需要排除
+          return true;
+        })
         .map(t => t.ipPort)
     );
 
-    // 移除失效IP、重复端口IP、超过延迟上限的IP和回收站中的非延迟超标IP
+    // 移除失效IP、重复端口IP、超过延迟上限的IP和回收站中的永久失效IP
     const dupRemovedSet = new Set(dupRemoved.map(i => i.ipPort));
     const groupMaxLatency = g.maxLatency || null;
 
@@ -591,8 +667,8 @@ async function main() {
       if (dupRemovedSet.has(i.ipPort)) return false;
       // 移除超过延迟上限的IP
       if (groupMaxLatency && i.status === 'valid' && i.checkLatency > groupMaxLatency) return false;
-      // 移除回收站中的非延迟超标IP
-      if (nonOverLatencyTrashIPs.has(i.ipPort)) return false;
+      // 移除回收站中的永久失效IP（失效次数>=2或超过6小时的非延迟超标IP）
+      if (permanentTrashIPs.has(i.ipPort)) return false;
       return true;
     });
 
