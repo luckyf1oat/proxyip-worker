@@ -370,12 +370,16 @@ async function main() {
 
     // 找出回收站中可以重新检测的IP：
     // 1. 延迟超标的IP (over_latency_)
-    // 2. 6小时内失效的IP (且失效次数<2)
+    // 2. 重复端口的IP (duplicate_port)
+    // 3. 6小时内失效的IP (且失效次数<2)
     const retryableTrash = groupTrash.filter(t => {
       if (!t.deletedReason) return false;
 
       // 延迟超标的IP总是重试
       if (t.deletedReason.startsWith('over_latency_')) return true;
+
+      // 重复端口的IP总是重试
+      if (t.deletedReason === 'duplicate_port') return true;
 
       // 检查是否在6小时内失效
       const deletedTime = new Date(t.deletedAt).getTime();
@@ -397,6 +401,7 @@ async function main() {
           retryableIPMap.set(ip.ipPort, {
             groupId: g.id,
             isOverLatency: ip.deletedReason.startsWith('over_latency_'),
+            isDuplicatePort: ip.deletedReason === 'duplicate_port',
             failCount: ip.failCount || 1,
             lastFailReason: ip.deletedReason
           });
@@ -516,16 +521,17 @@ async function main() {
         return false;
       }
 
-      // 处理其他失效原因的IP（6小时内失效的IP会被重新检测）
+      // 处理其他失效原因的IP（6小时内失效的IP和重复端口IP会被重新检测）
       const retryInfo = retryableIPMap.get(t.ipPort);
       if (retryInfo && !retryInfo.isOverLatency) {
-        // 这是一个被重新检测的失效IP
+        // 这是一个被重新检测的失效IP或重复端口IP
         const result = resultMap.get(t.ipPort);
         if (!result) return true; // 没有检测结果，保留在回收站
 
         if (result.status === 'valid') {
           // 检测成功，从回收站移除，准备放回IP池
-          console.log(`    [✓] 失效IP重测成功: ${t.ipPort} (之前失效原因: ${t.deletedReason})`);
+          const reasonText = retryInfo.isDuplicatePort ? '重复端口' : '失效IP';
+          console.log(`    [✓] ${reasonText}重测成功: ${t.ipPort} (之前失效原因: ${t.deletedReason})`);
           restoredIPs.push(result);
           return false;
         } else {
@@ -536,7 +542,8 @@ async function main() {
           t.deletedReason = result.failReason || 'unknown';
           t.deletedAt = now;
           t.lastCheck = result.lastCheck;
-          console.log(`    [!] 失效IP重测仍失效: ${t.ipPort} - ${t.deletedReason} (失效次数: ${newFailCount})`);
+          const reasonText = retryInfo.isDuplicatePort ? '重复端口IP' : '失效IP';
+          console.log(`    [!] ${reasonText}重测仍失效: ${t.ipPort} - ${t.deletedReason} (失效次数: ${newFailCount})`);
           return true; // 保留在回收站
         }
       }
@@ -548,7 +555,7 @@ async function main() {
     if (restoredIPs.length > 0) {
       totalRestored += restoredIPs.length;
       restoredPerGroup[g.id] = restoredIPs.length;
-      console.log(`♻️ [${g.name}] ${restoredIPs.length} 个IP延迟达标，从回收站放回IP池`);
+      console.log(`♻️ [${g.name}] ${restoredIPs.length} 个IP重测成功，从回收站放回IP池`);
     }
 
     // 添加新的失效/重复/超延迟IP到回收站
