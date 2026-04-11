@@ -1554,7 +1554,7 @@
     }
 
     function safeFileName(s){
-      return String(s||'').replace(/[\\/:*?"<>|\s]+/g,'_').replace(/^_+|_+$/g,'')||'group';
+      return String(s||'').replace(/[\\/:*?"<>|\\s]+/g,'_').replace(/^_+|_+$/g,'')||'group';
     }
 
     async function exportGroupIPs(groupId){
@@ -1571,7 +1571,7 @@
           const org=i.org||'';
           const status=i.status||'unchecked';
           return [i.ipPort||'',ping,colo,city,org,status].join(',');
-        }).join('\n');
+        }).join('\\n');
 
         const fileName=safeFileName(g.name||g.id)+'-'+getExportDateTime()+'.csv';
         const blob=new Blob([lines],{type:'text/csv;charset=utf-8'});
