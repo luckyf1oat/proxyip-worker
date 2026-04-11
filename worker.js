@@ -1566,11 +1566,12 @@
 
         const lines=ips.map(i=>{
           const ping=(i.checkLatency!==undefined&&i.checkLatency!==null&&i.checkLatency<9999)?(i.checkLatency+'ms'):(i.latency!==undefined&&i.latency!==null?i.latency+'ms':'9999ms');
+          const asn=i.asn?('AS'+i.asn):'';
           const colo=i.colo||'';
           const city=i.city||'';
           const org=i.org||'';
           const status=i.status||'unchecked';
-          return [i.ipPort||'',ping,colo,city,org,status].join(',');
+          return [i.ipPort||'',asn,ping,colo,city,org,status].join(',');
         }).join('\\n');
 
         const fileName=safeFileName(g.name||g.id)+'-'+getExportDateTime()+'.csv';
