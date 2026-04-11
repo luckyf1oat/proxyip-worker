@@ -97,12 +97,16 @@
         const d=await r.json();
         const asn=d?.asn||{},loc=d?.location||{},company=d?.company||{};
         const risk=calcRiskInfo(d||{});
+        const orgVal=asn.org||company.name||asn.descr||'';
+        const cityVal=loc.city||loc.state||'';
+        const companyVal=company.name||asn.org||asn.descr||'';
+        const countryVal=loc.country||asn.country||'';
         return{
           asn:asn.asn?String(asn.asn):'',
-          org:asn.org||'',
-          country:loc.country||'',
-          city:loc.city||'',
-          company:company.name||'',
+          org:orgVal,
+          country:countryVal,
+          city:cityVal,
+          company:companyVal,
           networkType:asn.type||'',
           riskLevel:risk.riskLevel,
           riskScore:risk.riskScore
@@ -126,6 +130,8 @@
           ip.country=pickMeta(ip.country,info.country);
           ip.city=pickMeta(ip.city,info.city);
           ip.company=pickMeta(ip.company,info.company);
+          if(isEmptyMeta(ip.org)&&!isEmptyMeta(ip.company))ip.org=String(ip.company).trim();
+          if(isEmptyMeta(ip.company)&&!isEmptyMeta(ip.org))ip.company=String(ip.org).trim();
           ip.networkType=ip.networkType||info.networkType||'';
           if(!ip.riskLevel&&info.riskLevel)ip.riskLevel=info.riskLevel;
           if(!ip.riskScore&&info.riskScore)ip.riskScore=info.riskScore;
