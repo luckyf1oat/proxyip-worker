@@ -1272,7 +1272,7 @@
       $('hi').textContent=GRPS.length?GRPS.length+'个分组':'未配置分组';
     }
     function renderGrps(){
-      $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> '+(g.fofaQuery?'<button class="btn p" onclick="fofaSearch('+Q+g.id+Q+',this)">🔍FOFA</button> ':'')+' <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+(g.fofaQuery?' | FOFA:'+g.fofaSize:'')+(g.fofaCron?' | 定时:每'+g.fofaCron+'h':'')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
+      $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> <button class="btn" onclick="exportGroupIPs('+Q+g.id+Q+')">📥导出IP</button> '+(g.fofaQuery?'<button class="btn p" onclick="fofaSearch('+Q+g.id+Q+',this)">🔍FOFA</button> ':'')+' <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+(g.fofaQuery?' | FOFA:'+g.fofaSize:'')+(g.fofaCron?' | 定时:每'+g.fofaCron+'h':'')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
     }
     // IP管理(按分组)
     async function chgGrp(){
@@ -1544,6 +1544,44 @@
         a.click();
         URL.revokeObjectURL(url);
         tt('IP库已导出');
+      }catch(e){tt('导出失败: '+e.message,0)}
+    }
+
+    function getExportDateTime(){
+      const d=new Date();
+      const pad=n=>String(n).padStart(2,'0');
+      return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+'-'+pad(d.getHours())+pad(d.getMinutes())+pad(d.getSeconds());
+    }
+
+    function safeFileName(s){
+      return String(s||'').replace(/[\\/:*?"<>|\s]+/g,'_').replace(/^_+|_+$/g,'')||'group';
+    }
+
+    async function exportGroupIPs(groupId){
+      try{
+        const g=GRPS.find(x=>x.id===groupId);
+        if(!g)return tt('分组不存在',0);
+        const{ips}=await api('/api/ips?groupId='+groupId);
+        if(!ips||!ips.length)return tt('该分组暂无IP可导出',0);
+
+        const lines=ips.map(i=>{
+          const ping=(i.checkLatency!==undefined&&i.checkLatency!==null&&i.checkLatency<9999)?(i.checkLatency+'ms'):(i.latency!==undefined&&i.latency!==null?i.latency+'ms':'9999ms');
+          const colo=i.colo||'';
+          const city=i.city||'';
+          const org=i.org||'';
+          const status=i.status||'unchecked';
+          return [i.ipPort||'',ping,colo,city,org,status].join(',');
+        }).join('\n');
+
+        const fileName=safeFileName(g.name||g.id)+'-'+getExportDateTime()+'.csv';
+        const blob=new Blob([lines],{type:'text/csv;charset=utf-8'});
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url;
+        a.download=fileName;
+        a.click();
+        URL.revokeObjectURL(url);
+        tt('已导出 '+(g.name||g.id)+' 共'+ips.length+'条');
       }catch(e){tt('导出失败: '+e.message,0)}
     }
 
