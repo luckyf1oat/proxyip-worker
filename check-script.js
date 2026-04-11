@@ -1,6 +1,8 @@
 // GitHub Actions检测脚本 - 从KV读取IP并检测
 const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
+const INFO_API = 'https://api.ipapi.is/?q=';
 const CHECK_TIMEOUT = 10000;
+const INFO_TIMEOUT = 8000;
 const RETRY = 2;
 const BATCH = 60;
 
@@ -78,6 +80,95 @@ async function checkIP(ipPort) {
     lastReason = r.reason;
   }
   return { ok: false, reason: lastReason };
+}
+
+function calcRiskInfo(infoData) {
+  const asnScoreRaw = Number(infoData?.asn?.abuser_score || 0);
+  const companyScoreRaw = Number(infoData?.company?.abuser_score || 0);
+  let score = Math.max(Number.isNaN(asnScoreRaw) ? 0 : asnScoreRaw, Number.isNaN(companyScoreRaw) ? 0 : companyScoreRaw);
+  if (infoData?.is_abuser === true) score = Math.max(score, 1);
+  const pct = score * 100;
+  let level = '极度纯净';
+  if (pct >= 100) level = '极度危险';
+  else if (pct >= 20) level = '高风险';
+  else if (pct >= 5) level = '轻微风险';
+  else if (pct >= 0.25) level = '纯净';
+  return { riskLevel: level, riskScore: `${pct.toFixed(2)}%` };
+}
+
+function needEnrichIPMeta(ip) {
+  return !ip.asn || !ip.country || !ip.org || !ip.city || !ip.company;
+}
+
+async function fetchIPInfo(ip) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), INFO_TIMEOUT);
+  try {
+    const res = await fetch(INFO_API + encodeURIComponent(ip), {
+      signal: controller.signal,
+      headers: { 'User-Agent': 'Mozilla/5.0' }
+    });
+    clearTimeout(timeout);
+    if (!res.ok) return null;
+    const data = await res.json();
+    const asn = data?.asn || {};
+    const loc = data?.location || {};
+    const company = data?.company || {};
+    const risk = calcRiskInfo(data || {});
+    return {
+      asn: asn.asn ? String(asn.asn) : '',
+      org: asn.org || '',
+      country: loc.country || '',
+      city: loc.city || '',
+      company: company.name || '',
+      networkType: asn.type || '',
+      riskLevel: risk.riskLevel,
+      riskScore: risk.riskScore
+    };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function enrichMissingIPInfo(list) {
+  const targets = list.filter(i => i.status === 'valid' && needEnrichIPMeta(i));
+  if (!targets.length) return { total: 0, updated: 0 };
+
+  const ENRICH_BATCH = 5;
+  let done = 0;
+  let updated = 0;
+
+  console.log(`[*] 第三阶段(补全ASN等信息)开始: ${targets.length} 个IP`);
+
+  for (let i = 0; i < targets.length; i += ENRICH_BATCH) {
+    const chunk = targets.slice(i, i + ENRICH_BATCH);
+    await Promise.allSettled(chunk.map(async ip => {
+      const info = await fetchIPInfo(ip.ip);
+      if (!info) return;
+      const beforeMissing = needEnrichIPMeta(ip);
+
+      ip.asn = ip.asn || info.asn || '';
+      ip.org = ip.org || info.org || '';
+      ip.country = ip.country || info.country || '';
+      ip.city = ip.city || info.city || '';
+      ip.company = ip.company || info.company || '';
+      ip.networkType = ip.networkType || info.networkType || '';
+      if (!ip.riskLevel && info.riskLevel) ip.riskLevel = info.riskLevel;
+      if (!ip.riskScore && info.riskScore) ip.riskScore = info.riskScore;
+
+      if (beforeMissing && !needEnrichIPMeta(ip)) updated++;
+    }));
+
+    done += chunk.length;
+    if (done % 20 === 0 || done === targets.length) {
+      console.log(`[*] 第三阶段进度: ${done}/${targets.length} | 已完整补全: ${updated}`);
+    }
+  }
+
+  console.log(`[+] 信息补全完成: 待补全 ${targets.length} | 完整补全 ${updated}`);
+  return { total: targets.length, updated };
 }
 
 // 解析到Cloudflare DNS
@@ -431,6 +522,9 @@ async function main() {
   const checkResult = await batchCheck(toCheck);
   const checked = checkResult.results;
   const dupRemoved = checkResult.dupRemoved;
+
+  await enrichMissingIPInfo(checked);
+
   const resultMap = new Map(checked.map(i => [i.ipPort, i]));
   const validSet = new Set(checked.filter(i => i.status === 'valid').map(i => i.ipPort));
 

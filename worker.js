@@ -3,7 +3,8 @@
     // KV: config, groups, ips:{groupId}, blacklist, last_result
     const UA='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36';
     const CHECK_API='https://cf.090227.xyz/check?proxyip=';
-    const CHECK_TIMEOUT=10000, BATCH=30, RETRY=1; // Python: 10s超时, 1次重试(共2次尝试)
+    const INFO_API='https://api.ipapi.is/?q=';
+    const CHECK_TIMEOUT=10000, INFO_TIMEOUT=8000, BATCH=30, RETRY=1; // Python: 10s超时, 1次重试(共2次尝试)
 
     function parseCSV(text){
       const lines=text.replace(/^\uFEFF/,'').trim().split('\n').filter(l=>l.trim());
@@ -53,6 +54,74 @@
         lastReason=r.reason;
       }
       return{ok:false,reason:lastReason};
+    }
+
+    function calcRiskInfo(infoData){
+      const asnScoreRaw=Number(infoData?.asn?.abuser_score||0);
+      const companyScoreRaw=Number(infoData?.company?.abuser_score||0);
+      let score=Math.max(Number.isNaN(asnScoreRaw)?0:asnScoreRaw,Number.isNaN(companyScoreRaw)?0:companyScoreRaw);
+      if(infoData?.is_abuser===true)score=Math.max(score,1);
+      const pct=score*100;
+      let level='极度纯净';
+      if(pct>=100)level='极度危险';
+      else if(pct>=20)level='高风险';
+      else if(pct>=5)level='轻微风险';
+      else if(pct>=0.25)level='纯净';
+      return{riskLevel:level,riskScore:pct.toFixed(2)+'%'};
+    }
+
+    function needEnrichIPMeta(ip){
+      return !ip.asn||!ip.country||!ip.org||!ip.city||!ip.company;
+    }
+
+    async function fetchIPInfo(ip){
+      const c=new AbortController();
+      const t=setTimeout(()=>c.abort(),INFO_TIMEOUT);
+      try{
+        const r=await fetch(INFO_API+encodeURIComponent(ip),{signal:c.signal,headers:{'User-Agent':UA}});
+        clearTimeout(t);
+        if(!r.ok)return null;
+        const d=await r.json();
+        const asn=d?.asn||{},loc=d?.location||{},company=d?.company||{};
+        const risk=calcRiskInfo(d||{});
+        return{
+          asn:asn.asn?String(asn.asn):'',
+          org:asn.org||'',
+          country:loc.country||'',
+          city:loc.city||'',
+          company:company.name||'',
+          networkType:asn.type||'',
+          riskLevel:risk.riskLevel,
+          riskScore:risk.riskScore
+        };
+      }catch{return null}finally{clearTimeout(t)}
+    }
+
+    async function enrichMissingIPInfo(list,onProgress){
+      const targets=list.filter(i=>i.status==='valid'&&needEnrichIPMeta(i));
+      if(!targets.length)return{total:0,updated:0};
+      const ENRICH_BATCH=5;
+      let done=0,updated=0;
+      for(let i=0;i<targets.length;i+=ENRICH_BATCH){
+        const chunk=targets.slice(i,i+ENRICH_BATCH);
+        await Promise.allSettled(chunk.map(async ip=>{
+          const info=await fetchIPInfo(ip.ip);
+          if(!info)return;
+          const beforeMissing=needEnrichIPMeta(ip);
+          ip.asn=ip.asn||info.asn||'';
+          ip.org=ip.org||info.org||'';
+          ip.country=ip.country||info.country||'';
+          ip.city=ip.city||info.city||'';
+          ip.company=ip.company||info.company||'';
+          ip.networkType=ip.networkType||info.networkType||'';
+          if(!ip.riskLevel&&info.riskLevel)ip.riskLevel=info.riskLevel;
+          if(!ip.riskScore&&info.riskScore)ip.riskScore=info.riskScore;
+          if(beforeMissing&&!needEnrichIPMeta(ip))updated++;
+        }));
+        done+=chunk.length;
+        if(onProgress)await onProgress({phase:'enriching',done,total:targets.length,updated});
+      }
+      return{total:targets.length,updated};
     }
 
     async function batchCheck(list,onProgress){
@@ -175,6 +244,9 @@
       // 全并发检测(BATCH并发，失败重试RETRY次)
       const checked=await batchCheck(toCheck,async(p)=>{
         await env.KV.put('check_progress',JSON.stringify({...p,start:new Date().toISOString()}));
+      });
+      await enrichMissingIPInfo(checked,async(p)=>{
+        await env.KV.put('check_progress',JSON.stringify({phase:'enriching',checked:p.done,total:p.total,updated:p.updated,start:new Date().toISOString()}));
       });
       const resultMap=new Map(checked.map(i=>[i.ipPort,i]));
       const validSet=new Set(checked.filter(i=>i.status==='valid').map(i=>i.ipPort));
@@ -403,6 +475,9 @@
           await env.KV.put('check_progress',JSON.stringify({phase:'checking',checked:0,total:toCheck.length,valid:0,invalid:0,group:g.name}));
           const checked=await batchCheck(toCheck,async(p)=>{
             await env.KV.put('check_progress',JSON.stringify({...p,group:g.name}));
+          });
+          await enrichMissingIPInfo(checked,async(p)=>{
+            await env.KV.put('check_progress',JSON.stringify({phase:'enriching',group:g.name,checked:p.done,total:p.total,updated:p.updated}));
           });
           const resultMap=new Map(checked.map(i=>[i.ipPort,i]));
           const validSet=new Set(checked.filter(i=>i.status==='valid').map(i=>i.ipPort));
