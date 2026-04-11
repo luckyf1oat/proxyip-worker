@@ -96,8 +96,21 @@ function calcRiskInfo(infoData) {
   return { riskLevel: level, riskScore: `${pct.toFixed(2)}%` };
 }
 
+function isEmptyMeta(v) {
+  if (v === undefined || v === null) return true;
+  const s = String(v).trim();
+  if (!s) return true;
+  const l = s.toLowerCase();
+  return l === 'n/a' || l === 'na' || l === 'null' || l === 'none' || l === 'unknown' || l === '-' || l === '--';
+}
+
+function pickMeta(oldVal, newVal) {
+  if (!isEmptyMeta(oldVal)) return oldVal;
+  return isEmptyMeta(newVal) ? '' : String(newVal).trim();
+}
+
 function needEnrichIPMeta(ip) {
-  return !ip.asn || !ip.country || !ip.org || !ip.city || !ip.company;
+  return isEmptyMeta(ip.asn) || isEmptyMeta(ip.country) || isEmptyMeta(ip.org) || isEmptyMeta(ip.city) || isEmptyMeta(ip.company);
 }
 
 async function fetchIPInfo(ip) {
@@ -149,11 +162,11 @@ async function enrichMissingIPInfo(list) {
       if (!info) return;
       const beforeMissing = needEnrichIPMeta(ip);
 
-      ip.asn = ip.asn || info.asn || '';
-      ip.org = ip.org || info.org || '';
-      ip.country = ip.country || info.country || '';
-      ip.city = ip.city || info.city || '';
-      ip.company = ip.company || info.company || '';
+      ip.asn = pickMeta(ip.asn, info.asn);
+      ip.org = pickMeta(ip.org, info.org);
+      ip.country = pickMeta(ip.country, info.country);
+      ip.city = pickMeta(ip.city, info.city);
+      ip.company = pickMeta(ip.company, info.company);
       ip.networkType = ip.networkType || info.networkType || '';
       if (!ip.riskLevel && info.riskLevel) ip.riskLevel = info.riskLevel;
       if (!ip.riskScore && info.riskScore) ip.riskScore = info.riskScore;
