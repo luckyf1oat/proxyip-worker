@@ -234,7 +234,8 @@
           if(!blIP.has(ip.ipPort.split(':')[0])&&!blIPPort.has(ip.ipPort)&&!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip);
         });
         let filtered=gips.filter(ip=>!blIP.has(ip.ipPort.split(':')[0])&&!blIPPort.has(ip.ipPort)&&!trashIPs.has(ip.ipPort));
-        if(g.selectedAsns?.length)filtered=filtered.filter(ip=>g.selectedAsns.includes(ip.asn));
+        // 允许 ASN 为空的 IP 进入检测流程，后续再按 IP 补全 ASN/地理信息
+        if(g.selectedAsns?.length)filtered=filtered.filter(ip=>!ip.asn||g.selectedAsns.includes(ip.asn));
         filtered.forEach(ip=>{if(!allMap.has(ip.ipPort))allMap.set(ip.ipPort,ip)});
       }
       const toCheck=[...allMap.values()];

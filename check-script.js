@@ -503,7 +503,8 @@ async function main() {
     let gips = JSON.parse(ipsStr);
     let filtered = gips.filter(ip => !blacklistIP.has(ip.ip) && !blacklistIPPort.has(ip.ipPort) && !trashIPs.has(ip.ipPort));
     if (g.selectedAsns?.length) {
-      filtered = filtered.filter(ip => g.selectedAsns.includes(ip.asn));
+      // 允许 ASN 为空的 IP 先参与检测，后续通过 IP 信息接口补全
+      filtered = filtered.filter(ip => !ip.asn || g.selectedAsns.includes(ip.asn));
     }
     filtered.forEach(ip => {
       if (!allMap.has(ip.ipPort)) allMap.set(ip.ipPort, ip);
