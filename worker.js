@@ -84,7 +84,8 @@
     }
 
     function needEnrichIPMeta(ip){
-      return isEmptyMeta(ip.asn)||isEmptyMeta(ip.country)||isEmptyMeta(ip.org)||isEmptyMeta(ip.city)||isEmptyMeta(ip.company);
+      // city 在部分运营商/住宅IP上天然缺失，不作为“必须补全项”，避免每轮反复进入待补全
+      return isEmptyMeta(ip.asn)||isEmptyMeta(ip.country)||isEmptyMeta(ip.org)||isEmptyMeta(ip.company);
     }
 
     async function fetchIPInfo(ip){
