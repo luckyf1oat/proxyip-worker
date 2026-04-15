@@ -485,16 +485,16 @@ async function main() {
 
     // 找出回收站中可以重新检测的IP：
     // 1. 延迟超标的IP (over_latency_)
-    // 2. 重复端口的IP (duplicate_port)
-    // 3. 6小时内失效的IP (且失效次数<2)
+    // 2. 6小时内失效的IP (且失效次数<2)
+    //    说明：duplicate_port 属于数据清洗，不再重试，避免“去重-回收-重测-再去重”的循环
     const retryableTrash = groupTrash.filter(t => {
       if (!t.deletedReason) return false;
 
       // 延迟超标的IP总是重试
       if (t.deletedReason.startsWith('over_latency_')) return true;
 
-      // 重复端口的IP总是重试
-      if (t.deletedReason === 'duplicate_port') return true;
+      // duplicate_port 不重试（去重清洗结果）
+      if (t.deletedReason === 'duplicate_port') return false;
 
       // 检查是否在6小时内失效
       const deletedTime = new Date(t.deletedAt).getTime();
@@ -516,7 +516,6 @@ async function main() {
           retryableIPMap.set(ip.ipPort, {
             groupId: g.id,
             isOverLatency: ip.deletedReason.startsWith('over_latency_'),
-            isDuplicatePort: ip.deletedReason === 'duplicate_port',
             failCount: ip.failCount || 1,
             lastFailReason: ip.deletedReason
           });
@@ -640,17 +639,16 @@ async function main() {
         return false;
       }
 
-      // 处理其他失效原因的IP（6小时内失效的IP和重复端口IP会被重新检测）
+      // 处理其他失效原因的IP（仅6小时内失效IP会被重新检测）
       const retryInfo = retryableIPMap.get(t.ipPort);
       if (retryInfo && !retryInfo.isOverLatency) {
-        // 这是一个被重新检测的失效IP或重复端口IP
+        // 这是一个被重新检测的失效IP
         const result = resultMap.get(t.ipPort);
         if (!result) return true; // 没有检测结果，保留在回收站
 
         if (result.status === 'valid') {
           // 检测成功，从回收站移除，准备放回IP池
-          const reasonText = retryInfo.isDuplicatePort ? '重复端口' : '失效IP';
-          console.log(`    [✓] ${reasonText}重测成功: ${t.ipPort} (之前失效原因: ${t.deletedReason})`);
+          console.log(`    [✓] 失效IP重测成功: ${t.ipPort} (之前失效原因: ${t.deletedReason})`);
           restoredIPs.push(result);
           return false;
         } else {
@@ -661,8 +659,7 @@ async function main() {
           t.deletedReason = result.failReason || 'unknown';
           t.deletedAt = now;
           t.lastCheck = result.lastCheck;
-          const reasonText = retryInfo.isDuplicatePort ? '重复端口IP' : '失效IP';
-          console.log(`    [!] ${reasonText}重测仍失效: ${t.ipPort} - ${t.deletedReason} (失效次数: ${newFailCount})`);
+          console.log(`    [!] 失效IP重测仍失效: ${t.ipPort} - ${t.deletedReason} (失效次数: ${newFailCount})`);
           return true; // 保留在回收站
         }
       }
@@ -681,9 +678,7 @@ async function main() {
     groupInvalidIPs.forEach(ip => {
       groupTrash.push({ ...ip, deletedAt: now, deletedReason: ip.failReason || 'unknown', failCount: 1 });
     });
-    groupDupIPs.forEach(ip => {
-      groupTrash.push({ ...ip, deletedAt: now, deletedReason: 'duplicate_port', failCount: 1 });
-    });
+    // duplicate_port 属于去重清洗结果，不再写入回收站，避免后续被重测放回导致循环
     groupOverLatencyIPs.forEach(ip => {
       groupTrash.push({ ...ip, deletedAt: now, deletedReason: `over_latency_${groupMaxLatency}ms`, failCount: 0 });
     });
@@ -764,6 +759,9 @@ async function main() {
         .filter(t => {
           // 延迟超标的IP不排除（会被重新检测）
           if (t.deletedReason && t.deletedReason.startsWith('over_latency_')) return false;
+
+          // duplicate_port 直接排除，不参与重试
+          if (t.deletedReason === 'duplicate_port') return true;
 
           // 检查是否在6小时内且失效次数<2
           const deletedTime = new Date(t.deletedAt).getTime();
@@ -881,10 +879,7 @@ async function main() {
     reasonMap[r] = (reasonMap[r] || 0) + 1;
   });
 
-  // 统计去重移除的IP原因
-  if (dupRemoved.length > 0) {
-    reasonMap['duplicate_port'] = dupRemoved.length;
-  }
+  // duplicate_port 是数据清洗，不计入“失效原因”统计，避免日志噪音
 
   // 统计超延迟移除的IP
   if (totalOverLatency > 0) {
