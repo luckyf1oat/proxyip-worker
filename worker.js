@@ -190,27 +190,10 @@
       return out;
     }
 async function resolveToCloudflare(g,ips){
-  const splitVals=v=>{
-    const toArr=(x)=>Array.isArray(x)?x:[x];
-    const raw=toArr(v).flatMap(item=>{
-      if(item===undefined||item===null)return[];
-      if(typeof item==='string'){
-        const s=item.trim();
-        if((s.startsWith('[')&&s.endsWith(']'))||(s.startsWith('{')&&s.endsWith('}'))){
-          try{
-            const parsed=JSON.parse(s);
-            return Array.isArray(parsed)?parsed:[parsed];
-          }catch{}
-        }
-      }
-      return [item];
-    });
-
-    return raw
-      .flatMap(x=>String(x||'').split(/[，,、;；|\n\r\t]+/))
-      .map(s=>s.trim().replace(/^\[+|\]+$/g,'').replace(/^['"`]+|['"`]+$/g,''))
-      .filter(Boolean);
-  };
+  const splitVals=v=>String(v||'')
+    .split(/[，,;；\n\r]+/)
+    .map(s=>s.trim().replace(/^['"`]+|['"`]+$/g,''))
+    .filter(Boolean);
   const domains=splitVals(g.domain);
   const tokens=splitVals(g.cfToken);
   const zones=splitVals(g.zoneId);
@@ -297,19 +280,10 @@ async function resolveToCloudflare(g,ips){
       for(let i=0;i<chunks.length;i++){
         const text=chunks.length>1?`<b>(${i+1}/${chunks.length})</b>\n`+chunks[i]:chunks[i];
         try{
-          const r=await fetch('https://api.telegram.org/bot'+cfg.tgToken+'/sendMessage',{
+          await fetch('https://api.telegram.org/bot'+cfg.tgToken+'/sendMessage',{
             method:'POST',headers:{'Content-Type':'application/json'},
             body:JSON.stringify({chat_id:cfg.tgChatId,text,parse_mode:'HTML'})
           });
-          const d=await r.json().catch(()=>({ok:r.ok}));
-          if(!r.ok||d?.ok===false){
-            // HTML格式失败时降级为纯文本重发，避免因特殊字符导致整条通知丢失
-            const plain=text.replace(/<[^>]*>/g,'');
-            await fetch('https://api.telegram.org/bot'+cfg.tgToken+'/sendMessage',{
-              method:'POST',headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({chat_id:cfg.tgChatId,text:plain})
-            });
-          }
         }catch(e){
           console.error('Telegram发送失败:',e?.message||e);
         }
