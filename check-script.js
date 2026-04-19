@@ -425,23 +425,59 @@ async function batchCheck(list) {
   return { results: finalResults, dupRemoved };
 }
 
-// 发送Telegram通知
+function splitTelegramMessage(msg, maxLen = 3500) {
+  const text = String(msg || '');
+  if (text.length <= maxLen) return [text];
+
+  const parts = [];
+  let current = '';
+  for (const line of text.split('\n')) {
+    const add = (current ? current + '\n' : '') + line;
+    if (add.length <= maxLen) {
+      current = add;
+      continue;
+    }
+    if (current) {
+      parts.push(current);
+      current = '';
+    }
+    if (line.length <= maxLen) {
+      current = line;
+      continue;
+    }
+    for (let i = 0; i < line.length; i += maxLen) {
+      parts.push(line.slice(i, i + maxLen));
+    }
+  }
+  if (current) parts.push(current);
+  return parts.length ? parts : [text.slice(0, maxLen)];
+}
+
+// 发送Telegram通知（自动分片，避免超长消息被Telegram拒绝）
 async function sendTelegram(cfg, msg) {
   if (!cfg.tgToken || !cfg.tgChatId) return;
-  try {
-    await fetch(`https://api.telegram.org/bot${cfg.tgToken}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: cfg.tgChatId,
-        text: msg,
-        parse_mode: 'HTML'
-      })
-    });
-    console.log('✅ Telegram通知已发送');
-  } catch (e) {
-    console.log('⚠️ Telegram通知发送失败:', e.message);
+  const chunks = splitTelegramMessage(msg, 3500);
+  for (let i = 0; i < chunks.length; i++) {
+    const text = chunks.length > 1 ? `<b>(${i + 1}/${chunks.length})</b>\n${chunks[i]}` : chunks[i];
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${cfg.tgToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: cfg.tgChatId,
+          text,
+          parse_mode: 'HTML'
+        })
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        console.log('⚠️ Telegram通知发送失败:', res.status, err);
+      }
+    } catch (e) {
+      console.log('⚠️ Telegram通知发送失败:', e.message);
+    }
   }
+  console.log('✅ Telegram通知已发送');
 }
 
 // 主函数
