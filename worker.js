@@ -1244,7 +1244,7 @@
     <!-- 设置 -->
     <div class="tab" id="t-st">
     <div class="cd"><h3>GitHub Actions配置</h3>
-    <label>GitHub Token</label><input id="c-gh-token" type="password" placeholder="ghp_...">
+<label>GitHub Token</label><input id="c-gh-token" type="text" placeholder="ghp_...">
     <label>仓库 (格式: 用户名/仓库名)</label><input id="c-gh-repo" placeholder="luckyf1oat/proxyip-worker">
     <p style="color:var(--dm);font-size:11px;margin-top:4px">Token权限: repo > actions (write)</p>
     </div>
