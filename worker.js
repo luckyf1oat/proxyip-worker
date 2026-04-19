@@ -190,41 +190,60 @@
       return out;
     }
     async function resolveToCloudflare(g,ips){
-      if(!g.cfToken||!g.zoneId||!g.domain)throw new Error('['+g.id+']缺少CF配置');
-      const recordType=g.recordType||'TXT';
-      const h={'Authorization':'Bearer '+g.cfToken,'Content-Type':'application/json'};
-      const base='https://api.cloudflare.com/client/v4/zones/'+g.zoneId+'/dns_records';
+  const splitVals=v=>String(v||'').split(',').map(s=>s.trim()).filter(Boolean);
+  const domains=splitVals(g.domain);
+  const tokens=splitVals(g.cfToken);
+  const zones=splitVals(g.zoneId);
+  if(!domains.length)throw new Error('['+g.id+']缺少解析域名');
+  if(!tokens.length)throw new Error('['+g.id+']缺少CF API Token');
+  if(!zones.length)throw new Error('['+g.id+']缺少Zone ID');
 
-      if(recordType==='A'){
-        // A记录：为每个IP创建一条A记录
-        // 1. 查询所有现有的A记录
-        const lr=await(await fetch(base+'?name='+g.domain+'&type=A',{headers:h})).json();
-        if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
-        const existing=lr.result||[];
+  const pick=(arr,idx,name)=>{
+    if(arr.length===1)return arr[0];
+    if(idx<arr.length)return arr[idx];
+    throw new Error('['+g.id+']'+name+'数量不足，请按逗号一一对应填写');
+  };
 
-        // 2. 删除所有现有的A记录
-        for(const record of existing){
-          await fetch(base+'/'+record.id,{method:'DELETE',headers:h});
-        }
+  const targets=domains.map((domain,idx)=>({
+    domain,
+    cfToken:pick(tokens,idx,'CF API Token'),
+    zoneId:pick(zones,idx,'Zone ID')
+  }));
 
-        // 3. 为每个IP创建新的A记录（去掉端口）
-        for(const ip of ips){
-          const ipOnly=ip.ipPort.split(':')[0];
-          const body=JSON.stringify({type:'A',name:g.domain,content:ipOnly,ttl:60,proxied:false});
-          const res=await(await fetch(base,{method:'POST',headers:h,body})).json();
-          if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
-        }
-      }else{
-        // TXT记录：多个IP用逗号分隔
-        const lr=await(await fetch(base+'?name='+g.domain+'&type=TXT',{headers:h})).json();
-        if(!lr.success)throw new Error('CF查询失败:'+JSON.stringify(lr.errors));
-        const ext=lr.result?.[0];
-        const content='"'+ips.map(i=>i.ipPort).join(',')+'"';
-        const body=JSON.stringify({type:'TXT',name:g.domain,content,ttl:60});
-        const res=ext?await(await fetch(base+'/'+ext.id,{method:'PUT',headers:h,body})).json()
-          :await(await fetch(base,{method:'POST',headers:h,body})).json();
-        if(!res.success)throw new Error('CF写入失败:'+JSON.stringify(res.errors));
+  const recordType=g.recordType||'TXT';
+
+  for(const t of targets){
+    const h={'Authorization':'Bearer '+t.cfToken,'Content-Type':'application/json'};
+    const base='https://api.cloudflare.com/client/v4/zones/'+t.zoneId+'/dns_records';
+
+    if(recordType==='A'){
+      // A记录：为每个IP创建一条A记录
+      const lr=await(await fetch(base+'?name='+t.domain+'&type=A',{headers:h})).json();
+      if(!lr.success)throw new Error('CF查询失败['+t.domain+']:'+JSON.stringify(lr.errors));
+      const existing=lr.result||[];
+
+      for(const record of existing){
+        await fetch(base+'/'+record.id,{method:'DELETE',headers:h});
       }
+
+      for(const ip of ips){
+        const ipOnly=ip.ipPort.split(':')[0];
+        const body=JSON.stringify({type:'A',name:t.domain,content:ipOnly,ttl:60,proxied:false});
+        const res=await(await fetch(base,{method:'POST',headers:h,body})).json();
+        if(!res.success)throw new Error('CF写入失败['+t.domain+']:'+JSON.stringify(res.errors));
+      }
+    }else{
+      // TXT记录：多个IP用逗号分隔
+      const lr=await(await fetch(base+'?name='+t.domain+'&type=TXT',{headers:h})).json();
+      if(!lr.success)throw new Error('CF查询失败['+t.domain+']:'+JSON.stringify(lr.errors));
+      const ext=lr.result?.[0];
+      const content='"'+ips.map(i=>i.ipPort).join(',')+'"';
+      const body=JSON.stringify({type:'TXT',name:t.domain,content,ttl:60});
+      const res=ext?await(await fetch(base+'/'+ext.id,{method:'PUT',headers:h,body})).json()
+        :await(await fetch(base,{method:'POST',headers:h,body})).json();
+      if(!res.success)throw new Error('CF写入失败['+t.domain+']:'+JSON.stringify(res.errors));
+    }
+  }
       return true;
     }
 
@@ -1174,9 +1193,9 @@
     <div class="cd"><h3>添加/编辑分组</h3>
     <div class="row"><div style="flex:1"><label>分组ID(英文)</label><input id="g-id" placeholder="如kr"></div>
     <div style="flex:1"><label>分组名称</label><input id="g-nm" placeholder="如韩国"></div></div>
-    <label>CF API Token</label><input id="g-tk" type="password">
-    <label>Zone ID</label><input id="g-zn">
-    <label>解析域名</label><input id="g-dm" placeholder="proxy.example.com">
+<label>CF API Token</label><input id="g-tk" type="text" placeholder="可用逗号分隔，多组时与Zone/域名一一对应">
+<label>Zone ID</label><input id="g-zn" placeholder="可用逗号分隔，多组时与Token/域名一一对应">
+<label>解析域名</label><input id="g-dm" placeholder="如 a.example.com,b.example.com（逗号分隔一一对应）">
     <label>DNS记录类型</label>
     <select id="g-rt">
       <option value="TXT">TXT记录 (多IP逗号分隔)</option>
@@ -1304,7 +1323,7 @@
       $('hi').textContent=GRPS.length?GRPS.length+'个分组':'未配置分组';
     }
     function renderGrps(){
-      $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> <button class="btn" onclick="exportGroupIPs('+Q+g.id+Q+')">📥导出IP</button> '+(g.fofaQuery?'<button class="btn p" onclick="fofaSearch('+Q+g.id+Q+',this)">🔍FOFA</button> ':'')+' <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+(g.fofaQuery?' | FOFA:'+g.fofaSize:'')+(g.fofaCron?' | 定时:每'+g.fofaCron+'h':'')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
+  $('gl').innerHTML=GRPS.length?GRPS.map(g=>'<div class="cd gc"><div class="row" style="justify-content:space-between"><b>'+g.name+'('+g.id+')</b><div><button class="btn" onclick="editGrp('+Q+g.id+Q+')">编辑</button> <button class="btn" onclick="cloneGrp('+Q+g.id+Q+')">克隆</button> <button class="btn" onclick="exportGroupIPs('+Q+g.id+Q+')">📥导出IP</button> '+(g.fofaQuery?'<button class="btn p" onclick="fofaSearch('+Q+g.id+Q+',this)">🔍FOFA</button> ':'')+' <button class="btn p" onclick="resGrp('+Q+g.id+Q+',this)">🌐解析</button> <button class="btn d" onclick="delGrp('+Q+g.id+Q+')">删除</button></div></div><p style="color:var(--dm);font-size:11px;margin-top:4px">'+g.domain+' | 数量:'+g.resolveCount+' | ASN:'+(g.selectedAsns?.length?g.selectedAsns.map(a=>'AS'+a).join(','):'全部')+(g.fofaQuery?' | FOFA:'+g.fofaSize:'')+(g.fofaCron?' | 定时:每'+g.fofaCron+'h':'')+'</p></div>').join(''):'<p style="color:var(--dm);padding:8px">暂无分组</p>';
     }
     // IP管理(按分组)
     async function chgGrp(){
@@ -1428,6 +1447,30 @@
     const dz=$('dz');if(dz){dz.ondragover=e=>{e.preventDefault();dz.classList.add('drag')};dz.ondragleave=()=>dz.classList.remove('drag');dz.ondrop=e=>{e.preventDefault();dz.classList.remove('drag');if(!CG)return tt('请先选择分组',0);const f=e.dataTransfer.files[0];if(f){const rd=new FileReader();rd.onload=async()=>{try{const d=await api('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({groupId:CG,csv:rd.result})});tt('新增'+d.added+'条');chgGrp()}catch(e2){tt(e2.message,0)}};rd.readAsText(f)}}}
     // 分组管理
     function editGrp(id){const g=GRPS.find(x=>x.id===id);if(!g)return;$('g-id').value=g.id;$('g-id').readOnly=true;$('g-nm').value=g.name||'';$('g-tk').value=g.cfToken||'';$('g-zn').value=g.zoneId||'';$('g-dm').value=g.domain||'';$('g-rt').value=g.recordType||'TXT';$('g-ct').value=g.resolveCount||8;$('g-max-lat').value=g.maxLatency||'';$('g-fofa-q').value=g.fofaQuery||'';$('g-fofa-sz').value=g.fofaSize||10000;$('g-fofa-cron').value=g.fofaCron||'';GA=new Set(g.selectedAsns||[]);renderGAChips();sw('gr')}
+function cloneGrp(id){
+  const g=GRPS.find(x=>x.id===id);if(!g)return;
+  const baseId=(g.id||'group').toString().trim();
+  let newId=baseId+'-copy';
+  let idx=2;
+  const idSet=new Set(GRPS.map(x=>x.id));
+  while(idSet.has(newId)){newId=baseId+'-copy'+idx;idx++;}
+
+  $('g-id').value=newId;$('g-id').readOnly=false;
+  $('g-nm').value=((g.name||g.id||'')+'-副本').trim();
+  $('g-tk').value=g.cfToken||'';
+  $('g-zn').value=g.zoneId||'';
+  $('g-dm').value=g.domain||'';
+  $('g-rt').value=g.recordType||'TXT';
+  $('g-ct').value=g.resolveCount||8;
+  $('g-max-lat').value=g.maxLatency||'';
+  $('g-fofa-q').value=g.fofaQuery||'';
+  $('g-fofa-sz').value=g.fofaSize||10000;
+  $('g-fofa-cron').value=g.fofaCron||'';
+  GA=new Set(g.selectedAsns||[]);
+  renderGAChips();
+  sw('gr');
+  tt('已加载克隆模板，请修改分组ID后保存');
+}
     function clrGF(){$('g-id').value='';$('g-id').readOnly=false;$('g-nm').value='';$('g-tk').value='';$('g-zn').value='';$('g-dm').value='';$('g-rt').value='TXT';$('g-ct').value=8;$('g-max-lat').value='';$('g-fofa-q').value='';$('g-fofa-sz').value=10000;$('g-fofa-cron').value='';GA.clear();renderGAChips()}
     async function saveGrp(){
       const g={id:$('g-id').value.trim(),name:$('g-nm').value.trim()||$('g-id').value.trim(),cfToken:$('g-tk').value,zoneId:$('g-zn').value,domain:$('g-dm').value,recordType:$('g-rt').value||'TXT',resolveCount:+$('g-ct').value||8,fofaQuery:$('g-fofa-q').value.trim(),fofaSize:+$('g-fofa-sz').value||10000,fofaCron:$('g-fofa-cron').value||'',selectedAsns:[...GA]};
