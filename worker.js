@@ -189,8 +189,11 @@
       }
       return out;
     }
-    async function resolveToCloudflare(g,ips){
-  const splitVals=v=>String(v||'').split(',').map(s=>s.trim()).filter(Boolean);
+async function resolveToCloudflare(g,ips){
+  const splitVals=v=>String(v||'')
+    .split(/[，,;；\n\r]+/)
+    .map(s=>s.trim().replace(/^['"`]+|['"`]+$/g,''))
+    .filter(Boolean);
   const domains=splitVals(g.domain);
   const tokens=splitVals(g.cfToken);
   const zones=splitVals(g.zoneId);
