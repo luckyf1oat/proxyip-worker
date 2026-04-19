@@ -197,60 +197,82 @@ async function enrichMissingIPInfo(list) {
 
 // 解析到Cloudflare DNS
 async function resolveToCloudflare(g, ips) {
-  if (!g.cfToken || !g.zoneId || !g.domain) {
-    throw new Error(`[${g.id}]缺少CF配置`);
-  }
-  const recordType = g.recordType || 'TXT';
-  const headers = {
-    'Authorization': `Bearer ${g.cfToken}`,
-    'Content-Type': 'application/json'
+  const splitVals = v => String(v || '')
+    .split(/[，,;；\n\r]+/)
+    .map(s => s.trim().replace(/^['"`]+|['"`]+$/g, ''))
+    .filter(Boolean);
+
+  const domains = splitVals(g.domain);
+  const tokens = splitVals(g.cfToken);
+  const zones = splitVals(g.zoneId);
+
+  if (!domains.length) throw new Error(`[${g.id}]缺少解析域名`);
+  if (!tokens.length) throw new Error(`[${g.id}]缺少CF API Token`);
+  if (!zones.length) throw new Error(`[${g.id}]缺少Zone ID`);
+
+  const pick = (arr, idx, name) => {
+    if (arr.length === 1) return arr[0];
+    if (idx < arr.length) return arr[idx];
+    throw new Error(`[${g.id}]${name}数量不足，请按逗号一一对应填写`);
   };
-  const base = `https://api.cloudflare.com/client/v4/zones/${g.zoneId}/dns_records`;
 
-  if (recordType === 'A') {
-    // A记录：为每个IP创建一条A记录
-    // 1. 查询所有现有的A记录
-    const listRes = await fetch(`${base}?name=${g.domain}&type=A`, { headers });
-    const listData = await listRes.json();
-    if (!listData.success) {
-      throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
-    }
-    const existing = listData.result || [];
+  const targets = domains.map((domain, idx) => ({
+    domain,
+    cfToken: pick(tokens, idx, 'CF API Token'),
+    zoneId: pick(zones, idx, 'Zone ID')
+  }));
 
-    // 2. 删除所有现有的A记录
-    for (const record of existing) {
-      await fetch(`${base}/${record.id}`, { method: 'DELETE', headers });
-    }
+  const recordType = g.recordType || 'TXT';
 
-    // 3. 为每个IP创建新的A记录（去掉端口）
-    for (const ip of ips) {
-      const ipOnly = ip.ipPort.split(':')[0];
-      const body = JSON.stringify({ type: 'A', name: g.domain, content: ipOnly, ttl: 60, proxied: false });
-      const res = await fetch(base, { method: 'POST', headers, body });
-      const resData = await res.json();
-      if (!resData.success) {
-        throw new Error('CF写入失败:' + JSON.stringify(resData.errors));
+  for (const t of targets) {
+    const headers = {
+      'Authorization': `Bearer ${t.cfToken}`,
+      'Content-Type': 'application/json'
+    };
+    const base = `https://api.cloudflare.com/client/v4/zones/${t.zoneId}/dns_records`;
+
+    if (recordType === 'A') {
+      // A记录：为每个IP创建一条A记录
+      const listRes = await fetch(`${base}?name=${t.domain}&type=A`, { headers });
+      const listData = await listRes.json();
+      if (!listData.success) {
+        throw new Error(`CF查询失败[${t.domain}]:` + JSON.stringify(listData.errors));
       }
-    }
-  } else {
-    // TXT记录：多个IP用逗号分隔
-    const listRes = await fetch(`${base}?name=${g.domain}&type=TXT`, { headers });
-    const listData = await listRes.json();
-    if (!listData.success) {
-      throw new Error('CF查询失败:' + JSON.stringify(listData.errors));
-    }
+      const existing = listData.result || [];
 
-    const existing = listData.result?.[0];
-    const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
-    const body = JSON.stringify({ type: 'TXT', name: g.domain, content, ttl: 60 });
+      for (const record of existing) {
+        await fetch(`${base}/${record.id}`, { method: 'DELETE', headers });
+      }
 
-    const updateRes = existing
-      ? await fetch(`${base}/${existing.id}`, { method: 'PUT', headers, body })
-      : await fetch(base, { method: 'POST', headers, body });
+      for (const ip of ips) {
+        const ipOnly = ip.ipPort.split(':')[0];
+        const body = JSON.stringify({ type: 'A', name: t.domain, content: ipOnly, ttl: 60, proxied: false });
+        const res = await fetch(base, { method: 'POST', headers, body });
+        const resData = await res.json();
+        if (!resData.success) {
+          throw new Error(`CF写入失败[${t.domain}]:` + JSON.stringify(resData.errors));
+        }
+      }
+    } else {
+      // TXT记录：多个IP用逗号分隔
+      const listRes = await fetch(`${base}?name=${t.domain}&type=TXT`, { headers });
+      const listData = await listRes.json();
+      if (!listData.success) {
+        throw new Error(`CF查询失败[${t.domain}]:` + JSON.stringify(listData.errors));
+      }
 
-    const updateData = await updateRes.json();
-    if (!updateData.success) {
-      throw new Error('CF写入失败:' + JSON.stringify(updateData.errors));
+      const existing = listData.result?.[0];
+      const content = '"' + ips.map(i => i.ipPort).join(',') + '"';
+      const body = JSON.stringify({ type: 'TXT', name: t.domain, content, ttl: 60 });
+
+      const updateRes = existing
+        ? await fetch(`${base}/${existing.id}`, { method: 'PUT', headers, body })
+        : await fetch(base, { method: 'POST', headers, body });
+
+      const updateData = await updateRes.json();
+      if (!updateData.success) {
+        throw new Error(`CF写入失败[${t.domain}]:` + JSON.stringify(updateData.errors));
+      }
     }
   }
   return true;
