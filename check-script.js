@@ -11,6 +11,9 @@ const ACCOUNT_ID = process.env.CF_ACCOUNT_ID;
 const KV_NAMESPACE_ID = process.env.CF_KV_NAMESPACE_ID;
 const API_TOKEN = process.env.CF_API_TOKEN;
 
+// 结果文档生成器：每次检测按分组写入 results/<分组>/<时间戳>.{json,md}
+const { writeResultDocs } = require('./results-writer.js');
+
 if (!ACCOUNT_ID || !KV_NAMESPACE_ID || !API_TOKEN) {
   console.error('❌ 缺少必要的环境变量');
   process.exit(1);
@@ -644,6 +647,7 @@ async function main() {
   const now = new Date().toISOString();
   let totalRestored = 0;
   const restoredPerGroup = {}; // 记录每个分组恢复的IP数
+  const restoredPerGroupDetails = {}; // 记录每个分组本轮恢复的IP明细（写结果文档用）
 
   for (const g of groups) {
     const ipsStr = await kvGet('ips:' + g.id);
@@ -729,6 +733,10 @@ async function main() {
     if (restoredIPs.length > 0) {
       totalRestored += restoredIPs.length;
       restoredPerGroup[g.id] = restoredIPs.length;
+      restoredPerGroupDetails[g.id] = restoredIPs.map(ip => ({
+        ipPort: ip.ipPort, checkLatency: ip.checkLatency, latency: ip.latency,
+        asn: ip.asn, org: ip.org, colo: ip.colo, city: ip.city, country: ip.country, status: ip.status
+      }));
       console.log(`♻️ [${g.name}] ${restoredIPs.length} 个IP重测成功，从回收站放回IP池`);
     }
 
@@ -909,6 +917,8 @@ async function main() {
       restored: restoredPerGroup[g.id] || 0,
       resolved: resolved,  // 保存完整的IP对象
       overLatencyIPs: overLatencyIPs,  // 超延迟IP列表
+      allValidIPs: validIPs,  // 该分组全部有效IP（写结果文档用）
+      trash: groupTrash2,  // 该分组回收站明细（写结果文档用）
       maxLatency: g.maxLatency || null,  // 延迟上限
       stats: {
         total: totalIPs,
@@ -959,6 +969,23 @@ async function main() {
   console.log('\n=== 检测任务完成 ===');
   console.log(`⏰ 时间: ${result.time}`);
   console.log(`📊 总计: ${result.total}, 检测: ${result.checked}, 有效: ${result.valid}, 失效: ${result.invalid}, 去重: ${result.duplicates}, 超延迟: ${result.overLatency}`);
+
+  // ===== 结果文档：按分组写入 results/<分组>/<时间戳>.json + .md（提交进仓库）=====
+  try {
+    const rd = writeResultDocs({
+      runTime: result.time,
+      runStartedAt: now,
+      result,
+      groupResults,
+      groups,
+      restoredPerGroupDetails,
+      dir: process.env.RESULTS_DIR || 'results'
+    });
+    console.log(`\n📁 结果文档已写入 ${rd.dir}（分组 ${rd.groups.length} 个，清理旧文档 ${rd.pruned} 个）`);
+    rd.groups.forEach(g => console.log(`   - [${g.name}] 有效IP ${g.validIPs} 条 → results/${g.doc}`));
+  } catch (e) {
+    console.error('⚠️ 结果文档写入失败（不影响检测结果）:', e.message);
+  }
 
   // 发送Telegram通知
   if (config.tgToken && config.tgChatId) {

@@ -8,6 +8,14 @@ on:
   # 允许手动触发
   workflow_dispatch:
 
+# 结果文档需要提交回仓库（results/ 目录）
+permissions:
+  contents: write
+
+concurrency:
+  group: proxyip-check
+  cancel-in-progress: false
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -27,3 +35,21 @@ jobs:
           CF_KV_NAMESPACE_ID: ${{ secrets.CF_KV_NAMESPACE_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: node check-script.js
+
+      - name: 提交检测结果文档
+        if: always()
+        run: |
+          if [ ! -d results ]; then
+            echo "没有 results 目录，跳过提交"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A results
+          if git diff --cached --quiet; then
+            echo "结果文档无变更，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore(results): 检测结果文档 $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          git push

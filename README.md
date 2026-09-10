@@ -222,3 +222,33 @@ A:
 ✅ DNS自动解析
 
 享受自动化的IP管理吧！
+
+
+---
+
+## 🛡️ GitHub Actions 保活（内置，无需任何本机定时任务）
+
+fxpip 面板 Worker 自带每小时一次（cron `0 * * * *`）的保活巡检，逻辑：
+
+1. 查询 `check-proxy.yml` 工作流状态 —— 如果被停用（`disabled_inactivity`，即 60 天无仓库活动被 GitHub 自动停用）→ 自动 `enable`；
+2. 查询最近一次运行时间 —— 超过 **6 小时** 没跑过（schedule 静默掉链子）→ 自动 `workflow_dispatch` 触发一次检测；
+3. 巡检结果写入 KV `keepalive_last`，面板「设置 → GitHub Actions 保活」可查看/手动巡检；
+4. 仅在“采取了动作”或“出错”时发送 Telegram 通知，正常情况静默。
+
+## 📁 结果文档（每次检测按分组归档）
+
+`check-script.js` 每次跑完会调用 `results-writer.js`，把结果写入仓库：
+
+```
+results/
+├── index.json                  # 最近 60 次运行的索引（时间 + 各组统计 + 文档路径）
+├── README.md                   # 目录说明
+└── <分组名>/
+    ├── 2026-09-10_1430Z.json   # 完整结果文档：统计/环比、DNS解析、本轮移除与恢复、ASN/colo/延迟分布、全部有效IP
+    └── 2026-09-10_1430Z.md     # 可读版摘要（表格）
+```
+
+- Workflow 里 `permissions: contents: write`，检测结束后自动 `git commit + push`（提交信息 `chore(results): 检测结果文档 <UTC时间>`）；
+- 保留策略：每个分组只留最近 `RESULTS_KEEP` 份（默认 36 ≈ 3 天），旧文档在写入新文档时自动删除；索引保留最近 `RESULTS_KEEP_INDEX` 次（默认 60）；
+- 每次检测产生仓库提交 → 同时让仓库保持“有活动”状态，进一步降低被 60 天规则停用的概率；
+- 本地复现：`RESULTS_DIR=results node check-script.js`（需要 `CF_ACCOUNT_ID` / `CF_KV_NAMESPACE_ID` / `CF_API_TOKEN` 环境变量）。

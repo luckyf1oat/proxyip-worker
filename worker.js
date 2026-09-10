@@ -462,6 +462,74 @@ async function resolveToCloudflare(g,ips){
       }
     }
 
+    // ===== GitHub Actions 保活（fxpip 内置，防 60 天无仓库活动被自动停用）=====
+    const KA_WORKFLOW = 'check-proxy.yml';
+    const KA_IDLE_HOURS = 6;      // 超过这么久没运行过检测 → 主动触发一次
+    const KA_REPO_FALLBACK = 'luckyf1oat/proxyip-worker';
+    async function keepActionsAlive(env){
+      const cfg=JSON.parse(await env.KV.get('config')||'{}');
+      const repo=cfg.githubRepo||KA_REPO_FALLBACK;
+      const token=cfg.githubToken;
+      const out={time:new Date().toISOString(),repo,workflow:KA_WORKFLOW,actions:[],ok:false};
+      if(!token){
+        out.msg='未配置 GitHub Token，跳过保活巡检';
+        await env.KV.put('keepalive_last',JSON.stringify(out));
+        return out;
+      }
+      const H={'Authorization':`Bearer ${token}`,'User-Agent':'ProxyIP-Manager','Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+      const base=`https://api.github.com/repos/${repo}/actions/workflows/${KA_WORKFLOW}`;
+      const dispatch=async(tag)=>{
+        const r=await fetch(base+'/dispatches',{method:'POST',headers:{...H,'Content-Type':'application/json'},body:JSON.stringify({ref:'main'})});
+        out.dispatchStatus=r.status;
+        out.actions.push(`${tag} → 已触发一次检测(${r.status===204?'成功':'失败 HTTP '+r.status+' '+await r.text()}）`);
+      };
+      try{
+        // 1) 工作流是否被停用（disabled_inactivity = 60天无活动被自动停用）
+        const r1=await fetch(base,{headers:H});
+        if(r1.ok){
+          const d1=await r1.json();
+          out.state=d1.state||'';
+          if(out.state&&out.state!=='active'){
+            const r2=await fetch(base+'/enable',{method:'PUT',headers:H});
+            out.enableStatus=r2.status;
+            out.actions.push(`工作流被停用（${out.state}）→ 已重新启用${r2.status===204?'成功':'失败 HTTP '+r2.status}`);
+          }
+        }else{
+          out.msg='查询工作流状态失败: HTTP '+r1.status;
+        }
+        // 2) 最近一次运行是否过期（防 schedule 静默断流）
+        const r3=await fetch(`${base}/runs?per_page=1`,{headers:H});
+        if(r3.ok){
+          const d3=await r3.json();
+          const last=(d3.workflow_runs||[])[0];
+          if(last){
+            const ageH=(Date.now()-Date.parse(last.created_at))/3600000;
+            out.lastRun=last.created_at;
+            out.lastRunAgeHours=+ageH.toFixed(2);
+            out.lastRunStatus=`${last.status}/${last.conclusion||'-'}`;
+            if(ageH>=KA_IDLE_HOURS)await dispatch(`距上次运行 ${ageH.toFixed(1)} 小时`);
+          }else{
+            out.actions.push('从未有过运行记录');
+            await dispatch('从未运行过');
+          }
+        }else{
+          out.msg=(out.msg?out.msg+' | ':'')+'查询运行记录失败: HTTP '+r3.status;
+        }
+        out.ok=!out.msg;
+      }catch(e){out.msg=e.message}
+      out.time=new Date().toISOString();
+      await env.KV.put('keepalive_last',JSON.stringify(out));
+      // 只在“采取动作”或“出错”时通知，正常情况静默
+      if(out.actions.length||!out.ok){
+        let msg=`<b>🛡️ fxpip 保活巡检</b>\n📦 <code>${repo}</code>\n`;
+        msg+=`⚙️ 工作流: ${out.state||'-'} | 上次检测: ${out.lastRunAgeHours!==undefined?out.lastRunAgeHours+'h 前':'未知'}\n`;
+        if(out.actions.length)msg+=out.actions.map(a=>'✅ '+a).join('\n')+'\n';
+        if(!out.ok)msg+='❌ '+(out.msg||'保活巡检失败');
+        try{await sendTG(cfg,msg)}catch{}
+      }
+      return out;
+    }
+
     function json(d,s=200){return new Response(JSON.stringify(d),{status:s,headers:{'Content-Type':'application/json','Access-Control-Allow-Origin':'*'}})}
     async function handleAPI(path,req,env,ctx){
       if(req.method==='OPTIONS')return new Response(null,{headers:{'Access-Control-Allow-Origin':'*','Access-Control-Allow-Headers':'*','Access-Control-Allow-Methods':'*'}});
@@ -533,6 +601,11 @@ async function resolveToCloudflare(g,ips){
           }
           return json({ok:1,msg:'GitHub Actions已触发'});
         }catch(e){return json({error:e.message},500)}
+      }
+      // GitHub Actions 保活：GET 看状态，POST 立即巡检一次
+      if(path==='/api/keepalive'){
+        if(req.method==='POST'){const r=await keepActionsAlive(env);return json(r)}
+        return json(JSON.parse(await env.KV.get('keepalive_last')||'{}'));
       }
       if(path==='/api/check'&&req.method==='POST'){ctx.waitUntil(autoCheckAndResolve(env));return json({ok:1,msg:'检测已触发'})}
 
@@ -1274,6 +1347,11 @@ async function resolveToCloudflare(g,ips){
     <label>延迟上限 (ms)</label><input id="c-max-latency" type="number" placeholder="3000" min="100" max="10000">
     <p style="color:var(--dm);font-size:11px;margin-top:4px">超过此延迟的IP将被移入回收站 (留空不限制)</p>
     </div>
+    <div class="cd"><h3>GitHub Actions 保活</h3>
+    <p id="ka-info" style="color:var(--dm);font-size:11px">状态加载中...</p>
+    <p style="color:var(--dm);font-size:11px;margin-top:4px">内置巡检（每小时）：工作流被停用会自动重新启用；超过 6 小时没运行过检测会自动触发一次。结果文档见仓库 results/ 目录。无需任何本机定时任务。</p>
+    <div class="row"><button class="btn" onclick="runKA()">🛡️ 立即巡检</button><button class="btn" onclick="loadKA()">🔄 刷新状态</button></div>
+    </div>
     <div class="cd"><h3>修改密码</h3><label>新密码(留空不改)</label><input id="c-pw" type="password"></div>
     <div class="cd"><h3>数据导出</h3>
     <p style="color:var(--dm);font-size:11px;margin-bottom:6px">导出配置和IP库数据</p>
@@ -1295,7 +1373,7 @@ async function resolveToCloudflare(g,ips){
     const Q="'";
     const tabs=[['ov','概览'],['ip','IP管理'],['gr','分组管理'],['bl','黑名单'],['trash','回收站'],['st','设置']];
     $('nav').innerHTML=tabs.map(([k,v],i)=>'<a onclick="sw('+Q+k+Q+')" id="n-'+k+'"'+(i===0?' class="on"':'')+'>'+v+'</a>').join('');
-    function sw(k){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('nav a').forEach(a=>a.classList.remove('on'));$('t-'+k)?.classList.add('on');$('n-'+k)?.classList.add('on');if(k==='ov')loadSt();if(k==='ip'&&CG)chgGrp();if(k==='gr')loadGrps();if(k==='bl')loadBL();if(k==='trash')loadTrash();if(k==='st')loadCfg()}
+    function sw(k){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));document.querySelectorAll('nav a').forEach(a=>a.classList.remove('on'));$('t-'+k)?.classList.add('on');$('n-'+k)?.classList.add('on');if(k==='ov')loadSt();if(k==='ip'&&CG)chgGrp();if(k==='gr')loadGrps();if(k==='bl')loadBL();if(k==='trash')loadTrash();if(k==='st'){loadCfg();loadKA()}}
 
     async function init(){
       const{needSetup}=await api('/api/init');
@@ -1532,6 +1610,24 @@ function cloneGrp(id){
       try{await api('/api/blacklist',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({blacklist:b})});tt('黑名单已保存');loadSt()}catch(e){tt(e.message,0)}
     }
 
+    // GitHub Actions 保活状态
+    async function loadKA(){
+      const el=$('ka-info'); if(!el)return;
+      try{
+        const r=await api('/api/keepalive');
+        if(!r||!r.time){el.textContent='还没有保活记录（下一个整点自动巡检）';return}
+        let h='上次巡检: '+new Date(r.time).toLocaleString();
+        h+='<br>工作流状态: '+(r.state||'-')+(r.state==='active'?' ✅':' ⚠️');
+        h+='<br>上次检测: '+(r.lastRunAgeHours!==undefined?r.lastRunAgeHours+'h 前 ('+(r.lastRunStatus||'-')+')':'未知');
+        if(r.actions&&r.actions.length)h+='<br><span style="color:var(--gn)">'+r.actions.join('<br>')+'</span>';
+        if(!r.ok)h+='<br><span style="color:var(--rd)">'+(r.msg||'巡检失败')+'</span>';
+        el.innerHTML=h;
+      }catch(e){el.textContent='读取失败: '+e.message}
+    }
+    async function runKA(){
+      try{await api('/api/keepalive',{method:'POST'});tt('保活巡检完成');loadKA()}catch(e){tt(e.message,0)}
+    }
+
     // Telegram Webhook 设置
     async function setTgWebhook(){
       const token=$('c-tt').value;
@@ -1706,5 +1802,6 @@ function cloneGrp(id){
       },
       async scheduled(event,env,ctx){
         ctx.waitUntil(scheduledFofaSearch(env));
+        ctx.waitUntil(keepActionsAlive(env));
       }
     };
