@@ -1,6 +1,115 @@
 {
- "updated": "2026-09-10T20:56:21.828Z",
+ "updated": "2026-09-11T00:10:38.938Z",
  "runs": [
+  {
+   "time": "2026-09-11T00:10:38.454Z",
+   "ref": "results/2026-09-11_0010Z",
+   "summary": {
+    "time": "2026-09-11T00:10:38.454Z",
+    "total": 2568,
+    "checked": 1620,
+    "valid": 1285,
+    "invalid": 199,
+    "duplicates": 136,
+    "overLatency": 0,
+    "failReasons": {
+     "timeout": 127,
+     "api_fail": 72
+    }
+   },
+   "groups": [
+    {
+     "id": "kr",
+     "name": "kr",
+     "domain": "krautofxpip.9999669.xyz,krfxpip.9999669.xyz",
+     "doc": "kr/2026-09-11_0010Z.json",
+     "docMd": "kr/2026-09-11_0010Z.md",
+     "total": 1064,
+     "alive": 1064,
+     "removed": 279,
+     "restored": 10,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 1064
+    },
+    {
+     "id": "kr443",
+     "name": "kr443",
+     "domain": "krautofxpip.9999669.xyz",
+     "doc": "kr443/2026-09-11_0010Z.json",
+     "docMd": "kr443/2026-09-11_0010Z.md",
+     "total": 50,
+     "alive": 50,
+     "removed": 48,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 50
+    },
+    {
+     "id": "kr1",
+     "name": "kr1",
+     "domain": "krfxpip.5671234.xyz",
+     "doc": "kr1/2026-09-11_0010Z.json",
+     "docMd": "kr1/2026-09-11_0010Z.md",
+     "total": 363,
+     "alive": 201,
+     "removed": 33,
+     "restored": 1,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 363
+    },
+    {
+     "id": "NL216071",
+     "name": "NL216071",
+     "domain": "nl216071.9999669.xyz",
+     "doc": "NL216071/2026-09-11_0010Z.json",
+     "docMd": "NL216071/2026-09-11_0010Z.md",
+     "total": 263,
+     "alive": 124,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 263
+    },
+    {
+     "id": "63023",
+     "name": "63023",
+     "domain": "63023.9999669.xyz",
+     "doc": "63023/2026-09-11_0010Z.json",
+     "docMd": "63023/2026-09-11_0010Z.md",
+     "total": 174,
+     "alive": 27,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 174
+    },
+    {
+     "id": "906",
+     "name": "906",
+     "domain": "906.9999669.xyz",
+     "doc": "906/2026-09-11_0010Z.json",
+     "docMd": "906/2026-09-11_0010Z.md",
+     "total": 222,
+     "alive": 8,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": false,
+     "dnsErr": "CF写入失败[906.9999669.xyz]:[{\"code\":81058,\"message\":\"An identical record already exists.\"}]",
+     "validIPs": 222
+    }
+   ]
+  },
   {
    "time": "2026-09-10T20:56:21.471Z",
    "ref": "results/2026-09-10_2056Z",
