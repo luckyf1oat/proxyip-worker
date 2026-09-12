@@ -1,0 +1,818 @@
+{
+ "runTime": "2026-09-12T12:16:47.641Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 49,
+  "alive": 49,
+  "removedThisRun": 59,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 3,
+   "alive": 3,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "3.35.51.12:443",
+   "latency": 176,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "183.102.143.226:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.37.54.133:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.95.95.3:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.132.165.114:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "168.110.121.213:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "121.157.83.154:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.102.143.141:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.100.36.148:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "43.108.106.187:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "125.132.217.205:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.159.0.119:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "49.143.194.54:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.132.165.5:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.190.46.249:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.28.70.185:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "49.143.194.50:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.51.225.7:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.88.72.66:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "146.56.40.234:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "121.147.63.9:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "160.202.162.178:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS45382",
+   "country": "KR",
+   "org": "Hostcenter"
+  },
+  {
+   "ipPort": "20.249.20.158:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS8075",
+   "country": "KR",
+   "org": "Microsoft Corporation"
+  },
+  {
+   "ipPort": "59.16.219.140:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "158.179.175.117:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "14.55.111.2:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.171.213.232:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.39.160.244:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "49.143.194.51:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "43.131.224.11:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "141.164.34.193:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  },
+  {
+   "ipPort": "121.172.21.5:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.98.142.248:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.100.67.247:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.102.143.210:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.159.48.60:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.33.233.157:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.215.54.251:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.215.54.176:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.75.109.3:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.165.121.105:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "43.164.140.37:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "218.156.83.30:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.248.135.140:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.201.169.66:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "43.133.86.74:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "59.22.161.26:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.165.222.230:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.248.134.240:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.197.167.47:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.97.115.160:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.97.115.222:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.198.104.65:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.248.135.65:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "43.155.144.102:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "121.176.46.234:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.248.135.96:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.171.159.32:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.1.128.139:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 54,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 55,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.34:443",
+   "latency": 56,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 57,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "131.186.26.94:443",
+   "latency": 194,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "146.56.158.34:443",
+   "latency": 197,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "146.56.142.151:443",
+   "latency": 198,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "146.56.151.92:443",
+   "latency": 198,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "IAD",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    26
+   ],
+   [
+    "AS20473",
+    5
+   ],
+   [
+    "AS16509",
+    4
+   ],
+   [
+    "AS132203",
+    4
+   ],
+   [
+    "AS7488",
+    3
+   ],
+   [
+    "AS4766",
+    2
+   ],
+   [
+    "AS45102",
+    2
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS9848",
+    1
+   ],
+   [
+    "AS138195",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "IAD",
+    49
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    49
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    35
+   ],
+   [
+    "Chuncheon",
+    10
+   ],
+   [
+    "Sejong",
+    2
+   ],
+   [
+    "Seongnam",
+    1
+   ],
+   [
+    "Icheon",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    26
+   ],
+   [
+    "The Constant Company, LLC",
+    5
+   ],
+   [
+    "Amazon.com, Inc.",
+    4
+   ],
+   [
+    "CNServer LLC",
+    4
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    4
+   ],
+   [
+    "Korea Telecom",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "SEJONG NETWORKS",
+    1
+   ],
+   [
+    "Alibaba (US) Technology Co., Ltd.",
+    1
+   ],
+   [
+    "MOACK.Co.LTD",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 4,
+   "100-200ms": 6,
+   "200-500ms": 38,
+   "500-1000ms": 0,
+   ">1000ms": 1,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|497ms|AS4766|IAD|valid",
+  "141.164.42.2:443|202ms|AS20473|IAD|valid",
+  "131.186.16.166:443|211ms|AS31898|IAD|valid",
+  "47.80.57.116:443|205ms|AS45102|IAD|valid",
+  "146.56.142.151:443|198ms|AS31898|IAD|valid",
+  "134.185.127.173:443|208ms|AS31898|IAD|valid",
+  "152.67.208.47:443|203ms|AS31898|IAD|valid",
+  "13.124.169.29:443|205ms|AS16509|IAD|valid",
+  "166.88.33.86:443|57ms|AS0|IAD|valid",
+  "146.56.151.92:443|198ms|AS31898|IAD|valid",
+  "152.67.214.155:443|207ms|AS31898|IAD|valid",
+  "146.56.119.205:443|207ms|AS31898|IAD|valid",
+  "203.248.94.49:443|202ms|AS9848|IAD|valid",
+  "131.186.26.94:443|194ms|AS31898|IAD|valid",
+  "140.245.65.122:443|210ms|AS31898|IAD|valid",
+  "43.201.2.23:443|219ms|AS16509|IAD|valid",
+  "193.122.96.190:443|200ms|AS31898|IAD|valid",
+  "54.180.141.246:443|205ms|AS16509|IAD|valid",
+  "193.122.119.241:443|199ms|AS31898|IAD|valid",
+  "146.56.135.196:443|203ms|AS31898|IAD|valid",
+  "158.247.210.172:443|201ms|AS20473|IAD|valid",
+  "43.131.225.115:443|207ms|AS132203|IAD|valid",
+  "101.33.68.172:443|206ms|AS132203|IAD|valid",
+  "130.162.137.247:443|203ms|AS31898|IAD|valid",
+  "166.88.33.113:443|55ms|AS7488|IAD|valid",
+  "64.110.70.64:443|209ms|AS31898|IAD|valid",
+  "141.164.35.4:443|206ms|AS20473|IAD|valid",
+  "134.185.112.134:443|200ms|AS31898|IAD|valid",
+  "166.88.33.34:443|56ms|AS7488|IAD|valid",
+  "146.56.115.180:443|199ms|AS31898|IAD|valid",
+  "193.123.236.206:443|202ms|AS31898|IAD|valid",
+  "140.238.30.217:443|207ms|AS31898|IAD|valid",
+  "141.164.49.98:443|211ms|AS20473|IAD|valid",
+  "134.185.114.16:443|201ms|AS31898|IAD|valid",
+  "166.88.33.149:443|54ms|AS7488|IAD|valid",
+  "129.154.197.113:443|207ms|AS31898|IAD|valid",
+  "8.220.214.146:443|203ms|AS45102|IAD|valid",
+  "168.107.14.233:443|1756ms|AS31898|IAD|valid",
+  "129.154.212.204:443|216ms|AS31898|IAD|valid",
+  "140.245.70.145:443|213ms|AS31898|IAD|valid",
+  "43.133.251.155:443|211ms|AS132203|IAD|valid",
+  "140.238.15.158:443|202ms|AS31898|IAD|valid",
+  "61.77.229.182:443|209ms|AS4766|IAD|valid",
+  "158.247.224.240:443|203ms|AS20473|IAD|valid",
+  "146.56.158.34:443|197ms|AS31898|IAD|valid",
+  "61.110.5.237:443|230ms|AS138195|IAD|valid",
+  "193.122.115.184:443|209ms|AS31898|IAD|valid",
+  "3.35.138.237:443|206ms|AS16509|IAD|valid",
+  "43.155.136.250:443|210ms|AS132203|IAD|valid"
+ ],
+ "_file": "2026-09-12_1216Z.json"
+}
