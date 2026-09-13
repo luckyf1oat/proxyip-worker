@@ -1,0 +1,214 @@
+{
+ "runTime": "2026-09-13T20:48:38.450Z",
+ "group": {
+  "id": "906",
+  "name": "906",
+  "domain": "906.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 21,
+  "alive": 21,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "216.234.142.42:443",
+   "latency": 58,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "179.255.102.54:443",
+   "latency": 40,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "69.63.196.2:443",
+   "latency": 41,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.253.230.185:443",
+   "latency": 41,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "64.186.245.27:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.253.254.122:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.250.111:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "154.26.178.77:443",
+   "latency": 43,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.255.144.153:443",
+   "latency": 43,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.225.172:443",
+   "latency": 43,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.244.113:443",
+   "latency": 43,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS906",
+    21
+   ]
+  ],
+  "byColo": [
+   [
+    "ORD",
+    21
+   ]
+  ],
+  "byCountry": [
+   [
+    "BR",
+    13
+   ],
+   [
+    "US",
+    6
+   ],
+   [
+    "CN",
+    2
+   ]
+  ],
+  "byCity": [
+   [
+    "Rio de Janeiro",
+    13
+   ],
+   [
+    "Los Angeles",
+    6
+   ],
+   [
+    "Hong Kong",
+    2
+   ]
+  ],
+  "byOrg": [
+   [
+    "DMIT Cloud Services",
+    21
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 15,
+   "50-100ms": 1,
+   "100-200ms": 4,
+   "200-500ms": 1,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "179.253.228.118:443|49ms|AS906|ORD|valid",
+  "154.26.178.77:443|43ms|AS906|ORD|valid",
+  "64.186.245.27:443|42ms|AS906|ORD|valid",
+  "179.255.144.153:443|43ms|AS906|ORD|valid",
+  "174.136.205.28:443|48ms|AS906|ORD|valid",
+  "179.253.254.122:443|42ms|AS906|ORD|valid",
+  "179.255.102.54:443|40ms|AS906|ORD|valid",
+  "69.63.196.2:443|41ms|AS906|ORD|valid",
+  "191.223.217.50:443|187ms|AS906|ORD|valid",
+  "179.253.225.172:443|43ms|AS906|ORD|valid",
+  "45.59.186.102:443|48ms|AS906|ORD|valid",
+  "191.223.217.255:443|187ms|AS906|ORD|valid",
+  "179.253.230.185:443|41ms|AS906|ORD|valid",
+  "154.3.39.40:443|188ms|AS906|ORD|valid",
+  "154.17.22.82:443|50ms|AS906|ORD|valid",
+  "179.253.250.120:443|49ms|AS906|ORD|valid",
+  "179.253.250.111:443|42ms|AS906|ORD|valid",
+  "179.253.241.115:443|48ms|AS906|ORD|valid",
+  "179.253.244.113:443|43ms|AS906|ORD|valid",
+  "103.117.101.109:443|205ms|AS906|ORD|valid",
+  "191.223.212.83:443|185ms|AS906|ORD|valid"
+ ],
+ "_file": "2026-09-13_2048Z.json"
+}
