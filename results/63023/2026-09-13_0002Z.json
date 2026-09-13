@@ -1,0 +1,263 @@
+{
+ "runTime": "2026-09-13T00:02:52.895Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 28,
+  "alive": 28,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "172.99.189.217:443",
+   "latency": 116,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Paris",
+   "country": "FR"
+  },
+  {
+   "ipPort": "140.99.83.16:443",
+   "latency": 120,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "172.99.190.49:443",
+   "latency": 121,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "68.168.31.169:443",
+   "latency": 122,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "170.101.106.144:443",
+   "latency": 122,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Mountlake Terrace",
+   "country": "US"
+  },
+  {
+   "ipPort": "140.99.101.63:443",
+   "latency": 124,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Frankfurt am Main",
+   "country": "DE"
+  },
+  {
+   "ipPort": "108.165.235.48:443",
+   "latency": 124,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Orem",
+   "country": "US"
+  },
+  {
+   "ipPort": "186.190.213.123:443",
+   "latency": 127,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "23.168.72.190:443",
+   "latency": 128,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.227:443",
+   "latency": 129,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "DFW",
+   "city": "Amsterdam",
+   "country": "NL"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS63023",
+    28
+   ]
+  ],
+  "byColo": [
+   [
+    "DFW",
+    28
+   ]
+  ],
+  "byCountry": [
+   [
+    "NL",
+    14
+   ],
+   [
+    "US",
+    4
+   ],
+   [
+    "GB",
+    3
+   ],
+   [
+    "DE",
+    2
+   ],
+   [
+    "The Netherlands",
+    1
+   ],
+   [
+    "FR",
+    1
+   ],
+   [
+    "IT",
+    1
+   ],
+   [
+    "BR",
+    1
+   ],
+   [
+    "IN",
+    1
+   ]
+  ],
+  "byCity": [
+   [
+    "Amsterdam",
+    15
+   ],
+   [
+    "London",
+    3
+   ],
+   [
+    "Frankfurt am Main",
+    2
+   ],
+   [
+    "Pittsburgh",
+    1
+   ],
+   [
+    "Paris",
+    1
+   ],
+   [
+    "Milan",
+    1
+   ],
+   [
+    "Mountlake Terrace",
+    1
+   ],
+   [
+    "Fort Lauderdale",
+    1
+   ],
+   [
+    "Orem",
+    1
+   ],
+   [
+    "Rio de Janeiro",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "GTHost",
+    28
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 28,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "68.168.31.169:443|122ms|AS63023|DFW|valid",
+  "216.152.157.140:443|134ms|AS63023|DFW|valid",
+  "186.190.213.5:443|135ms|AS63023|DFW|valid",
+  "186.190.213.227:443|129ms|AS63023|DFW|valid",
+  "186.190.213.37:443|130ms|AS63023|DFW|valid",
+  "186.190.213.123:443|127ms|AS63023|DFW|valid",
+  "186.190.213.82:443|135ms|AS63023|DFW|valid",
+  "67.220.80.99:443|131ms|AS63023|DFW|valid",
+  "23.168.72.17:443|131ms|AS63023|DFW|valid",
+  "23.168.72.85:443|133ms|AS63023|DFW|valid",
+  "67.220.80.6:443|140ms|AS63023|DFW|valid",
+  "23.168.72.69:443|129ms|AS63023|DFW|valid",
+  "23.168.72.190:443|128ms|AS63023|DFW|valid",
+  "23.168.72.90:443|136ms|AS63023|DFW|valid",
+  "186.190.213.72:443|130ms|AS63023|DFW|valid",
+  "186.190.213.211:443|130ms|AS63023|DFW|valid",
+  "170.168.61.171:443|133ms|AS63023|DFW|valid",
+  "67.220.82.10:443|130ms|AS63023|DFW|valid",
+  "140.99.101.63:443|124ms|AS63023|DFW|valid",
+  "172.99.189.217:443|116ms|AS63023|DFW|valid",
+  "216.106.191.53:443|143ms|AS63023|DFW|valid",
+  "170.101.106.144:443|122ms|AS63023|DFW|valid",
+  "191.44.66.34:443|131ms|AS63023|DFW|valid",
+  "172.99.190.49:443|121ms|AS63023|DFW|valid",
+  "108.165.235.48:443|124ms|AS63023|DFW|valid",
+  "179.255.189.42:443|132ms|AS63023|DFW|valid",
+  "140.99.83.16:443|120ms|AS63023|DFW|valid",
+  "103.160.59.198:443|130ms|AS63023|DFW|valid"
+ ],
+ "_file": "2026-09-13_0002Z.json"
+}
