@@ -1,0 +1,228 @@
+{
+ "runTime": "2026-09-15T00:37:09.154Z",
+ "group": {
+  "id": "906",
+  "name": "906",
+  "domain": "906.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 27,
+  "alive": 27,
+  "removedThisRun": 1,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": -1,
+   "alive": -1,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "179.255.114.57:443",
+   "latency": 58,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS906",
+   "country": "BR",
+   "org": "DMIT Cloud Services"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "179.253.250.111:443",
+   "latency": 41,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.255.144.153:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "174.136.205.28:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.253.254.122:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.250.120:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.241.115:443",
+   "latency": 42,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.244.113:443",
+   "latency": 43,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.253.228.118:443",
+   "latency": 48,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "154.26.178.77:443",
+   "latency": 48,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.255.102.54:443",
+   "latency": 48,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "ORD",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS906",
+    27
+   ]
+  ],
+  "byColo": [
+   [
+    "ORD",
+    27
+   ]
+  ],
+  "byCountry": [
+   [
+    "BR",
+    18
+   ],
+   [
+    "US",
+    5
+   ],
+   [
+    "CN",
+    3
+   ],
+   [
+    "JP",
+    1
+   ]
+  ],
+  "byCity": [
+   [
+    "Rio de Janeiro",
+    18
+   ],
+   [
+    "Los Angeles",
+    5
+   ],
+   [
+    "Hong Kong",
+    3
+   ],
+   [
+    "Tokyo",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "DMIT Cloud Services",
+    27
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 18,
+   "50-100ms": 0,
+   "100-200ms": 7,
+   "200-500ms": 2,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "179.253.228.118:443|48ms|AS906|ORD|valid",
+  "154.26.178.77:443|48ms|AS906|ORD|valid",
+  "64.186.245.27:443|49ms|AS906|ORD|valid",
+  "179.255.144.153:443|42ms|AS906|ORD|valid",
+  "174.136.205.28:443|42ms|AS906|ORD|valid",
+  "179.253.254.122:443|42ms|AS906|ORD|valid",
+  "179.255.102.54:443|48ms|AS906|ORD|valid",
+  "69.63.196.2:443|48ms|AS906|ORD|valid",
+  "191.223.217.50:443|195ms|AS906|ORD|valid",
+  "179.253.225.172:443|49ms|AS906|ORD|valid",
+  "45.59.186.102:443|49ms|AS906|ORD|valid",
+  "191.223.217.255:443|186ms|AS906|ORD|valid",
+  "179.253.230.185:443|49ms|AS906|ORD|valid",
+  "154.3.39.40:443|187ms|AS906|ORD|valid",
+  "179.253.250.120:443|42ms|AS906|ORD|valid",
+  "179.253.250.111:443|41ms|AS906|ORD|valid",
+  "179.253.241.115:443|42ms|AS906|ORD|valid",
+  "179.253.244.113:443|43ms|AS906|ORD|valid",
+  "103.117.101.109:443|223ms|AS906|ORD|valid",
+  "191.223.212.83:443|195ms|AS906|ORD|valid",
+  "191.223.214.19:443|190ms|AS906|ORD|valid",
+  "179.255.102.6:443|48ms|AS906|ORD|valid",
+  "154.12.190.144:443|142ms|AS906|ORD|valid",
+  "191.222.219.135:443|186ms|AS906|ORD|valid",
+  "103.135.250.133:443|211ms|AS906|ORD|valid",
+  "179.255.151.30:443|48ms|AS906|ORD|valid",
+  "179.255.154.39:443|49ms|AS906|ORD|valid"
+ ],
+ "_file": "2026-09-15_0037Z.json"
+}
