@@ -1,6 +1,114 @@
 {
- "updated": "2026-09-15T22:59:52.859Z",
+ "updated": "2026-09-16T04:50:00.750Z",
  "runs": [
+  {
+   "time": "2026-09-16T04:50:00.472Z",
+   "ref": "results/2026-09-16_0450Z",
+   "summary": {
+    "time": "2026-09-16T04:50:00.472Z",
+    "total": 1744,
+    "checked": 1320,
+    "valid": 1292,
+    "invalid": 28,
+    "duplicates": 0,
+    "overLatency": 0,
+    "failReasons": {
+     "timeout": 28
+    }
+   },
+   "groups": [
+    {
+     "id": "kr",
+     "name": "kr",
+     "domain": "krautofxpip.9999669.xyz,krfxpip.9999669.xyz",
+     "doc": "kr/2026-09-16_0450Z.json",
+     "docMd": "kr/2026-09-16_0450Z.md",
+     "total": 1088,
+     "alive": 1088,
+     "removed": 18,
+     "restored": 5,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 1088
+    },
+    {
+     "id": "kr443",
+     "name": "kr443",
+     "domain": "krautofxpip.9999669.xyz",
+     "doc": "kr443/2026-09-16_0450Z.json",
+     "docMd": "kr443/2026-09-16_0450Z.md",
+     "total": 54,
+     "alive": 54,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 54
+    },
+    {
+     "id": "kr1",
+     "name": "kr1",
+     "domain": "krfxpip.5671234.xyz",
+     "doc": "kr1/2026-09-16_0450Z.json",
+     "docMd": "kr1/2026-09-16_0450Z.md",
+     "total": 255,
+     "alive": 255,
+     "removed": 4,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 255
+    },
+    {
+     "id": "NL216071",
+     "name": "NL216071",
+     "domain": "nl216071.9999669.xyz",
+     "doc": "NL216071/2026-09-16_0450Z.json",
+     "docMd": "NL216071/2026-09-16_0450Z.md",
+     "total": 263,
+     "alive": 263,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 263
+    },
+    {
+     "id": "63023",
+     "name": "63023",
+     "domain": "63023.9999669.xyz",
+     "doc": "63023/2026-09-16_0450Z.json",
+     "docMd": "63023/2026-09-16_0450Z.md",
+     "total": 26,
+     "alive": 26,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 26
+    },
+    {
+     "id": "906",
+     "name": "906",
+     "domain": "906.9999669.xyz",
+     "doc": "906/2026-09-16_0450Z.json",
+     "docMd": "906/2026-09-16_0450Z.md",
+     "total": 27,
+     "alive": 27,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 27
+    }
+   ]
+  },
   {
    "time": "2026-09-15T22:59:52.540Z",
    "ref": "results/2026-09-15_2259Z",
