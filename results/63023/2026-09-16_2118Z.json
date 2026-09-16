@@ -1,0 +1,258 @@
+{
+ "runTime": "2026-09-16T21:18:37.490Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 25,
+  "alive": 25,
+  "removedThisRun": 1,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 1,
+  "change": {
+   "total": -1,
+   "alive": -1,
+   "overLatency": 1
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "140.99.101.63:443",
+   "latency": 2131,
+   "reason": "over_latency_1000ms",
+   "failCount": 0,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "68.168.31.169:443",
+   "latency": 81,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "170.101.106.144:443",
+   "latency": 81,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Mountlake Terrace",
+   "country": "US"
+  },
+  {
+   "ipPort": "140.99.83.16:443",
+   "latency": 81,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "186.190.213.82:443",
+   "latency": 87,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "23.168.72.17:443",
+   "latency": 87,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "The Netherlands"
+  },
+  {
+   "ipPort": "186.190.213.37:443",
+   "latency": 90,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "23.168.72.190:443",
+   "latency": 90,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.5:443",
+   "latency": 91,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "103.160.59.4:443",
+   "latency": 91,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Delhi",
+   "country": "IN"
+  },
+  {
+   "ipPort": "186.190.213.227:443",
+   "latency": 92,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS63023",
+    25
+   ]
+  ],
+  "byColo": [
+   [
+    "IAD",
+    25
+   ]
+  ],
+  "byCountry": [
+   [
+    "NL",
+    14
+   ],
+   [
+    "US",
+    4
+   ],
+   [
+    "GB",
+    2
+   ],
+   [
+    "IN",
+    2
+   ],
+   [
+    "The Netherlands",
+    1
+   ],
+   [
+    "DE",
+    1
+   ],
+   [
+    "BR",
+    1
+   ]
+  ],
+  "byCity": [
+   [
+    "Amsterdam",
+    15
+   ],
+   [
+    "London",
+    2
+   ],
+   [
+    "Delhi",
+    2
+   ],
+   [
+    "Pittsburgh",
+    1
+   ],
+   [
+    "Frankfurt am Main",
+    1
+   ],
+   [
+    "Mountlake Terrace",
+    1
+   ],
+   [
+    "Fort Lauderdale",
+    1
+   ],
+   [
+    "Orem",
+    1
+   ],
+   [
+    "Rio de Janeiro",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "GTHost",
+    25
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 25,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "68.168.31.169:443|81ms|AS63023|IAD|valid",
+  "216.152.157.140:443|93ms|AS63023|IAD|valid",
+  "186.190.213.5:443|91ms|AS63023|IAD|valid",
+  "186.190.213.227:443|92ms|AS63023|IAD|valid",
+  "186.190.213.37:443|90ms|AS63023|IAD|valid",
+  "186.190.213.123:443|94ms|AS63023|IAD|valid",
+  "186.190.213.82:443|87ms|AS63023|IAD|valid",
+  "67.220.80.99:443|92ms|AS63023|IAD|valid",
+  "23.168.72.17:443|87ms|AS63023|IAD|valid",
+  "23.168.72.85:443|92ms|AS63023|IAD|valid",
+  "67.220.80.6:443|94ms|AS63023|IAD|valid",
+  "23.168.72.69:443|95ms|AS63023|IAD|valid",
+  "23.168.72.190:443|90ms|AS63023|IAD|valid",
+  "23.168.72.90:443|93ms|AS63023|IAD|valid",
+  "186.190.213.72:443|97ms|AS63023|IAD|valid",
+  "186.190.213.211:443|95ms|AS63023|IAD|valid",
+  "67.220.82.10:443|92ms|AS63023|IAD|valid",
+  "170.101.106.144:443|81ms|AS63023|IAD|valid",
+  "191.44.66.34:443|93ms|AS63023|IAD|valid",
+  "108.165.235.48:443|94ms|AS63023|IAD|valid",
+  "179.255.189.42:443|95ms|AS63023|IAD|valid",
+  "140.99.83.16:443|81ms|AS63023|IAD|valid",
+  "103.160.59.198:443|93ms|AS63023|IAD|valid",
+  "103.160.59.4:443|91ms|AS63023|IAD|valid",
+  "170.168.61.171:443|95ms|AS63023|IAD|valid"
+ ],
+ "_file": "2026-09-16_2118Z.json"
+}
