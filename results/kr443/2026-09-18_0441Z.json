@@ -1,0 +1,564 @@
+{
+ "runTime": "2026-09-18T04:41:18.767Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 61,
+  "alive": 61,
+  "removedThisRun": 36,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 8,
+   "alive": 8,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "168.107.46.61:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "20.214.125.98:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS8075",
+   "country": "KR",
+   "org": "Microsoft Corporation"
+  },
+  {
+   "ipPort": "168.110.112.49:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "43.108.35.11:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "43.155.234.195:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "43.203.67.126:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "129.154.63.71:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "134.185.125.171:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "72.246.103.19:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS20940",
+   "country": "KR",
+   "org": "Akamai International B.V."
+  },
+  {
+   "ipPort": "18.64.8.108:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "52.84.167.206:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "101.79.218.2:443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS54994",
+   "country": "KR",
+   "org": "Meteverse Limited."
+  },
+  {
+   "ipPort": "211.39.223.81:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.39.223.82:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "101.79.217.3:443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS54994",
+   "country": "KR",
+   "org": "Meteverse Limited."
+  },
+  {
+   "ipPort": "13.225.134.3:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "101.79.218.6:443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS54994",
+   "country": "KR",
+   "org": "Meteverse Limited."
+  },
+  {
+   "ipPort": "168.107.22.250:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "211.39.223.80:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "101.79.218.5:443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS54994",
+   "country": "KR",
+   "org": "Meteverse Limited."
+  },
+  {
+   "ipPort": "43.155.215.183:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "141.164.46.122:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  },
+  {
+   "ipPort": "38.54.40.229:443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS154177",
+   "country": "KR",
+   "org": "LIGHT NODE LIMITED"
+  },
+  {
+   "ipPort": "34.47.117.57:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS396982",
+   "country": "KR",
+   "org": "Google LLC"
+  },
+  {
+   "ipPort": "34.47.78.159:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS396982",
+   "country": "KR",
+   "org": "Google LLC"
+  },
+  {
+   "ipPort": "141.164.37.91:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  },
+  {
+   "ipPort": "43.164.140.40:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "211.186.230.7:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.245.36.237:443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.190:443",
+   "latency": 3,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 4,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 5,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.34:443",
+   "latency": 5,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 5,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.157:443",
+   "latency": 6,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.137:443",
+   "latency": 8,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "13.124.169.29:443",
+   "latency": 132,
+   "asn": "AS16509",
+   "org": "Amazon.com, Inc.",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    28
+   ],
+   [
+    "AS16509",
+    7
+   ],
+   [
+    "AS132203",
+    7
+   ],
+   [
+    "AS7488",
+    6
+   ],
+   [
+    "AS20473",
+    5
+   ],
+   [
+    "AS4766",
+    2
+   ],
+   [
+    "AS9318",
+    2
+   ],
+   [
+    "AS45102",
+    1
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS138195",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "LAX",
+    61
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    61
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    46
+   ],
+   [
+    "Chuncheon",
+    12
+   ],
+   [
+    "Seongnam",
+    1
+   ],
+   [
+    "Icheon",
+    1
+   ],
+   [
+    "Sejong",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    28
+   ],
+   [
+    "Amazon.com, Inc.",
+    7
+   ],
+   [
+    "CNServer LLC",
+    7
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    7
+   ],
+   [
+    "The Constant Company, LLC",
+    5
+   ],
+   [
+    "Korea Telecom",
+    2
+   ],
+   [
+    "SK Broadband Co Ltd",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "MOACK.Co.LTD",
+    1
+   ],
+   [
+    "LG POWERCOMM",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 7,
+   "50-100ms": 0,
+   "100-200ms": 53,
+   "200-500ms": 1,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|232ms|AS4766|LAX|valid",
+  "141.164.42.2:443|138ms|AS20473|LAX|valid",
+  "131.186.16.166:443|133ms|AS31898|LAX|valid",
+  "47.80.57.116:443|139ms|AS45102|LAX|valid",
+  "146.56.142.151:443|134ms|AS31898|LAX|valid",
+  "134.185.127.173:443|137ms|AS31898|LAX|valid",
+  "152.67.208.47:443|135ms|AS31898|LAX|valid",
+  "13.124.169.29:443|132ms|AS16509|LAX|valid",
+  "166.88.33.86:443|4ms|AS0|LAX|valid",
+  "146.56.151.92:443|133ms|AS31898|LAX|valid",
+  "152.67.214.155:443|136ms|AS31898|LAX|valid",
+  "146.56.119.205:443|138ms|AS31898|LAX|valid",
+  "131.186.26.94:443|134ms|AS31898|LAX|valid",
+  "140.245.65.122:443|135ms|AS31898|LAX|valid",
+  "193.122.96.190:443|132ms|AS31898|LAX|valid",
+  "54.180.141.246:443|133ms|AS16509|LAX|valid",
+  "193.122.119.241:443|132ms|AS31898|LAX|valid",
+  "146.56.135.196:443|133ms|AS31898|LAX|valid",
+  "158.247.210.172:443|142ms|AS20473|LAX|valid",
+  "43.131.225.115:443|135ms|AS132203|LAX|valid",
+  "101.33.68.172:443|134ms|AS132203|LAX|valid",
+  "130.162.137.247:443|132ms|AS31898|LAX|valid",
+  "166.88.33.113:443|5ms|AS7488|LAX|valid",
+  "141.164.35.4:443|134ms|AS20473|LAX|valid",
+  "134.185.112.134:443|137ms|AS31898|LAX|valid",
+  "166.88.33.34:443|5ms|AS7488|LAX|valid",
+  "146.56.115.180:443|138ms|AS31898|LAX|valid",
+  "193.123.236.206:443|135ms|AS31898|LAX|valid",
+  "140.238.30.217:443|132ms|AS31898|LAX|valid",
+  "141.164.49.98:443|133ms|AS20473|LAX|valid",
+  "134.185.114.16:443|138ms|AS31898|LAX|valid",
+  "166.88.33.149:443|5ms|AS7488|LAX|valid",
+  "129.154.197.113:443|133ms|AS31898|LAX|valid",
+  "168.107.14.233:443|135ms|AS31898|LAX|valid",
+  "129.154.212.204:443|134ms|AS31898|LAX|valid",
+  "140.245.70.145:443|137ms|AS31898|LAX|valid",
+  "43.133.251.155:443|135ms|AS132203|LAX|valid",
+  "140.238.15.158:443|133ms|AS31898|LAX|valid",
+  "61.77.229.182:443|140ms|AS4766|LAX|valid",
+  "158.247.224.240:443|138ms|AS20473|LAX|valid",
+  "146.56.158.34:443|134ms|AS31898|LAX|valid",
+  "61.110.5.237:443|158ms|AS138195|LAX|valid",
+  "193.122.115.184:443|136ms|AS31898|LAX|valid",
+  "3.35.138.237:443|133ms|AS16509|LAX|valid",
+  "43.155.136.250:443|132ms|AS132203|LAX|valid",
+  "3.35.51.12:443|136ms|AS16509|LAX|valid",
+  "166.88.33.190:443|3ms|AS7488|LAX|valid",
+  "166.88.33.137:443|8ms|AS7488|LAX|valid",
+  "152.67.203.125:443|137ms|AS31898|LAX|valid",
+  "166.88.33.157:443|6ms|AS7488|LAX|valid",
+  "3.37.245.168:443|142ms|AS16509|LAX|valid",
+  "13.125.141.213:443|134ms|AS16509|LAX|valid",
+  "146.56.106.214:443|137ms|AS31898|LAX|valid",
+  "43.131.228.129:443|133ms|AS132203|LAX|valid",
+  "50.114.114.31:443|136ms|AS9318|LAX|valid",
+  "43.133.69.254:443|134ms|AS132203|LAX|valid",
+  "54.116.250.226:443|138ms|AS16509|LAX|valid",
+  "161.118.153.136:443|134ms|AS31898|LAX|valid",
+  "182.224.185.243:443|147ms|AS17858|LAX|valid",
+  "39.115.137.14:443|143ms|AS9318|LAX|valid",
+  "43.164.134.99:443|134ms|AS132203|LAX|valid"
+ ],
+ "_file": "2026-09-18_0441Z.json"
+}
