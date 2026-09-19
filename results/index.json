@@ -1,6 +1,114 @@
 {
- "updated": "2026-09-18T20:55:57.495Z",
+ "updated": "2026-09-19T00:18:56.048Z",
  "runs": [
+  {
+   "time": "2026-09-19T00:18:55.745Z",
+   "ref": "results/2026-09-19_0018Z",
+   "summary": {
+    "time": "2026-09-19T00:18:55.745Z",
+    "total": 1769,
+    "checked": 1769,
+    "valid": 1749,
+    "invalid": 20,
+    "duplicates": 0,
+    "overLatency": 0,
+    "failReasons": {
+     "timeout": 20
+    }
+   },
+   "groups": [
+    {
+     "id": "kr",
+     "name": "kr",
+     "domain": "krautofxpip.9999669.xyz,krfxpip.9999669.xyz",
+     "doc": "kr/2026-09-19_0018Z.json",
+     "docMd": "kr/2026-09-19_0018Z.md",
+     "total": 1098,
+     "alive": 1098,
+     "removed": 13,
+     "restored": 10,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 1098
+    },
+    {
+     "id": "kr443",
+     "name": "kr443",
+     "domain": "krautofxpip.9999669.xyz",
+     "doc": "kr443/2026-09-19_0018Z.json",
+     "docMd": "kr443/2026-09-19_0018Z.md",
+     "total": 56,
+     "alive": 56,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 56
+    },
+    {
+     "id": "kr1",
+     "name": "kr1",
+     "domain": "krfxpip.5671234.xyz",
+     "doc": "kr1/2026-09-19_0018Z.json",
+     "docMd": "kr1/2026-09-19_0018Z.md",
+     "total": 255,
+     "alive": 255,
+     "removed": 1,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 255
+    },
+    {
+     "id": "NL216071",
+     "name": "NL216071",
+     "domain": "nl216071.9999669.xyz",
+     "doc": "NL216071/2026-09-19_0018Z.json",
+     "docMd": "NL216071/2026-09-19_0018Z.md",
+     "total": 289,
+     "alive": 289,
+     "removed": 0,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 289
+    },
+    {
+     "id": "63023",
+     "name": "63023",
+     "domain": "63023.9999669.xyz",
+     "doc": "63023/2026-09-19_0018Z.json",
+     "docMd": "63023/2026-09-19_0018Z.md",
+     "total": 26,
+     "alive": 26,
+     "removed": 1,
+     "restored": 1,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 26
+    },
+    {
+     "id": "906",
+     "name": "906",
+     "domain": "906.9999669.xyz",
+     "doc": "906/2026-09-19_0018Z.json",
+     "docMd": "906/2026-09-19_0018Z.md",
+     "total": 25,
+     "alive": 25,
+     "removed": 2,
+     "restored": 0,
+     "overLatency": 0,
+     "dnsOK": true,
+     "dnsErr": "",
+     "validIPs": 25
+    }
+   ]
+  },
   {
    "time": "2026-09-18T20:55:57.243Z",
    "ref": "results/2026-09-18_2055Z",
@@ -3824,115 +3932,6 @@
      "dnsOK": true,
      "dnsErr": "",
      "validIPs": 22
-    }
-   ]
-  },
-  {
-   "time": "2026-09-12T12:16:47.641Z",
-   "ref": "results/2026-09-12_1216Z",
-   "summary": {
-    "time": "2026-09-12T12:16:47.641Z",
-    "total": 2083,
-    "checked": 1560,
-    "valid": 1307,
-    "invalid": 104,
-    "duplicates": 149,
-    "overLatency": 0,
-    "failReasons": {
-     "timeout": 30,
-     "api_fail": 74
-    }
-   },
-   "groups": [
-    {
-     "id": "kr",
-     "name": "kr",
-     "domain": "krautofxpip.9999669.xyz,krfxpip.9999669.xyz",
-     "doc": "kr/2026-09-12_1216Z.json",
-     "docMd": "kr/2026-09-12_1216Z.md",
-     "total": 1092,
-     "alive": 1092,
-     "removed": 191,
-     "restored": 1,
-     "overLatency": 0,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 1092
-    },
-    {
-     "id": "kr443",
-     "name": "kr443",
-     "domain": "krautofxpip.9999669.xyz",
-     "doc": "kr443/2026-09-12_1216Z.json",
-     "docMd": "kr443/2026-09-12_1216Z.md",
-     "total": 49,
-     "alive": 49,
-     "removed": 59,
-     "restored": 0,
-     "overLatency": 0,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 49
-    },
-    {
-     "id": "kr1",
-     "name": "kr1",
-     "domain": "krfxpip.5671234.xyz",
-     "doc": "kr1/2026-09-12_1216Z.json",
-     "docMd": "kr1/2026-09-12_1216Z.md",
-     "total": 387,
-     "alive": 229,
-     "removed": 33,
-     "restored": 0,
-     "overLatency": 0,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 387
-    },
-    {
-     "id": "NL216071",
-     "name": "NL216071",
-     "domain": "nl216071.9999669.xyz",
-     "doc": "NL216071/2026-09-12_1216Z.json",
-     "docMd": "NL216071/2026-09-12_1216Z.md",
-     "total": 215,
-     "alive": 215,
-     "removed": 0,
-     "restored": 0,
-     "overLatency": 1,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 215
-    },
-    {
-     "id": "63023",
-     "name": "63023",
-     "domain": "63023.9999669.xyz",
-     "doc": "63023/2026-09-12_1216Z.json",
-     "docMd": "63023/2026-09-12_1216Z.md",
-     "total": 42,
-     "alive": 26,
-     "removed": 0,
-     "restored": 0,
-     "overLatency": 0,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 42
-    },
-    {
-     "id": "906",
-     "name": "906",
-     "domain": "906.9999669.xyz",
-     "doc": "906/2026-09-12_1216Z.json",
-     "docMd": "906/2026-09-12_1216Z.md",
-     "total": 43,
-     "alive": 13,
-     "removed": 0,
-     "restored": 0,
-     "overLatency": 0,
-     "dnsOK": true,
-     "dnsErr": "",
-     "validIPs": 43
     }
    ]
   }
