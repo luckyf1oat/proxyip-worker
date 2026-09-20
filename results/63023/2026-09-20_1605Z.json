@@ -1,0 +1,252 @@
+{
+ "runTime": "2026-09-20T16:05:49.146Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 25,
+  "alive": 25,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "179.255.189.17:443",
+   "latency": 140,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "191.44.66.34:443",
+   "latency": 144,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Fort Lauderdale",
+   "country": "US"
+  },
+  {
+   "ipPort": "23.168.72.17:443",
+   "latency": 145,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "The Netherlands"
+  },
+  {
+   "ipPort": "67.220.80.99:443",
+   "latency": 146,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "23.168.72.69:443",
+   "latency": 147,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "140.99.83.16:443",
+   "latency": 147,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "170.168.61.171:443",
+   "latency": 147,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.5:443",
+   "latency": 148,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.82:443",
+   "latency": 149,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.123:443",
+   "latency": 150,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "LAX",
+   "city": "Amsterdam",
+   "country": "NL"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS63023",
+    25
+   ]
+  ],
+  "byColo": [
+   [
+    "LAX",
+    25
+   ]
+  ],
+  "byCountry": [
+   [
+    "NL",
+    14
+   ],
+   [
+    "US",
+    3
+   ],
+   [
+    "DE",
+    2
+   ],
+   [
+    "IN",
+    2
+   ],
+   [
+    "The Netherlands",
+    1
+   ],
+   [
+    "GB",
+    1
+   ],
+   [
+    "CZ",
+    1
+   ],
+   [
+    "BR",
+    1
+   ]
+  ],
+  "byCity": [
+   [
+    "Amsterdam",
+    15
+   ],
+   [
+    "Frankfurt am Main",
+    2
+   ],
+   [
+    "Delhi",
+    2
+   ],
+   [
+    "Pittsburgh",
+    1
+   ],
+   [
+    "Fort Lauderdale",
+    1
+   ],
+   [
+    "Orem",
+    1
+   ],
+   [
+    "London",
+    1
+   ],
+   [
+    "Mesto",
+    1
+   ],
+   [
+    "Rio de Janeiro",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "GTHost",
+    25
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 25,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "216.152.157.140:443|164ms|AS63023|LAX|valid",
+  "186.190.213.5:443|148ms|AS63023|LAX|valid",
+  "186.190.213.227:443|152ms|AS63023|LAX|valid",
+  "186.190.213.37:443|152ms|AS63023|LAX|valid",
+  "186.190.213.123:443|150ms|AS63023|LAX|valid",
+  "186.190.213.82:443|149ms|AS63023|LAX|valid",
+  "67.220.80.99:443|146ms|AS63023|LAX|valid",
+  "23.168.72.17:443|145ms|AS63023|LAX|valid",
+  "23.168.72.85:443|156ms|AS63023|LAX|valid",
+  "67.220.80.6:443|157ms|AS63023|LAX|valid",
+  "23.168.72.69:443|147ms|AS63023|LAX|valid",
+  "23.168.72.190:443|150ms|AS63023|LAX|valid",
+  "23.168.72.90:443|150ms|AS63023|LAX|valid",
+  "186.190.213.72:443|153ms|AS63023|LAX|valid",
+  "186.190.213.211:443|151ms|AS63023|LAX|valid",
+  "67.220.82.10:443|158ms|AS63023|LAX|valid",
+  "191.44.66.34:443|144ms|AS63023|LAX|valid",
+  "108.165.235.48:443|152ms|AS63023|LAX|valid",
+  "140.99.83.16:443|147ms|AS63023|LAX|valid",
+  "103.160.59.198:443|165ms|AS63023|LAX|valid",
+  "103.160.59.4:443|152ms|AS63023|LAX|valid",
+  "170.168.61.171:443|147ms|AS63023|LAX|valid",
+  "140.99.101.63:443|150ms|AS63023|LAX|valid",
+  "194.87.87.135:443|151ms|AS63023|LAX|valid",
+  "179.255.189.17:443|140ms|AS63023|LAX|valid"
+ ],
+ "_file": "2026-09-20_1605Z.json"
+}
