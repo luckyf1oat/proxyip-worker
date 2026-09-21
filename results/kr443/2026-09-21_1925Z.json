@@ -1,0 +1,308 @@
+{
+ "runTime": "2026-09-21T19:25:37.082Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 63,
+  "alive": 63,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 33,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.34:443",
+   "latency": 35,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 36,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 36,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.190:443",
+   "latency": 36,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.137:443",
+   "latency": 36,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.157:443",
+   "latency": 36,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "43.131.225.115:443",
+   "latency": 162,
+   "asn": "AS132203",
+   "org": "Tencent Building, Kejizhongyi Avenue",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    28
+   ],
+   [
+    "AS16509",
+    6
+   ],
+   [
+    "AS132203",
+    6
+   ],
+   [
+    "AS7488",
+    6
+   ],
+   [
+    "AS20473",
+    5
+   ],
+   [
+    "AS9318",
+    3
+   ],
+   [
+    "AS4766",
+    2
+   ],
+   [
+    "AS45102",
+    2
+   ],
+   [
+    "AS138195",
+    2
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ],
+   [
+    "AS8075",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "DFW",
+    63
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    63
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    49
+   ],
+   [
+    "Chuncheon",
+    11
+   ],
+   [
+    "Seongnam",
+    1
+   ],
+   [
+    "Icheon",
+    1
+   ],
+   [
+    "Sejong",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    28
+   ],
+   [
+    "CNServer LLC",
+    7
+   ],
+   [
+    "Amazon.com, Inc.",
+    6
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    6
+   ],
+   [
+    "The Constant Company, LLC",
+    5
+   ],
+   [
+    "SK Broadband Co Ltd",
+    3
+   ],
+   [
+    "Korea Telecom",
+    2
+   ],
+   [
+    "MOACK.Co.LTD",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "LG POWERCOMM",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 7,
+   "50-100ms": 0,
+   "100-200ms": 55,
+   "200-500ms": 1,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|163ms|AS4766|DFW|valid",
+  "141.164.42.2:443|180ms|AS20473|DFW|valid",
+  "131.186.16.166:443|166ms|AS31898|DFW|valid",
+  "47.80.57.116:443|171ms|AS45102|DFW|valid",
+  "152.67.208.47:443|168ms|AS31898|DFW|valid",
+  "13.124.169.29:443|168ms|AS16509|DFW|valid",
+  "166.88.33.86:443|36ms|AS0|DFW|valid",
+  "146.56.151.92:443|166ms|AS31898|DFW|valid",
+  "152.67.214.155:443|171ms|AS31898|DFW|valid",
+  "146.56.119.205:443|171ms|AS31898|DFW|valid",
+  "131.186.26.94:443|172ms|AS31898|DFW|valid",
+  "140.245.65.122:443|165ms|AS31898|DFW|valid",
+  "193.122.96.190:443|173ms|AS31898|DFW|valid",
+  "54.180.141.246:443|169ms|AS16509|DFW|valid",
+  "193.122.119.241:443|169ms|AS31898|DFW|valid",
+  "146.56.135.196:443|168ms|AS31898|DFW|valid",
+  "158.247.210.172:443|200ms|AS20473|DFW|valid",
+  "101.33.68.172:443|165ms|AS132203|DFW|valid",
+  "130.162.137.247:443|174ms|AS31898|DFW|valid",
+  "166.88.33.113:443|36ms|AS7488|DFW|valid",
+  "141.164.35.4:443|179ms|AS20473|DFW|valid",
+  "166.88.33.34:443|35ms|AS7488|DFW|valid",
+  "146.56.115.180:443|172ms|AS31898|DFW|valid",
+  "193.123.236.206:443|171ms|AS31898|DFW|valid",
+  "140.238.30.217:443|165ms|AS31898|DFW|valid",
+  "141.164.49.98:443|181ms|AS20473|DFW|valid",
+  "134.185.114.16:443|174ms|AS31898|DFW|valid",
+  "166.88.33.149:443|33ms|AS7488|DFW|valid",
+  "129.154.197.113:443|166ms|AS31898|DFW|valid",
+  "168.107.14.233:443|173ms|AS31898|DFW|valid",
+  "129.154.212.204:443|169ms|AS31898|DFW|valid",
+  "140.245.70.145:443|168ms|AS31898|DFW|valid",
+  "43.133.251.155:443|170ms|AS132203|DFW|valid",
+  "140.238.15.158:443|171ms|AS31898|DFW|valid",
+  "61.77.229.182:443|177ms|AS4766|DFW|valid",
+  "158.247.224.240:443|193ms|AS20473|DFW|valid",
+  "146.56.158.34:443|166ms|AS31898|DFW|valid",
+  "61.110.5.237:443|189ms|AS138195|DFW|valid",
+  "193.122.115.184:443|165ms|AS31898|DFW|valid",
+  "3.35.138.237:443|171ms|AS16509|DFW|valid",
+  "43.155.136.250:443|194ms|AS132203|DFW|valid",
+  "3.35.51.12:443|164ms|AS16509|DFW|valid",
+  "166.88.33.190:443|36ms|AS7488|DFW|valid",
+  "166.88.33.137:443|36ms|AS7488|DFW|valid",
+  "152.67.203.125:443|169ms|AS31898|DFW|valid",
+  "166.88.33.157:443|36ms|AS7488|DFW|valid",
+  "13.125.141.213:443|169ms|AS16509|DFW|valid",
+  "146.56.106.214:443|166ms|AS31898|DFW|valid",
+  "50.114.114.31:443|169ms|AS9318|DFW|valid",
+  "54.116.250.226:443|164ms|AS16509|DFW|valid",
+  "161.118.153.136:443|170ms|AS31898|DFW|valid",
+  "182.224.185.243:443|175ms|AS17858|DFW|valid",
+  "39.115.137.14:443|164ms|AS9318|DFW|valid",
+  "43.164.134.99:443|163ms|AS132203|DFW|valid",
+  "43.131.225.115:443|162ms|AS132203|DFW|valid",
+  "144.24.78.206:443|172ms|AS31898|DFW|valid",
+  "43.164.132.181:443|167ms|AS132203|DFW|valid",
+  "132.145.89.240:443|166ms|AS31898|DFW|valid",
+  "118.128.63.181:443|176ms|AS138195|DFW|valid",
+  "64.110.82.71:443|169ms|AS31898|DFW|valid",
+  "114.204.39.195:443|166ms|AS9318|DFW|valid",
+  "20.194.34.26:443|162ms|AS8075|DFW|valid",
+  "47.80.24.151:443|174ms|AS45102|DFW|valid"
+ ],
+ "_file": "2026-09-21_1925Z.json"
+}
