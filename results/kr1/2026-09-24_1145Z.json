@@ -1,0 +1,647 @@
+{
+ "runTime": "2026-09-24T11:45:25.315Z",
+ "group": {
+  "id": "kr1",
+  "name": "kr1",
+  "domain": "krfxpip.5671234.xyz",
+  "recordType": "TXT",
+  "maxLatency": 2000,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "TXT",
+  "err": ""
+ },
+ "counts": {
+  "total": 279,
+  "alive": 279,
+  "removedThisRun": 179,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": -179,
+   "alive": -3,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "222.251.222.151:10031",
+   "latency": 155,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "AS23563",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.125.215.217:18790",
+   "latency": 142,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.48.212.164:12335",
+   "latency": 155,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.225.17.82:25000",
+   "latency": 142,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "223.222.213.164:10001",
+   "latency": 144,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS17849",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.52.252.24:10080",
+   "latency": 194,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "223.222.213.164:16993",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS17849",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.48.212.164:12348",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.125.215.217:12350",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.125.215.217:12363",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.125.215.217:10090",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.52.252.24:10043",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.225.17.82:10013",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.125.215.217:16923",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "218.49.51.119:20201",
+   "latency": 125,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "58.122.187.141:12365",
+   "latency": 126,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "39.118.55.137:10002",
+   "latency": 126,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "58.151.101.11:24442",
+   "latency": 127,
+   "asn": "AS3786",
+   "org": "LG DACOM Corporation",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "58.77.118.41:11001",
+   "latency": 127,
+   "asn": "AS3786",
+   "org": "LG DACOM Corporation",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "121.200.67.72:11001",
+   "latency": 128,
+   "asn": "AS17849",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "1.241.244.210:18789",
+   "latency": 128,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "114.204.7.107:12343",
+   "latency": 128,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SEA",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS9318",
+    194
+   ],
+   [
+    "AS17858",
+    28
+   ],
+   [
+    "AS3786",
+    28
+   ],
+   [
+    "AS9694",
+    6
+   ],
+   [
+    "AS17573",
+    6
+   ],
+   [
+    "AS17849",
+    5
+   ],
+   [
+    "AS17857",
+    5
+   ],
+   [
+    "AS9689",
+    4
+   ],
+   [
+    "AS23563",
+    2
+   ],
+   [
+    "AS18310",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "SEA",
+    279
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    275
+   ],
+   [
+    "South Korea",
+    4
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    239
+   ],
+   [
+    "Gwangmyeong",
+    6
+   ],
+   [
+    "Jinju",
+    5
+   ],
+   [
+    "Yongin",
+    3
+   ],
+   [
+    "Suwon",
+    3
+   ],
+   [
+    "Namdong",
+    3
+   ],
+   [
+    "Anyang",
+    2
+   ],
+   [
+    "Changwon",
+    2
+   ],
+   [
+    "Gijang",
+    2
+   ],
+   [
+    "Daegu",
+    2
+   ]
+  ],
+  "byOrg": [
+   [
+    "SK Broadband Co Ltd",
+    217
+   ],
+   [
+    "LG DACOM Corporation",
+    28
+   ],
+   [
+    "LG POWERCOMM",
+    27
+   ],
+   [
+    "Seokyung Cable Television Co.. Ltd.",
+    6
+   ],
+   [
+    "POWERVIS AS KR",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 272,
+   "200-500ms": 5,
+   "500-1000ms": 0,
+   ">1000ms": 2,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "124.57.36.207:37020|145ms|AS17858|SEA|valid",
+  "218.38.36.6:11965|160ms|AS9318|SEA|valid",
+  "211.117.145.51:18791|143ms|AS9318|SEA|valid",
+  "1.252.158.129:10332|169ms|AS9318|SEA|valid",
+  "118.130.23.168:10035|153ms|AS3786|SEA|valid",
+  "58.150.124.213:22335|158ms|AS3786|SEA|valid",
+  "123.143.85.36:23050|146ms|AS3786|SEA|valid",
+  "218.39.95.140:25565|155ms|AS9318|SEA|valid",
+  "49.172.37.121:11434|144ms|AS17858|SEA|valid",
+  "114.204.44.25:30001|137ms|AS9318|SEA|valid",
+  "123.142.91.237:10912|154ms|AS3786|SEA|valid",
+  "180.224.93.3:18852|158ms|AS17858|SEA|valid",
+  "58.65.74.112:18001|147ms|AS9694|SEA|valid",
+  "58.151.101.11:24442|127ms|AS3786|SEA|valid",
+  "117.123.215.188:11235|158ms|AS17849|SEA|valid",
+  "221.141.172.159:14534|172ms|AS9318|SEA|valid",
+  "182.228.248.74:29044|148ms|AS17858|SEA|valid",
+  "223.131.111.25:10911|153ms|AS9689|SEA|valid",
+  "112.217.78.59:11235|144ms|AS3786|SEA|valid",
+  "118.223.118.223:10010|143ms|AS9318|SEA|valid",
+  "180.224.81.228:14534|153ms|AS17858|SEA|valid",
+  "115.89.218.91:15001|131ms|AS3786|SEA|valid",
+  "110.12.188.72:10250|160ms|AS9318|SEA|valid",
+  "211.243.26.214:12326|146ms|AS9318|SEA|valid",
+  "182.211.20.105:11310|145ms|AS17858|SEA|valid",
+  "61.40.111.252:10801|156ms|AS3786|SEA|valid",
+  "116.121.91.167:28497|148ms|AS9318|SEA|valid",
+  "115.160.63.177:10004|153ms|AS9694|SEA|valid",
+  "119.65.130.250:10009|140ms|AS17858|SEA|valid",
+  "211.204.221.8:11000|154ms|AS9318|SEA|valid",
+  "1.251.161.118:10008|156ms|AS9318|SEA|valid",
+  "218.49.51.119:20201|125ms|AS9318|SEA|valid",
+  "112.212.10.93:14430|161ms|AS9689|SEA|valid",
+  "112.222.211.130:11920|156ms|AS3786|SEA|valid",
+  "211.244.184.183:10001|154ms|AS9318|SEA|valid",
+  "61.40.44.236:10001|140ms|AS3786|SEA|valid",
+  "1.248.225.244:20202|169ms|AS9318|SEA|valid",
+  "218.234.78.48:17988|161ms|AS9318|SEA|valid",
+  "1.220.207.50:10332|135ms|AS3786|SEA|valid",
+  "112.223.212.219:24800|154ms|AS3786|SEA|valid",
+  "49.236.80.123:28017|161ms|AS17858|SEA|valid",
+  "211.58.75.206:10005|140ms|AS9318|SEA|valid",
+  "58.79.180.37:18790|150ms|AS3786|SEA|valid",
+  "121.200.67.72:11001|128ms|AS17849|SEA|valid",
+  "175.113.242.178:19888|140ms|AS9318|SEA|valid",
+  "211.58.246.107:10008|147ms|AS9318|SEA|valid",
+  "175.119.146.197:14443|152ms|AS9318|SEA|valid",
+  "124.137.174.42:10004|163ms|AS9318|SEA|valid",
+  "58.77.118.41:11001|127ms|AS3786|SEA|valid",
+  "125.179.189.15:18080|155ms|AS17858|SEA|valid",
+  "211.207.47.238:10012|142ms|AS9318|SEA|valid",
+  "58.126.190.112:10012|150ms|AS9318|SEA|valid",
+  "115.160.112.174:13722|277ms|AS9694|SEA|valid",
+  "222.235.112.131:10019|206ms|AS9318|SEA|valid",
+  "218.53.234.184:10019|159ms|AS9318|SEA|valid",
+  "116.44.53.251:16923|179ms|AS17858|SEA|valid",
+  "175.114.222.83:10028|155ms|AS9318|SEA|valid",
+  "116.41.66.41:10243|176ms|AS17858|SEA|valid",
+  "218.238.18.164:10027|140ms|AS9318|SEA|valid",
+  "175.112.180.221:10025|152ms|AS9318|SEA|valid",
+  "110.14.102.164:10025|160ms|AS9318|SEA|valid",
+  "110.13.24.137:10022|154ms|AS9318|SEA|valid",
+  "124.111.204.47:10022|142ms|AS9318|SEA|valid",
+  "203.175.51.197:12000|176ms|AS17573|SEA|valid",
+  "211.108.182.177:10034|146ms|AS9318|SEA|valid",
+  "58.75.7.242:10005|155ms|AS3786|SEA|valid",
+  "221.143.121.77:10000|163ms|AS9318|SEA|valid",
+  "114.202.89.80:25000|140ms|AS9318|SEA|valid",
+  "114.203.166.13:10075|150ms|AS9318|SEA|valid",
+  "114.201.222.64:10075|158ms|AS9318|SEA|valid",
+  "1.248.229.76:10071|158ms|AS9318|SEA|valid",
+  "110.12.85.17:10022|145ms|AS9318|SEA|valid",
+  "110.10.144.86:10068|153ms|AS9318|SEA|valid",
+  "211.215.218.71:10068|147ms|AS9318|SEA|valid",
+  "114.205.66.168:16922|140ms|AS9318|SEA|valid",
+  "116.125.73.21:10066|155ms|AS9318|SEA|valid",
+  "211.211.59.62:10052|168ms|AS9318|SEA|valid",
+  "116.120.244.96:10052|169ms|AS9318|SEA|valid",
+  "116.121.210.196:10052|141ms|AS9318|SEA|valid",
+  "211.208.119.141:14534|146ms|AS9318|SEA|valid",
+  "58.123.132.16:11001|148ms|AS9318|SEA|valid",
+  "175.119.91.57:10045|150ms|AS9318|SEA|valid",
+  "122.254.149.226:10090|172ms|AS17857|SEA|valid",
+  "58.126.214.57:10089|145ms|AS9318|SEA|valid",
+  "203.175.60.161:10001|164ms|AS17573|SEA|valid",
+  "211.212.43.153:10087|183ms|AS9318|SEA|valid",
+  "58.78.224.230:10443|164ms|AS3786|SEA|valid",
+  "27.124.253.85:10086|195ms|AS17573|SEA|valid",
+  "218.52.188.91:11300|137ms|AS9318|SEA|valid",
+  "117.20.88.114:11371|153ms|AS18310|SEA|valid",
+  "211.52.225.59:10022|192ms|AS9318|SEA|valid",
+  "106.245.187.102:11443|145ms|AS3786|SEA|valid",
+  "118.220.203.227:10044|141ms|AS9318|SEA|valid",
+  "218.233.0.198:12363|140ms|AS9318|SEA|valid",
+  "222.235.190.141:12363|161ms|AS9318|SEA|valid",
+  "211.209.188.101:12363|149ms|AS9318|SEA|valid",
+  "1.221.152.11:10911|153ms|AS3786|SEA|valid",
+  "218.51.215.211:10332|155ms|AS9318|SEA|valid",
+  "58.122.187.141:12365|126ms|AS9318|SEA|valid",
+  "219.250.35.33:12365|142ms|AS9318|SEA|valid",
+  "218.53.28.168:12366|145ms|AS9318|SEA|valid",
+  "211.117.102.238:10333|140ms|AS9318|SEA|valid",
+  "112.212.78.124:10002|153ms|AS9689|SEA|valid",
+  "118.218.86.71:19222|156ms|AS9318|SEA|valid",
+  "182.225.43.133:25565|129ms|AS17858|SEA|valid",
+  "119.67.188.140:22335|153ms|AS17858|SEA|valid",
+  "211.201.15.100:12351|146ms|AS9318|SEA|valid",
+  "218.237.61.41:12352|145ms|AS9318|SEA|valid",
+  "219.249.105.205:12356|156ms|AS9318|SEA|valid",
+  "119.70.18.76:10162|155ms|AS17858|SEA|valid",
+  "180.65.171.211:12358|155ms|AS9318|SEA|valid",
+  "218.237.139.158:12359|146ms|AS9318|SEA|valid",
+  "221.141.183.143:12359|184ms|AS9318|SEA|valid",
+  "211.58.245.167:12359|140ms|AS9318|SEA|valid",
+  "117.123.36.234:12360|144ms|AS17849|SEA|valid",
+  "218.234.8.200:12360|152ms|AS9318|SEA|valid",
+  "211.204.240.144:12361|153ms|AS9318|SEA|valid",
+  "124.80.53.72:12361|160ms|AS17849|SEA|valid",
+  "175.120.177.100:12362|131ms|AS9318|SEA|valid",
+  "180.224.71.123:12300|145ms|AS17858|SEA|valid",
+  "211.203.42.140:10087|152ms|AS9318|SEA|valid",
+  "119.65.35.44:29876|160ms|AS17858|SEA|valid",
+  "218.234.129.19:10081|156ms|AS9318|SEA|valid",
+  "118.223.170.16:10101|171ms|AS9318|SEA|valid",
+  "1.230.210.30:37810|150ms|AS9318|SEA|valid",
+  "211.207.174.216:12341|164ms|AS9318|SEA|valid",
+  "175.121.23.48:18790|153ms|AS9318|SEA|valid",
+  "39.112.161.143:12341|226ms|AS9318|SEA|valid",
+  "118.91.90.131:16010|168ms|AS17573|SEA|valid",
+  "211.215.133.125:12342|129ms|AS9318|SEA|valid",
+  "1.246.152.128:16992|173ms|AS9318|SEA|valid",
+  "123.214.204.113:12343|148ms|AS9318|SEA|valid",
+  "39.112.174.20:12343|182ms|AS9318|SEA|valid",
+  "106.241.255.10:11920|148ms|AS3786|SEA|valid",
+  "1.254.106.110:12346|210ms|AS9318|SEA|valid",
+  "180.68.64.242:11211|157ms|AS9318|SEA|valid",
+  "58.237.187.135:12346|151ms|AS9318|SEA|valid",
+  "211.177.78.142:12346|143ms|AS9318|SEA|valid",
+  "58.235.171.167:12346|158ms|AS9318|SEA|valid",
+  "211.206.28.228:12347|144ms|AS9318|SEA|valid",
+  "124.111.97.136:12347|152ms|AS9318|SEA|valid",
+  "211.205.203.168:12347|159ms|AS9318|SEA|valid",
+  "110.12.40.199:12347|194ms|AS9318|SEA|valid",
+  "1.228.212.43:12347|145ms|AS9318|SEA|valid",
+  "211.59.169.27:12348|174ms|AS9318|SEA|valid",
+  "119.71.112.81:28017|129ms|AS17858|SEA|valid",
+  "211.208.53.218:12349|149ms|AS9318|SEA|valid",
+  "1.243.236.149:12351|146ms|AS9318|SEA|valid",
+  "123.111.149.99:34599|149ms|AS9318|SEA|valid",
+  "219.254.27.30:10333|146ms|AS9318|SEA|valid",
+  "175.117.40.5:14534|140ms|AS9318|SEA|valid",
+  "39.123.195.142:10000|179ms|AS9318|SEA|valid",
+  "211.187.96.118:10083|152ms|AS9318|SEA|valid",
+  "203.175.38.68:10011|150ms|AS17573|SEA|valid",
+  "123.143.6.105:11001|153ms|AS3786|SEA|valid",
+  "39.114.49.27:12203|169ms|AS9318|SEA|valid",
+  "58.225.109.118:18852|160ms|AS9318|SEA|valid",
+  "39.112.145.178:12325|168ms|AS9318|SEA|valid",
+  "58.231.142.151:19999|190ms|AS9318|SEA|valid",
+  "61.105.176.107:20000|169ms|AS9318|SEA|valid",
+  "58.238.65.90:19888|185ms|AS9318|SEA|valid",
+  "39.125.152.41:20385|182ms|AS9318|SEA|valid",
+  "61.99.190.44:16030|168ms|AS9318|SEA|valid",
+  "1.232.40.93:10025|144ms|AS9318|SEA|valid",
+  "1.245.58.55:10075|152ms|AS9318|SEA|valid",
+  "58.233.19.166:10089|1686ms|AS9318|SEA|valid",
+  "1.243.219.80:10001|142ms|AS9318|SEA|valid",
+  "58.232.49.2:12363|162ms|AS9318|SEA|valid",
+  "1.243.110.180:12363|144ms|AS9318|SEA|valid",
+  "39.120.77.105:12365|146ms|AS9318|SEA|valid",
+  "39.119.132.219:10443|154ms|AS9318|SEA|valid",
+  "39.124.211.21:19530|183ms|AS9318|SEA|valid",
+  "58.224.203.20:12999|188ms|AS9318|SEA|valid",
+  "58.231.41.19:12357|183ms|AS9318|SEA|valid",
+  "58.230.249.224:12357|166ms|AS9318|SEA|valid",
+  "61.254.205.175:12357|164ms|AS9318|SEA|valid",
+  "58.233.235.251:12359|148ms|AS9318|SEA|valid",
+  "1.242.39.3:12359|144ms|AS9318|SEA|valid",
+  "1.236.186.119:12360|183ms|AS9318|SEA|valid",
+  "175.120.87.150:12360|156ms|AS9318|SEA|valid",
+  "58.238.240.144:10016|142ms|AS9318|SEA|valid",
+  "211.33.71.215:10008|151ms|AS9318|SEA|valid",
+  "1.251.124.147:10333|150ms|AS9318|SEA|valid",
+  "175.117.108.250:10035|145ms|AS9318|SEA|valid",
+  "61.253.152.77:26257|195ms|AS9318|SEA|valid",
+  "122.44.138.249:26257|149ms|AS17858|SEA|valid",
+  "1.220.158.26:17988|131ms|AS3786|SEA|valid",
+  "112.222.49.250:33829|142ms|AS3786|SEA|valid",
+  "110.11.144.103:32773|142ms|AS9318|SEA|valid",
+  "182.221.123.145:32773|142ms|AS17858|SEA|valid",
+  "211.186.127.143:12332|143ms|AS9318|SEA|valid",
+  "203.175.60.33:12332|151ms|AS17573|SEA|valid",
+  "1.228.206.154:20000|154ms|AS9318|SEA|valid",
+  "180.65.191.31:12333|162ms|AS9318|SEA|valid",
+  "124.80.29.218:12333|174ms|AS17849|SEA|valid",
+  "180.64.151.227:12333|194ms|AS9318|SEA|valid",
+  "222.236.136.212:12333|178ms|AS9318|SEA|valid",
+  "58.225.140.102:12334|180ms|AS9318|SEA|valid",
+  "58.123.255.7:12334|166ms|AS9318|SEA|valid",
+  "116.120.204.86:10001|143ms|AS9318|SEA|valid",
+  "211.213.84.221:12334|156ms|AS9318|SEA|valid",
+  "118.217.69.13:12334|159ms|AS9318|SEA|valid",
+  "116.125.116.182:10002|151ms|AS9318|SEA|valid",
+  "1.237.229.226:12336|132ms|AS9318|SEA|valid",
+  "58.235.60.124:10443|168ms|AS9318|SEA|valid",
+  "211.209.154.52:12999|180ms|AS9318|SEA|valid",
+  "61.253.44.39:12337|166ms|AS9318|SEA|valid",
+  "221.138.1.99:12337|131ms|AS9318|SEA|valid",
+  "218.238.225.91:12338|158ms|AS9318|SEA|valid",
+  "211.246.231.161:20000|292ms|AS9694|SEA|valid",
+  "39.118.55.137:10002|126ms|AS9318|SEA|valid",
+  "106.251.49.249:10554|149ms|AS3786|SEA|valid",
+  "122.37.123.132:10443|167ms|AS17858|SEA|valid",
+  "211.176.155.11:10443|162ms|AS9318|SEA|valid",
+  "123.99.107.195:12339|171ms|AS17857|SEA|valid",
+  "180.66.147.244:11371|145ms|AS9318|SEA|valid",
+  "112.223.209.3:16010|133ms|AS3786|SEA|valid",
+  "211.245.251.33:12339|158ms|AS9318|SEA|valid",
+  "1.241.244.210:18789|128ms|AS9318|SEA|valid",
+  "124.153.141.79:10001|172ms|AS9694|SEA|valid",
+  "58.235.124.27:12341|139ms|AS9318|SEA|valid",
+  "114.204.7.107:12343|128ms|AS9318|SEA|valid",
+  "218.52.64.179:12347|142ms|AS9318|SEA|valid",
+  "39.120.102.114:12352|169ms|AS9318|SEA|valid",
+  "122.254.131.97:26470|168ms|AS17857|SEA|valid",
+  "175.123.219.7:10027|1183ms|AS9318|SEA|valid",
+  "39.112.8.239:10332|155ms|AS9318|SEA|valid",
+  "58.226.200.135:14000|185ms|AS9318|SEA|valid",
+  "182.221.77.178:10080|141ms|AS17858|SEA|valid",
+  "119.17.111.136:10801|166ms|AS23563|SEA|valid",
+  "122.36.31.22:10007|142ms|AS17858|SEA|valid",
+  "182.226.140.74:13133|160ms|AS17858|SEA|valid",
+  "219.255.174.121:10443|132ms|AS9318|SEA|valid",
+  "1.244.82.96:12335|157ms|AS9318|SEA|valid",
+  "218.54.154.5:12351|162ms|AS9318|SEA|valid",
+  "39.117.92.22:12365|142ms|AS9318|SEA|valid",
+  "58.234.169.141:19222|156ms|AS9318|SEA|valid",
+  "58.150.101.214:22313|160ms|AS3786|SEA|valid",
+  "58.239.93.64:18246|146ms|AS9318|SEA|valid",
+  "1.252.248.183:29015|160ms|AS9318|SEA|valid",
+  "114.203.203.4:10018|164ms|AS9318|SEA|valid",
+  "112.219.132.60:14440|164ms|AS3786|SEA|valid",
+  "211.49.147.86:19530|142ms|AS9318|SEA|valid",
+  "124.153.168.49:10443|162ms|AS9694|SEA|valid",
+  "39.113.7.144:12334|163ms|AS9318|SEA|valid",
+  "114.200.222.178:12338|151ms|AS9318|SEA|valid",
+  "110.9.101.157:12338|140ms|AS9318|SEA|valid",
+  "123.111.75.98:10443|160ms|AS9318|SEA|valid",
+  "211.117.50.160:10002|162ms|AS9318|SEA|valid",
+  "211.186.229.146:12340|158ms|AS9318|SEA|valid",
+  "58.123.69.114:12344|156ms|AS9318|SEA|valid",
+  "175.117.24.180:12344|137ms|AS9318|SEA|valid",
+  "180.65.213.57:12344|154ms|AS9318|SEA|valid",
+  "61.253.141.117:12348|195ms|AS9318|SEA|valid",
+  "175.121.138.160:12349|131ms|AS9318|SEA|valid",
+  "123.111.190.67:10332|132ms|AS9318|SEA|valid",
+  "1.250.142.241:18790|153ms|AS9318|SEA|valid",
+  "221.138.175.208:10101|143ms|AS9318|SEA|valid",
+  "211.33.24.23:10093|149ms|AS9318|SEA|valid",
+  "39.123.48.89:10093|144ms|AS9318|SEA|valid",
+  "211.209.173.213:10084|135ms|AS9318|SEA|valid",
+  "39.114.198.93:10046|167ms|AS9318|SEA|valid",
+  "115.161.28.20:10045|143ms|AS9689|SEA|valid",
+  "121.254.31.57:10033|141ms|AS23563|SEA|valid",
+  "114.201.241.26:10032|143ms|AS9318|SEA|valid",
+  "123.99.120.214:33890|155ms|AS17857|SEA|valid",
+  "219.248.61.88:10010|172ms|AS9318|SEA|valid",
+  "118.217.254.146:10008|151ms|AS9318|SEA|valid",
+  "180.230.48.141:25565|132ms|AS17858|SEA|valid",
+  "110.8.84.156:24800|145ms|AS9318|SEA|valid",
+  "122.46.59.210:11920|156ms|AS17858|SEA|valid",
+  "114.204.41.241:30001|136ms|AS9318|SEA|valid",
+  "106.246.54.30:10009|130ms|AS3786|SEA|valid",
+  "59.187.74.76:29090|144ms|AS3786|SEA|valid",
+  "119.70.20.137:29090|142ms|AS17858|SEA|valid",
+  "124.59.181.7:10333|175ms|AS17858|SEA|valid",
+  "116.93.196.117:13579|162ms|AS17857|SEA|valid",
+  "124.63.156.29:11371|161ms|AS17858|SEA|valid",
+  "114.204.41.241:30001|136ms|AS9318|SEA|valid"
+ ],
+ "_file": "2026-09-24_1145Z.json"
+}
