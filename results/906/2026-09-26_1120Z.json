@@ -1,0 +1,225 @@
+{
+ "runTime": "2026-09-26T11:20:37.220Z",
+ "group": {
+  "id": "906",
+  "name": "906",
+  "domain": "906.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 42,
+  "alive": 42,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "174.136.205.28:443",
+   "latency": 28,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "154.21.82.24:443",
+   "latency": 28,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "64.186.251.83:443",
+   "latency": 28,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.255.102.117:443",
+   "latency": 28,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "64.186.245.27:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.255.102.54:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "69.63.196.2:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "45.59.186.102:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Los Angeles",
+   "country": "US"
+  },
+  {
+   "ipPort": "179.253.230.185:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  },
+  {
+   "ipPort": "179.255.151.30:443",
+   "latency": 29,
+   "asn": "AS906",
+   "org": "DMIT Cloud Services",
+   "colo": "SEA",
+   "city": "Rio de Janeiro",
+   "country": "BR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS906",
+    42
+   ]
+  ],
+  "byColo": [
+   [
+    "SEA",
+    42
+   ]
+  ],
+  "byCountry": [
+   [
+    "BR",
+    27
+   ],
+   [
+    "US",
+    12
+   ],
+   [
+    "CN",
+    3
+   ]
+  ],
+  "byCity": [
+   [
+    "Rio de Janeiro",
+    27
+   ],
+   [
+    "Los Angeles",
+    12
+   ],
+   [
+    "Hong Kong",
+    3
+   ]
+  ],
+  "byOrg": [
+   [
+    "DMIT Cloud Services",
+    42
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 33,
+   "50-100ms": 1,
+   "100-200ms": 8,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "64.186.245.27:443|29ms|AS906|SEA|valid",
+  "179.255.144.153:443|30ms|AS906|SEA|valid",
+  "174.136.205.28:443|28ms|AS906|SEA|valid",
+  "179.255.102.54:443|29ms|AS906|SEA|valid",
+  "69.63.196.2:443|29ms|AS906|SEA|valid",
+  "179.253.225.172:443|30ms|AS906|SEA|valid",
+  "45.59.186.102:443|29ms|AS906|SEA|valid",
+  "191.223.217.255:443|134ms|AS906|SEA|valid",
+  "179.253.230.185:443|29ms|AS906|SEA|valid",
+  "154.3.39.40:443|134ms|AS906|SEA|valid",
+  "179.253.241.115:443|30ms|AS906|SEA|valid",
+  "191.223.212.83:443|133ms|AS906|SEA|valid",
+  "191.223.214.19:443|132ms|AS906|SEA|valid",
+  "179.255.102.6:443|30ms|AS906|SEA|valid",
+  "179.255.151.30:443|29ms|AS906|SEA|valid",
+  "179.255.154.39:443|30ms|AS906|SEA|valid",
+  "179.253.250.0:443|30ms|AS906|SEA|valid",
+  "179.253.234.210:443|29ms|AS906|SEA|valid",
+  "191.223.220.93:443|87ms|AS906|SEA|valid",
+  "179.253.244.113:443|29ms|AS906|SEA|valid",
+  "179.253.225.34:443|30ms|AS906|SEA|valid",
+  "103.135.248.119:443|140ms|AS906|SEA|valid",
+  "191.223.216.7:443|133ms|AS906|SEA|valid",
+  "179.253.248.6:443|29ms|AS906|SEA|valid",
+  "179.253.246.55:443|29ms|AS906|SEA|valid",
+  "154.17.31.116:443|30ms|AS906|SEA|valid",
+  "154.17.26.99:443|29ms|AS906|SEA|valid",
+  "179.255.146.162:443|29ms|AS906|SEA|valid",
+  "179.255.98.67:443|29ms|AS906|SEA|valid",
+  "154.21.82.24:443|28ms|AS906|SEA|valid",
+  "69.63.221.164:443|29ms|AS906|SEA|valid",
+  "179.253.234.228:443|29ms|AS906|SEA|valid",
+  "154.3.37.72:443|133ms|AS906|SEA|valid",
+  "69.63.200.3:443|30ms|AS906|SEA|valid",
+  "179.255.101.54:443|30ms|AS906|SEA|valid",
+  "64.186.251.83:443|28ms|AS906|SEA|valid",
+  "64.186.249.136:443|29ms|AS906|SEA|valid",
+  "191.223.217.74:443|133ms|AS906|SEA|valid",
+  "179.255.113.232:443|29ms|AS906|SEA|valid",
+  "179.255.102.117:443|28ms|AS906|SEA|valid",
+  "216.234.141.92:443|30ms|AS906|SEA|valid",
+  "179.255.114.15:443|29ms|AS906|SEA|valid"
+ ],
+ "_file": "2026-09-26_1120Z.json"
+}
