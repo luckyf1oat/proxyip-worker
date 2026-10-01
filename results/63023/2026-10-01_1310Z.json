@@ -1,5 +1,5 @@
 {
- "runTime": "2026-09-25T07:10:30.174Z",
+ "runTime": "2026-10-01T13:10:47.704Z",
  "group": {
   "id": "63023",
   "name": "63023",
@@ -15,11 +15,11 @@
   "err": ""
  },
  "counts": {
-  "total": 28,
-  "alive": 28,
+  "total": 31,
+  "alive": 31,
   "removedThisRun": 0,
   "restoredThisRun": 0,
-  "overLatencyInTrash": 1,
+  "overLatencyInTrash": 0,
   "change": {
    "total": 0,
    "alive": 0,
@@ -30,8 +30,17 @@
  "restoredThisRun": [],
  "resolved": [
   {
+   "ipPort": "172.252.212.7:443",
+   "latency": 60,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Santa Clara",
+   "country": "US"
+  },
+  {
    "ipPort": "140.99.83.16:443",
-   "latency": 82,
+   "latency": 81,
    "asn": "AS63023",
    "org": "GTHost",
    "colo": "IAD",
@@ -40,7 +49,7 @@
   },
   {
    "ipPort": "139.64.167.70:443",
-   "latency": 84,
+   "latency": 81,
    "asn": "AS63023",
    "org": "GTHost",
    "colo": "IAD",
@@ -48,7 +57,7 @@
    "country": "FR"
   },
   {
-   "ipPort": "186.190.213.37:443",
+   "ipPort": "23.168.72.85:443",
    "latency": 85,
    "asn": "AS63023",
    "org": "GTHost",
@@ -57,35 +66,8 @@
    "country": "NL"
   },
   {
-   "ipPort": "23.168.72.85:443",
-   "latency": 86,
-   "asn": "AS63023",
-   "org": "GTHost",
-   "colo": "IAD",
-   "city": "Amsterdam",
-   "country": "NL"
-  },
-  {
-   "ipPort": "186.190.213.227:443",
+   "ipPort": "186.190.213.82:443",
    "latency": 87,
-   "asn": "AS63023",
-   "org": "GTHost",
-   "colo": "IAD",
-   "city": "Amsterdam",
-   "country": "NL"
-  },
-  {
-   "ipPort": "170.168.61.171:443",
-   "latency": 87,
-   "asn": "AS63023",
-   "org": "GTHost",
-   "colo": "IAD",
-   "city": "Amsterdam",
-   "country": "NL"
-  },
-  {
-   "ipPort": "23.168.72.69:443",
-   "latency": 88,
    "asn": "AS63023",
    "org": "GTHost",
    "colo": "IAD",
@@ -94,6 +76,33 @@
   },
   {
    "ipPort": "23.168.72.190:443",
+   "latency": 87,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "186.190.213.123:443",
+   "latency": 88,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "140.99.101.63:443",
+   "latency": 88,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "IAD",
+   "city": "Frankfurt am Main",
+   "country": "DE"
+  },
+  {
+   "ipPort": "66.163.127.56:443",
    "latency": 89,
    "asn": "AS63023",
    "org": "GTHost",
@@ -103,34 +112,25 @@
   },
   {
    "ipPort": "191.44.66.34:443",
-   "latency": 89,
+   "latency": 90,
    "asn": "AS63023",
    "org": "GTHost",
    "colo": "IAD",
    "city": "Fort Lauderdale",
    "country": "US"
-  },
-  {
-   "ipPort": "67.220.82.10:443",
-   "latency": 91,
-   "asn": "AS63023",
-   "org": "GTHost",
-   "colo": "IAD",
-   "city": "Frankfurt am Main",
-   "country": "DE"
   }
  ],
  "distribution": {
   "byAsn": [
    [
     "AS63023",
-    28
+    31
    ]
   ],
   "byColo": [
    [
     "IAD",
-    28
+    31
    ]
   ],
   "byCountry": [
@@ -140,15 +140,11 @@
    ],
    [
     "US",
-    4
+    5
    ],
    [
     "DE",
-    2
-   ],
-   [
-    "IN",
-    2
+    4
    ],
    [
     "The Netherlands",
@@ -159,7 +155,7 @@
     1
    ],
    [
-    "BR",
+    "IN",
     1
    ],
    [
@@ -168,6 +164,14 @@
    ],
    [
     "ES",
+    1
+   ],
+   [
+    "BR",
+    1
+   ],
+   [
+    "CZ",
     1
    ]
   ],
@@ -178,11 +182,7 @@
    ],
    [
     "Frankfurt am Main",
-    2
-   ],
-   [
-    "Delhi",
-    2
+    4
    ],
    [
     "Pittsburgh",
@@ -201,7 +201,7 @@
     1
    ],
    [
-    "Rio de Janeiro",
+    "Delhi",
     1
    ],
    [
@@ -211,17 +211,21 @@
    [
     "Peoria",
     1
+   ],
+   [
+    "Madrid",
+    1
    ]
   ],
   "byOrg": [
    [
     "GTHost",
-    28
+    31
    ]
   ],
   "latencyBuckets": {
    "<50ms": 0,
-   "50-100ms": 28,
+   "50-100ms": 31,
    "100-200ms": 0,
    "200-500ms": 0,
    "500-1000ms": 0,
@@ -230,34 +234,37 @@
   }
  },
  "ips": [
-  "216.152.157.140:443|92ms|AS63023|IAD|valid",
-  "186.190.213.5:443|92ms|AS63023|IAD|valid",
-  "186.190.213.227:443|87ms|AS63023|IAD|valid",
-  "186.190.213.37:443|85ms|AS63023|IAD|valid",
-  "186.190.213.123:443|93ms|AS63023|IAD|valid",
-  "186.190.213.82:443|92ms|AS63023|IAD|valid",
-  "67.220.80.99:443|92ms|AS63023|IAD|valid",
-  "23.168.72.17:443|96ms|AS63023|IAD|valid",
-  "23.168.72.85:443|86ms|AS63023|IAD|valid",
-  "67.220.80.6:443|99ms|AS63023|IAD|valid",
-  "23.168.72.69:443|88ms|AS63023|IAD|valid",
-  "23.168.72.190:443|89ms|AS63023|IAD|valid",
-  "23.168.72.90:443|92ms|AS63023|IAD|valid",
+  "216.152.157.140:443|95ms|AS63023|IAD|valid",
+  "186.190.213.5:443|96ms|AS63023|IAD|valid",
+  "186.190.213.227:443|93ms|AS63023|IAD|valid",
+  "186.190.213.37:443|91ms|AS63023|IAD|valid",
+  "186.190.213.123:443|88ms|AS63023|IAD|valid",
+  "186.190.213.82:443|87ms|AS63023|IAD|valid",
+  "67.220.80.99:443|91ms|AS63023|IAD|valid",
+  "23.168.72.17:443|92ms|AS63023|IAD|valid",
+  "23.168.72.85:443|85ms|AS63023|IAD|valid",
+  "67.220.80.6:443|98ms|AS63023|IAD|valid",
+  "23.168.72.69:443|94ms|AS63023|IAD|valid",
+  "23.168.72.190:443|87ms|AS63023|IAD|valid",
   "186.190.213.72:443|94ms|AS63023|IAD|valid",
-  "186.190.213.211:443|96ms|AS63023|IAD|valid",
-  "67.220.82.10:443|91ms|AS63023|IAD|valid",
-  "191.44.66.34:443|89ms|AS63023|IAD|valid",
-  "108.165.235.48:443|94ms|AS63023|IAD|valid",
-  "140.99.83.16:443|82ms|AS63023|IAD|valid",
-  "103.160.59.198:443|92ms|AS63023|IAD|valid",
+  "186.190.213.211:443|93ms|AS63023|IAD|valid",
+  "67.220.82.10:443|93ms|AS63023|IAD|valid",
+  "191.44.66.34:443|90ms|AS63023|IAD|valid",
+  "108.165.235.48:443|92ms|AS63023|IAD|valid",
+  "140.99.83.16:443|81ms|AS63023|IAD|valid",
   "103.160.59.4:443|93ms|AS63023|IAD|valid",
-  "170.168.61.171:443|87ms|AS63023|IAD|valid",
-  "140.99.101.63:443|95ms|AS63023|IAD|valid",
-  "179.255.189.17:443|91ms|AS63023|IAD|valid",
-  "66.163.127.56:443|92ms|AS63023|IAD|valid",
-  "139.64.167.70:443|84ms|AS63023|IAD|valid",
-  "136.176.66.211:443|95ms|AS63023|IAD|valid",
-  "66.163.118.13:443|92ms|AS63023|IAD|valid"
+  "140.99.101.63:443|88ms|AS63023|IAD|valid",
+  "66.163.127.56:443|89ms|AS63023|IAD|valid",
+  "139.64.167.70:443|81ms|AS63023|IAD|valid",
+  "136.176.66.211:443|92ms|AS63023|IAD|valid",
+  "66.163.118.13:443|92ms|AS63023|IAD|valid",
+  "23.168.72.90:443|96ms|AS63023|IAD|valid",
+  "170.168.61.171:443|95ms|AS63023|IAD|valid",
+  "216.106.187.74:443|94ms|AS63023|IAD|valid",
+  "172.252.212.7:443|60ms|AS63023|IAD|valid",
+  "179.255.189.18:443|93ms|AS63023|IAD|valid",
+  "68.168.29.152:443|92ms|AS63023|IAD|valid",
+  "194.87.87.135:443|91ms|AS63023|IAD|valid"
  ],
- "_file": "2026-09-25_0710Z.json"
+ "_file": "2026-10-01_1310Z.json"
 }
