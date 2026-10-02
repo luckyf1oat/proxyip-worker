@@ -1,0 +1,299 @@
+{
+ "runTime": "2026-10-02T12:32:10.589Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 54,
+  "alive": 54,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 34,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 35,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 37,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "158.247.224.240:443",
+   "latency": 157,
+   "asn": "AS20473",
+   "org": "The Constant Company, LLC",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "193.123.236.206:443",
+   "latency": 158,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "129.154.197.113:443",
+   "latency": 159,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "183.101.136.209:443",
+   "latency": 159,
+   "asn": "AS4766",
+   "org": "Korea Telecom",
+   "colo": "DFW",
+   "city": "Seongnam",
+   "country": "KR"
+  },
+  {
+   "ipPort": "193.123.253.209:443",
+   "latency": 159,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    26
+   ],
+   [
+    "AS132203",
+    8
+   ],
+   [
+    "AS9318",
+    4
+   ],
+   [
+    "AS4766",
+    3
+   ],
+   [
+    "AS20473",
+    3
+   ],
+   [
+    "AS45102",
+    2
+   ],
+   [
+    "AS7488",
+    2
+   ],
+   [
+    "AS16509",
+    2
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS138195",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ],
+   [
+    "AS8075",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "DFW",
+    54
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    54
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    43
+   ],
+   [
+    "Chuncheon",
+    7
+   ],
+   [
+    "Seongnam",
+    2
+   ],
+   [
+    "Icheon",
+    1
+   ],
+   [
+    "Sejong",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    26
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    8
+   ],
+   [
+    "SK Broadband Co Ltd",
+    4
+   ],
+   [
+    "Korea Telecom",
+    3
+   ],
+   [
+    "CNServer LLC",
+    3
+   ],
+   [
+    "The Constant Company, LLC",
+    3
+   ],
+   [
+    "Amazon.com, Inc.",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "MOACK.Co.LTD",
+    1
+   ],
+   [
+    "LG POWERCOMM",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 3,
+   "50-100ms": 0,
+   "100-200ms": 50,
+   "200-500ms": 1,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|253ms|AS4766|DFW|valid",
+  "131.186.16.166:443|164ms|AS31898|DFW|valid",
+  "47.80.57.116:443|174ms|AS45102|DFW|valid",
+  "166.88.33.86:443|37ms|AS0|DFW|valid",
+  "146.56.151.92:443|163ms|AS31898|DFW|valid",
+  "131.186.26.94:443|162ms|AS31898|DFW|valid",
+  "140.245.65.122:443|167ms|AS31898|DFW|valid",
+  "193.122.96.190:443|162ms|AS31898|DFW|valid",
+  "193.122.119.241:443|161ms|AS31898|DFW|valid",
+  "146.56.135.196:443|162ms|AS31898|DFW|valid",
+  "158.247.210.172:443|175ms|AS20473|DFW|valid",
+  "130.162.137.247:443|161ms|AS31898|DFW|valid",
+  "166.88.33.113:443|34ms|AS7488|DFW|valid",
+  "141.164.35.4:443|168ms|AS20473|DFW|valid",
+  "193.123.236.206:443|158ms|AS31898|DFW|valid",
+  "140.238.30.217:443|165ms|AS31898|DFW|valid",
+  "134.185.114.16:443|162ms|AS31898|DFW|valid",
+  "166.88.33.149:443|35ms|AS7488|DFW|valid",
+  "129.154.197.113:443|159ms|AS31898|DFW|valid",
+  "129.154.212.204:443|175ms|AS31898|DFW|valid",
+  "140.238.15.158:443|163ms|AS31898|DFW|valid",
+  "61.77.229.182:443|167ms|AS4766|DFW|valid",
+  "158.247.224.240:443|157ms|AS20473|DFW|valid",
+  "146.56.158.34:443|168ms|AS31898|DFW|valid",
+  "61.110.5.237:443|187ms|AS138195|DFW|valid",
+  "193.122.115.184:443|171ms|AS31898|DFW|valid",
+  "152.67.203.125:443|164ms|AS31898|DFW|valid",
+  "13.125.141.213:443|162ms|AS16509|DFW|valid",
+  "146.56.106.214:443|163ms|AS31898|DFW|valid",
+  "54.116.250.226:443|162ms|AS16509|DFW|valid",
+  "161.118.153.136:443|163ms|AS31898|DFW|valid",
+  "182.224.185.243:443|174ms|AS17858|DFW|valid",
+  "144.24.78.206:443|168ms|AS31898|DFW|valid",
+  "43.164.132.181:443|164ms|AS132203|DFW|valid",
+  "132.145.89.240:443|162ms|AS31898|DFW|valid",
+  "64.110.82.71:443|163ms|AS31898|DFW|valid",
+  "114.204.39.195:443|173ms|AS9318|DFW|valid",
+  "20.194.34.26:443|179ms|AS8075|DFW|valid",
+  "47.80.24.151:443|180ms|AS45102|DFW|valid",
+  "50.114.114.31:443|168ms|AS9318|DFW|valid",
+  "39.115.137.14:443|165ms|AS9318|DFW|valid",
+  "146.56.159.35:443|165ms|AS31898|DFW|valid",
+  "183.101.136.209:443|159ms|AS4766|DFW|valid",
+  "43.128.130.45:443|162ms|AS132203|DFW|valid",
+  "43.128.147.145:443|167ms|AS132203|DFW|valid",
+  "43.128.154.199:443|163ms|AS132203|DFW|valid",
+  "43.133.76.171:443|163ms|AS132203|DFW|valid",
+  "43.133.251.155:443|161ms|AS132203|DFW|valid",
+  "101.33.68.172:443|160ms|AS132203|DFW|valid",
+  "129.154.61.118:443|160ms|AS31898|DFW|valid",
+  "168.110.101.249:443|168ms|AS31898|DFW|valid",
+  "23.27.1.161:443|169ms|AS9318|DFW|valid",
+  "193.123.253.209:443|159ms|AS31898|DFW|valid",
+  "43.131.225.115:443|179ms|AS132203|DFW|valid"
+ ],
+ "_file": "2026-10-02_1232Z.json"
+}
