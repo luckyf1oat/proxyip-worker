@@ -1,0 +1,313 @@
+{
+ "runTime": "2026-10-04T07:09:33.478Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 60,
+  "alive": 60,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 2,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 5,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 6,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "52.141.35.116:443",
+   "latency": 131,
+   "asn": "AS8075",
+   "org": "Microsoft Corporation",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "140.238.30.217:443",
+   "latency": 132,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "54.116.250.226:443",
+   "latency": 132,
+   "asn": "AS16509",
+   "org": "Amazon.com, Inc.",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "193.123.253.209:443",
+   "latency": 132,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "158.247.210.172:443",
+   "latency": 133,
+   "asn": "AS20473",
+   "org": "The Constant Company, LLC",
+   "colo": "LAX",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    28
+   ],
+   [
+    "AS132203",
+    7
+   ],
+   [
+    "AS20473",
+    5
+   ],
+   [
+    "AS9318",
+    4
+   ],
+   [
+    "AS4766",
+    3
+   ],
+   [
+    "AS45102",
+    2
+   ],
+   [
+    "AS7488",
+    2
+   ],
+   [
+    "AS16509",
+    2
+   ],
+   [
+    "AS8075",
+    2
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS138195",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ],
+   [
+    "AS57043",
+    1
+   ],
+   [
+    "AS9848",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "LAX",
+    60
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    60
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    46
+   ],
+   [
+    "Chuncheon",
+    9
+   ],
+   [
+    "Seongnam",
+    2
+   ],
+   [
+    "Sejong",
+    2
+   ],
+   [
+    "Icheon",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    28
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    7
+   ],
+   [
+    "The Constant Company, LLC",
+    5
+   ],
+   [
+    "SK Broadband Co Ltd",
+    4
+   ],
+   [
+    "Korea Telecom",
+    3
+   ],
+   [
+    "CNServer LLC",
+    3
+   ],
+   [
+    "Amazon.com, Inc.",
+    2
+   ],
+   [
+    "Microsoft Corporation",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "MOACK.Co.LTD",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 3,
+   "50-100ms": 0,
+   "100-200ms": 57,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|138ms|AS4766|LAX|valid",
+  "131.186.16.166:443|136ms|AS31898|LAX|valid",
+  "47.80.57.116:443|141ms|AS45102|LAX|valid",
+  "166.88.33.86:443|5ms|AS0|LAX|valid",
+  "146.56.151.92:443|138ms|AS31898|LAX|valid",
+  "131.186.26.94:443|142ms|AS31898|LAX|valid",
+  "140.245.65.122:443|142ms|AS31898|LAX|valid",
+  "193.122.96.190:443|142ms|AS31898|LAX|valid",
+  "193.122.119.241:443|139ms|AS31898|LAX|valid",
+  "146.56.135.196:443|145ms|AS31898|LAX|valid",
+  "158.247.210.172:443|133ms|AS20473|LAX|valid",
+  "130.162.137.247:443|133ms|AS31898|LAX|valid",
+  "166.88.33.113:443|6ms|AS7488|LAX|valid",
+  "141.164.35.4:443|139ms|AS20473|LAX|valid",
+  "193.123.236.206:443|135ms|AS31898|LAX|valid",
+  "140.238.30.217:443|132ms|AS31898|LAX|valid",
+  "134.185.114.16:443|139ms|AS31898|LAX|valid",
+  "166.88.33.149:443|2ms|AS7488|LAX|valid",
+  "129.154.197.113:443|138ms|AS31898|LAX|valid",
+  "129.154.212.204:443|139ms|AS31898|LAX|valid",
+  "140.238.15.158:443|135ms|AS31898|LAX|valid",
+  "61.77.229.182:443|144ms|AS4766|LAX|valid",
+  "158.247.224.240:443|139ms|AS20473|LAX|valid",
+  "146.56.158.34:443|143ms|AS31898|LAX|valid",
+  "61.110.5.237:443|164ms|AS138195|LAX|valid",
+  "193.122.115.184:443|139ms|AS31898|LAX|valid",
+  "152.67.203.125:443|143ms|AS31898|LAX|valid",
+  "13.125.141.213:443|135ms|AS16509|LAX|valid",
+  "146.56.106.214:443|143ms|AS31898|LAX|valid",
+  "54.116.250.226:443|132ms|AS16509|LAX|valid",
+  "161.118.153.136:443|136ms|AS31898|LAX|valid",
+  "182.224.185.243:443|147ms|AS17858|LAX|valid",
+  "144.24.78.206:443|139ms|AS31898|LAX|valid",
+  "43.164.132.181:443|133ms|AS132203|LAX|valid",
+  "132.145.89.240:443|142ms|AS31898|LAX|valid",
+  "64.110.82.71:443|139ms|AS31898|LAX|valid",
+  "114.204.39.195:443|142ms|AS9318|LAX|valid",
+  "47.80.24.151:443|137ms|AS45102|LAX|valid",
+  "50.114.114.31:443|136ms|AS9318|LAX|valid",
+  "39.115.137.14:443|133ms|AS9318|LAX|valid",
+  "146.56.159.35:443|135ms|AS31898|LAX|valid",
+  "183.101.136.209:443|144ms|AS4766|LAX|valid",
+  "43.128.130.45:443|136ms|AS132203|LAX|valid",
+  "43.128.147.145:443|140ms|AS132203|LAX|valid",
+  "43.128.154.199:443|137ms|AS132203|LAX|valid",
+  "43.133.76.171:443|135ms|AS132203|LAX|valid",
+  "43.133.251.155:443|142ms|AS132203|LAX|valid",
+  "101.33.68.172:443|139ms|AS132203|LAX|valid",
+  "129.154.61.118:443|139ms|AS31898|LAX|valid",
+  "168.110.101.249:443|139ms|AS31898|LAX|valid",
+  "23.27.1.161:443|139ms|AS9318|LAX|valid",
+  "193.123.253.209:443|132ms|AS31898|LAX|valid",
+  "152.69.229.110:443|135ms|AS31898|LAX|valid",
+  "152.67.198.36:443|143ms|AS31898|LAX|valid",
+  "163.5.16.50:443|143ms|AS57043|LAX|valid",
+  "52.141.35.116:443|131ms|AS8075|LAX|valid",
+  "141.164.44.60:443|133ms|AS20473|LAX|valid",
+  "141.164.56.22:443|136ms|AS20473|LAX|valid",
+  "203.227.191.29:443|164ms|AS9848|LAX|valid",
+  "20.194.34.26:443|136ms|AS8075|LAX|valid"
+ ],
+ "_file": "2026-10-04_0709Z.json"
+}
