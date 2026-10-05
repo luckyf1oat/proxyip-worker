@@ -1,0 +1,276 @@
+{
+ "runTime": "2026-10-05T14:34:08.829Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": "CF写入失败[63023.9999669.xyz]:[{\"code\":81058,\"message\":\"An identical record already exists.\"}]"
+ },
+ "counts": {
+  "total": 37,
+  "alive": 37,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "172.252.212.7:443",
+   "latency": 51,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Santa Clara",
+   "country": "US"
+  },
+  {
+   "ipPort": "222.167.226.35:443",
+   "latency": 58,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Hong Kong",
+   "country": "CN"
+  },
+  {
+   "ipPort": "216.106.188.116:443",
+   "latency": 93,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "216.106.188.116:443",
+   "latency": 93,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "136.176.68.49:443",
+   "latency": 94,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Peoria",
+   "country": "US"
+  },
+  {
+   "ipPort": "140.99.83.16:443",
+   "latency": 99,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "London",
+   "country": "GB"
+  },
+  {
+   "ipPort": "108.165.235.48:443",
+   "latency": 101,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Orem",
+   "country": "US"
+  },
+  {
+   "ipPort": "103.160.59.4:443",
+   "latency": 101,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Delhi",
+   "country": "IN"
+  },
+  {
+   "ipPort": "23.168.72.190:443",
+   "latency": 102,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "139.64.167.70:443",
+   "latency": 102,
+   "asn": "AS63023",
+   "org": "GTHost",
+   "colo": "ORD",
+   "city": "Paris",
+   "country": "FR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS63023",
+    37
+   ]
+  ],
+  "byColo": [
+   [
+    "ORD",
+    37
+   ]
+  ],
+  "byCountry": [
+   [
+    "NL",
+    15
+   ],
+   [
+    "US",
+    6
+   ],
+   [
+    "DE",
+    4
+   ],
+   [
+    "GB",
+    3
+   ],
+   [
+    "ES",
+    2
+   ],
+   [
+    "The Netherlands",
+    1
+   ],
+   [
+    "IN",
+    1
+   ],
+   [
+    "FR",
+    1
+   ],
+   [
+    "BR",
+    1
+   ],
+   [
+    "CN",
+    1
+   ]
+  ],
+  "byCity": [
+   [
+    "Amsterdam",
+    16
+   ],
+   [
+    "Frankfurt am Main",
+    4
+   ],
+   [
+    "London",
+    3
+   ],
+   [
+    "Peoria",
+    2
+   ],
+   [
+    "Madrid",
+    2
+   ],
+   [
+    "Pittsburgh",
+    1
+   ],
+   [
+    "Fort Lauderdale",
+    1
+   ],
+   [
+    "Orem",
+    1
+   ],
+   [
+    "Delhi",
+    1
+   ],
+   [
+    "Paris",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "GTHost",
+    37
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 6,
+   "100-200ms": 31,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "216.152.157.140:443|109ms|AS63023|ORD|valid",
+  "186.190.213.5:443|112ms|AS63023|ORD|valid",
+  "186.190.213.227:443|107ms|AS63023|ORD|valid",
+  "186.190.213.37:443|115ms|AS63023|ORD|valid",
+  "186.190.213.123:443|112ms|AS63023|ORD|valid",
+  "186.190.213.82:443|108ms|AS63023|ORD|valid",
+  "67.220.80.99:443|111ms|AS63023|ORD|valid",
+  "23.168.72.17:443|108ms|AS63023|ORD|valid",
+  "23.168.72.85:443|105ms|AS63023|ORD|valid",
+  "67.220.80.6:443|104ms|AS63023|ORD|valid",
+  "23.168.72.69:443|109ms|AS63023|ORD|valid",
+  "23.168.72.190:443|102ms|AS63023|ORD|valid",
+  "186.190.213.72:443|105ms|AS63023|ORD|valid",
+  "186.190.213.211:443|103ms|AS63023|ORD|valid",
+  "67.220.82.10:443|105ms|AS63023|ORD|valid",
+  "191.44.66.34:443|111ms|AS63023|ORD|valid",
+  "108.165.235.48:443|101ms|AS63023|ORD|valid",
+  "140.99.83.16:443|99ms|AS63023|ORD|valid",
+  "103.160.59.4:443|101ms|AS63023|ORD|valid",
+  "140.99.101.63:443|105ms|AS63023|ORD|valid",
+  "66.163.127.56:443|106ms|AS63023|ORD|valid",
+  "139.64.167.70:443|102ms|AS63023|ORD|valid",
+  "136.176.66.211:443|104ms|AS63023|ORD|valid",
+  "66.163.118.13:443|111ms|AS63023|ORD|valid",
+  "23.168.72.90:443|106ms|AS63023|ORD|valid",
+  "170.168.61.171:443|113ms|AS63023|ORD|valid",
+  "216.106.187.74:443|104ms|AS63023|ORD|valid",
+  "172.252.212.7:443|51ms|AS63023|ORD|valid",
+  "179.255.189.18:443|108ms|AS63023|ORD|valid",
+  "68.168.29.152:443|104ms|AS63023|ORD|valid",
+  "216.106.188.116:443|93ms|AS63023|ORD|valid",
+  "136.176.68.49:443|94ms|AS63023|ORD|valid",
+  "216.106.188.116:443|93ms|AS63023|ORD|valid",
+  "222.167.226.35:443|58ms|AS63023|ORD|valid",
+  "66.163.118.177:443|112ms|AS63023|ORD|valid",
+  "66.163.116.182:443|112ms|AS63023|ORD|valid",
+  "194.87.87.135:443|117ms|AS63023|ORD|valid"
+ ],
+ "_file": "2026-10-05_1434Z.json"
+}

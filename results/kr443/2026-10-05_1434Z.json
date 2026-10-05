@@ -1,0 +1,332 @@
+{
+ "runTime": "2026-10-05T14:34:08.829Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 60,
+  "alive": 60,
+  "removedThisRun": 1,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": -1,
+   "alive": -1,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "167.94.163.55:443",
+   "latency": 113,
+   "reason": "api_fail",
+   "failCount": 2,
+   "asn": "AS203273",
+   "country": "KR",
+   "org": "NetCrafters OU"
+  },
+  {
+   "ipPort": "141.164.35.4:443",
+   "latency": 206,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "166.88.33.113:443",
+   "latency": 57,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.149:443",
+   "latency": 57,
+   "asn": "AS7488",
+   "org": "CNServer LLC",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "166.88.33.86:443",
+   "latency": 59,
+   "asn": "AS0",
+   "org": "CNServer LLC",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "163.5.16.50:443",
+   "latency": 88,
+   "asn": "AS57043",
+   "org": "Hostkey B.v.",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "54.116.250.226:443",
+   "latency": 162,
+   "asn": "AS16509",
+   "org": "Amazon.com, Inc.",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "140.238.30.217:443",
+   "latency": 166,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "146.56.151.92:443",
+   "latency": 171,
+   "asn": "AS31898",
+   "org": "Oracle Corporation",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "20.194.34.26:443",
+   "latency": 171,
+   "asn": "AS8075",
+   "org": "Microsoft Corporation",
+   "colo": "ORD",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    28
+   ],
+   [
+    "AS132203",
+    9
+   ],
+   [
+    "AS20473",
+    4
+   ],
+   [
+    "AS4766",
+    3
+   ],
+   [
+    "AS9318",
+    3
+   ],
+   [
+    "AS45102",
+    2
+   ],
+   [
+    "AS7488",
+    2
+   ],
+   [
+    "AS16509",
+    2
+   ],
+   [
+    "AS8075",
+    2
+   ],
+   [
+    "AS0",
+    1
+   ],
+   [
+    "AS138195",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ],
+   [
+    "AS57043",
+    1
+   ],
+   [
+    "AS9848",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "ORD",
+    60
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    60
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    46
+   ],
+   [
+    "Chuncheon",
+    9
+   ],
+   [
+    "Seongnam",
+    2
+   ],
+   [
+    "Sejong",
+    2
+   ],
+   [
+    "Icheon",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    28
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    9
+   ],
+   [
+    "The Constant Company, LLC",
+    4
+   ],
+   [
+    "Korea Telecom",
+    3
+   ],
+   [
+    "CNServer LLC",
+    3
+   ],
+   [
+    "SK Broadband Co Ltd",
+    3
+   ],
+   [
+    "Amazon.com, Inc.",
+    2
+   ],
+   [
+    "Microsoft Corporation",
+    2
+   ],
+   [
+    "Alibaba US Technology Co., Ltd.",
+    1
+   ],
+   [
+    "MOACK.Co.LTD",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 4,
+   "100-200ms": 52,
+   "200-500ms": 3,
+   "500-1000ms": 0,
+   ">1000ms": 1,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "119.205.235.58:443|228ms|AS4766|ORD|valid",
+  "131.186.16.166:443|176ms|AS31898|ORD|valid",
+  "47.80.57.116:443|175ms|AS45102|ORD|valid",
+  "166.88.33.86:443|59ms|AS0|ORD|valid",
+  "146.56.151.92:443|171ms|AS31898|ORD|valid",
+  "131.186.26.94:443|189ms|AS31898|ORD|valid",
+  "140.245.65.122:443|175ms|AS31898|ORD|valid",
+  "193.122.96.190:443|177ms|AS31898|ORD|valid",
+  "193.122.119.241:443|175ms|AS31898|ORD|valid",
+  "146.56.135.196:443|173ms|AS31898|ORD|valid",
+  "158.247.210.172:443|185ms|AS20473|ORD|valid",
+  "130.162.137.247:443|190ms|AS31898|ORD|valid",
+  "166.88.33.113:443|57ms|AS7488|ORD|valid",
+  "193.123.236.206:443|179ms|AS31898|ORD|valid",
+  "140.238.30.217:443|166ms|AS31898|ORD|valid",
+  "134.185.114.16:443|177ms|AS31898|ORD|valid",
+  "166.88.33.149:443|57ms|AS7488|ORD|valid",
+  "129.154.197.113:443|173ms|AS31898|ORD|valid",
+  "129.154.212.204:443|183ms|AS31898|ORD|valid",
+  "140.238.15.158:443|181ms|AS31898|ORD|valid",
+  "61.77.229.182:443|177ms|AS4766|ORD|valid",
+  "158.247.224.240:443|184ms|AS20473|ORD|valid",
+  "146.56.158.34:443|187ms|AS31898|ORD|valid",
+  "61.110.5.237:443|176ms|AS138195|ORD|valid",
+  "193.122.115.184:443|180ms|AS31898|ORD|valid",
+  "152.67.203.125:443|179ms|AS31898|ORD|valid",
+  "13.125.141.213:443|181ms|AS16509|ORD|valid",
+  "146.56.106.214:443|179ms|AS31898|ORD|valid",
+  "54.116.250.226:443|162ms|AS16509|ORD|valid",
+  "161.118.153.136:443|176ms|AS31898|ORD|valid",
+  "182.224.185.243:443|184ms|AS17858|ORD|valid",
+  "144.24.78.206:443|176ms|AS31898|ORD|valid",
+  "43.164.132.181:443|185ms|AS132203|ORD|valid",
+  "132.145.89.240:443|179ms|AS31898|ORD|valid",
+  "64.110.82.71:443|183ms|AS31898|ORD|valid",
+  "114.204.39.195:443|179ms|AS9318|ORD|valid",
+  "47.80.24.151:443|314ms|AS45102|ORD|valid",
+  "50.114.114.31:443|175ms|AS9318|ORD|valid",
+  "39.115.137.14:443|192ms|AS9318|ORD|valid",
+  "146.56.159.35:443|172ms|AS31898|ORD|valid",
+  "183.101.136.209:443|178ms|AS4766|ORD|valid",
+  "43.128.130.45:443|180ms|AS132203|ORD|valid",
+  "43.128.147.145:443|184ms|AS132203|ORD|valid",
+  "43.128.154.199:443|188ms|AS132203|ORD|valid",
+  "43.133.76.171:443|194ms|AS132203|ORD|valid",
+  "101.33.68.172:443|191ms|AS132203|ORD|valid",
+  "129.154.61.118:443|178ms|AS31898|ORD|valid",
+  "168.110.101.249:443|179ms|AS31898|ORD|valid",
+  "193.123.253.209:443|180ms|AS31898|ORD|valid",
+  "152.69.229.110:443|176ms|AS31898|ORD|valid",
+  "152.67.198.36:443|4311ms|AS31898|ORD|valid",
+  "163.5.16.50:443|88ms|AS57043|ORD|valid",
+  "52.141.35.116:443|174ms|AS8075|ORD|valid",
+  "141.164.44.60:443|185ms|AS20473|ORD|valid",
+  "141.164.56.22:443|185ms|AS20473|ORD|valid",
+  "203.227.191.29:443|241ms|AS9848|ORD|valid",
+  "20.194.34.26:443|171ms|AS8075|ORD|valid",
+  "43.164.129.246:443|174ms|AS132203|ORD|valid",
+  "43.164.129.246:443|174ms|AS132203|ORD|valid",
+  "43.133.251.155:443|190ms|AS132203|ORD|valid"
+ ],
+ "_file": "2026-10-05_1434Z.json"
+}
