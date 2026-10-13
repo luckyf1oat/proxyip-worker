@@ -1,0 +1,402 @@
+{
+ "runTime": "2026-10-13T15:53:27.949Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 40,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": -40,
+   "alive": -38,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "216.152.157.140:443",
+   "latency": 101,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.5:443",
+   "latency": 96,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.227:443",
+   "latency": 94,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.37:443",
+   "latency": 91,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.123:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.82:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "67.220.80.99:443",
+   "latency": 92,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "23.168.72.17:443",
+   "latency": 97,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "The Netherlands",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "23.168.72.85:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "67.220.80.6:443",
+   "latency": 91,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "23.168.72.69:443",
+   "latency": 89,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "23.168.72.190:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.72:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "186.190.213.211:443",
+   "latency": 88,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "67.220.82.10:443",
+   "latency": 93,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "191.44.66.34:443",
+   "latency": 95,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "108.165.235.48:443",
+   "latency": 93,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "140.99.83.16:443",
+   "latency": 85,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "GB",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.160.59.4:443",
+   "latency": 93,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "IN",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "140.99.101.63:443",
+   "latency": 91,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "66.163.127.56:443",
+   "latency": 96,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "139.64.167.70:443",
+   "latency": 82,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "FR",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "136.176.66.211:443",
+   "latency": 92,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "23.168.72.90:443",
+   "latency": 93,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "170.168.61.171:443",
+   "latency": 91,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "216.106.187.74:443",
+   "latency": 93,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "172.252.212.7:443",
+   "latency": 223,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "179.255.189.18:443",
+   "latency": 90,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "BR",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "68.168.29.152:443",
+   "latency": 92,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "216.106.188.116:443",
+   "latency": 84,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "GB",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "136.176.68.49:443",
+   "latency": 81,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "222.167.226.35:443",
+   "latency": 63,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "CN",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "66.163.118.177:443",
+   "latency": 95,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "ES",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "66.163.116.182:443",
+   "latency": 95,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "CH",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.208.84.14:443",
+   "latency": 95,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "201.3.227.72:443",
+   "latency": 620,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "BR",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.136.70.192:443",
+   "latency": 92,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "167.17.69.221:443",
+   "latency": 9999,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.136.70.157:443",
+   "latency": 9999,
+   "reason": "http_403",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-13_1553Z.json"
+}
