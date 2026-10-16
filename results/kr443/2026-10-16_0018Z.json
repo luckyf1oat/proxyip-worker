@@ -1,0 +1,294 @@
+{
+ "runTime": "2026-10-16T00:18:10.095Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 28,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "43.108.109.168:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "168.110.110.16:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "118.107.172.65:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS54994",
+   "country": "KR",
+   "org": "Meteverse Limited."
+  },
+  {
+   "ipPort": "52.79.169.154:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "18.64.8.126:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "110.45.243.143:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS3786",
+   "country": "KR",
+   "org": "LG DACOM Corporation"
+  },
+  {
+   "ipPort": "158.247.251.25:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  },
+  {
+   "ipPort": "20.196.65.105:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS8075",
+   "country": "KR",
+   "org": "Microsoft Corporation"
+  },
+  {
+   "ipPort": "138.2.114.35:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "43.155.201.191:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "43.166.59.120:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "61.109.199.21:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS9848",
+   "country": "KR",
+   "org": "SEJONG NETWORKS"
+  },
+  {
+   "ipPort": "47.80.244.206:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "8.220.195.9:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "38.60.220.62:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS154177",
+   "country": "KR",
+   "org": "LIGHT NODE LIMITED"
+  },
+  {
+   "ipPort": "43.131.244.50:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "221.168.44.90:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "8.220.212.6:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "13.225.117.118:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "158.247.245.229:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  },
+  {
+   "ipPort": "103.13.221.7:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS138195",
+   "country": "KR",
+   "org": "MOACK.Co.LTD"
+  },
+  {
+   "ipPort": "211.174.123.241:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.214.239.177:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "160.202.163.159:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS45382",
+   "country": "KR",
+   "org": "Hostcenter"
+  },
+  {
+   "ipPort": "43.155.144.65:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "211.174.123.240:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "43.164.133.184:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-16_0018Z.json"
+}
