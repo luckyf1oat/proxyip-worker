@@ -1,0 +1,618 @@
+{
+ "runTime": "2026-10-19T04:29:23.027Z",
+ "group": {
+  "id": "NL216071",
+  "name": "NL216071",
+  "domain": "nl216071.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 63,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "146.103.122.177:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.228.187:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "109.107.166.153:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "91.84.126.209:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.89.35:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.110.118.172:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.110.111.112:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.105.141.235:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "109.107.167.117:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.67.214:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.110.142:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.115.20:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.246.104.105:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.248.101:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "62.84.96.237:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.91.21:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.117.253:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "91.246.41.232:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "88.210.13.72:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "87.199.199.88:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.80.100:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.103.6:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "195.2.92.9:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "46.151.29.120:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.94.217:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.112.61:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.112.24:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "78.40.194.48:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.233.139:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.119.161:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.224.249:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.246.99.92:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "88.210.10.26:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.105.136.75:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.66.181:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.111.121:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.124.79.103:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "94.103.82.195:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "212.34.150.14:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "5.35.37.25:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "212.118.37.122:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "88.210.12.225:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.246.101.234:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "77.246.110.7:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "195.200.19.200:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "91.84.101.89:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.110.110.194:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.253.197:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "144.124.231.85:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "212.118.55.151:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "91.84.124.123:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "88.210.9.92:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "89.110.110.128:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.126.253:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "109.234.34.178:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "146.103.125.20:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "195.63.128.95:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "93.183.89.239:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "185.245.107.239:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "185.245.107.121:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "193.178.169.54:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "195.63.168.189:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  },
+  {
+   "ipPort": "195.63.141.176:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-19_0429Z.json"
+}
