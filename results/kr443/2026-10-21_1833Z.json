@@ -1,0 +1,285 @@
+{
+ "runTime": "2026-10-21T18:33:51.150Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "52.85.128.86:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "3.35.147.170:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "43.200.25.158:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "3.37.133.87:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "47.80.244.167:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "47.80.8.47:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "47.80.7.23:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "119.28.235.127:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS132203",
+   "country": "KR",
+   "org": "Tencent Building, Kejizhongyi Avenue"
+  },
+  {
+   "ipPort": "3.170.221.79:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "110.45.243.141:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS3786",
+   "country": "KR",
+   "org": "LG DACOM Corporation"
+  },
+  {
+   "ipPort": "15.165.115.207:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "20.194.25.227:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS8075",
+   "country": "KR",
+   "org": "Microsoft Corporation"
+  },
+  {
+   "ipPort": "54.230.62.35:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "18.67.51.100:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "138.2.114.230:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "146.56.188.74:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "18.64.8.22:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS16509",
+   "country": "KR",
+   "org": "Amazon.com, Inc."
+  },
+  {
+   "ipPort": "152.32.139.243:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS135377",
+   "country": "KR",
+   "org": "UCLOUD INFORMATION TECHNOLOGY (HK) LIMITED"
+  },
+  {
+   "ipPort": "47.80.244.207:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS45102",
+   "country": "KR",
+   "org": "Alibaba (US) Technology Co., Ltd."
+  },
+  {
+   "ipPort": "211.245.36.44:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "49.128.202.142:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "20.41.122.238:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS8075",
+   "country": "KR",
+   "org": "Microsoft Corporation"
+  },
+  {
+   "ipPort": "134.185.100.61:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS31898",
+   "country": "KR",
+   "org": "Oracle Corporation"
+  },
+  {
+   "ipPort": "49.143.194.48:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.109.188.51:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS9848",
+   "country": "KR",
+   "org": "SEJONG NETWORKS"
+  },
+  {
+   "ipPort": "64.176.225.67:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS20473",
+   "country": "KR",
+   "org": "The Constant Company, LLC"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-21_1833Z.json"
+}
