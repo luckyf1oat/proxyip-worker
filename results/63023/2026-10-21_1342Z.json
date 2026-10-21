@@ -1,0 +1,96 @@
+{
+ "runTime": "2026-10-21T13:42:42.781Z",
+ "group": {
+  "id": "63023",
+  "name": "63023",
+  "domain": "63023.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 5,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "140.99.254.164:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "130.78.12.46:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.160.59.84:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "DE",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "138.249.133.252:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "US",
+   "org": "GTHost"
+  },
+  {
+   "ipPort": "103.136.70.243:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS63023",
+   "country": "NL",
+   "org": "GTHost"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-21_1342Z.json"
+}

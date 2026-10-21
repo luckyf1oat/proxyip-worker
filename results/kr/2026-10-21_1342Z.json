@@ -1,0 +1,3030 @@
+{
+ "runTime": "2026-10-21T13:42:42.781Z",
+ "group": {
+  "id": "kr",
+  "name": "kr",
+  "domain": "krautofxpip.9999669.xyz,krfxpip.9999669.xyz",
+  "recordType": "TXT",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "TXT",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 332,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "61.77.136.253:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.186.53.103:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.135.12.41:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.168.120.173:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.23.77.232:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.81.78.58:10911",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.2.62.171:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.140.89.1:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.170.173.224:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.151.210.54:29090",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.82.242.222:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.106.112.211:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.184.55.64:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.14.9.175:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.194.228.26:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.0.152.1:12162",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.99.36.9:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.80.5.99:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.195.170.8:17000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.44.184.27:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.194.46.88:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.206.80.24:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.183.165.109:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.107.129.204:38241",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.161.231.2:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.142.0.141:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.163.45.202:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.57.108.164:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.9.104.98:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.210.166.206:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.18.213:10035",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.137.246.135:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.175.81.126:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.154.44.158:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.132.58.142:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.183.186.184:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.18.211:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.99.173.66:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.41.26.148:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.192.77.37:12163",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.108.17.17:10255",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.198.181.119:18853",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.186.173.204:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.207.239.19:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.47.115.196:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.160.74.103:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.83.146.63:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.0.62.186:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.97.132.121:15000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.186.52.169:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.82.205.208:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.200.50.184:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.206.17.38:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.148.30.109:29090",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.135.69.244:17000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.167.127.232:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.199.61.92:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.185.56.31:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.37.37.100:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.153.45.186:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.165.36.130:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.183.74.146:27017",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.226.149.130:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "203.243.44.158:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.156.21.26:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.18.218:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.153.141.199:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.79.225.252:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.73.123.55:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.209.20.30:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.56.39.13:10443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.24.241.32:12164",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.148.113.201:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.46.160.227:18246",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.73.72.133:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.82.184.100:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.224.59.175:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.35.160.49:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.14.114.164:20201",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.179.20.14:10001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.139.17.106:25448",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.105.205.153:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.198.183.204:29090",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.164.79.183:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.50.106.42:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.46.17.245:18001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.81.78.208:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.86.116.220:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.213.181.141:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.134.169.165:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.195.18.80:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.165.243.199:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.199.27.72:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.197.100.133:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.41.95.26:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.144.199.171:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.0.58.42:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.179.218.9:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.99.227.24:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.52.162.11:32677",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "115.22.171.153:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.92.230.95:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.158.182.66:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.147.172.173:29090",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.102.209.110:25448",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.133.189.58:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.76.163.117:38241",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.199.130.106:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.169.140.190:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.187.213.23:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.79.225.252:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.162.240.23:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.178.123.93:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.182.249.194:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.26.172:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.40.120.197:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.159.234.77:12165",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.139.189.196:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.101.94.61:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.199.186.32:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.163.26.143:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.128.104.37:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.162.104.119:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.158.175.220:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.172.95.115:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.91.233.80:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.35.239.90:10005",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.201.151.120:18081",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "203.234.129.27:34567",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.186.53.103:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.56.201.108:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.148.181.220:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.151.21.46:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.82.118.81:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.3.62.210:19888",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.44.111.229:10101",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.2.153.198:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.179.13.29:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.16.122.104:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.119.163.4:12166",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.106.33.145:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "49.143.203.128:7001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.49.206.76:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.185.173.154:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.91.78.7:22105",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.205.74.47:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.73.210.209:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.162.242.137:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.121.232.32:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.195.235.198:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.31.124.236:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.157.145.120:18853",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.202.101.8:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.108.82.157:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.138.197.63:36317",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.53.28.33:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.209.20.30:10443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.204.74.212:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.105.228.84:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.103.27.56:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.3.180.185:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.114.97.252:12167",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.58.110.54:10000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.182.181.118:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.121.232.32:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.156.230.132:18853",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.214.125.233:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.43.117.8:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.0.58.42:23424",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.116.218.51:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.156.73.235:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.50.59.154:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.101.23.138:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.137.128.117:29090",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.184.187.224:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.211.246.239:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.82.242.222:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.141.32.222:10554",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.151.5.55:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.21.28.222:18853",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.48.165.25:13666",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.107.241.99:10554",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.90.33.53:20002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.198.183.204:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.146.126.247:10101",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.152.194.2:18001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.179.7.144:10101",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.179.7.143:10101",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.179.7.155:10101",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.94.94.109:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.129.29.23:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.215.204.244:12168",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.213.24.129:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.217.205.16:38241",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.63.181.106:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.165.202.54:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.116.218.51:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.97.6.94:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.125.34.93:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.18.211:20005",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.164.135.92:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.152.162.145:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.70.184.199:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "61.85.1.77:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.165.124.107:16030",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.15.205.51:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.180.89.29:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.165.36.130:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.101.20.224:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "203.243.44.158:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.123.165.166:20201",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.162.104.119:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.168.120.173:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.159.143.232:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.108.17.17:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.106.184.129:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.222.114.14:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.222.69.39:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.105.11.175:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.173.83.234:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.160.86.248:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.12.86.175:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "168.126.145.19:20000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.204.140.212:11001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.202.8.44:18264",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.32.158.138:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.150.96.18:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "115.23.30.112:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.38.143.76:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.88.246.34:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.233.138.88:7001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.79.192.110:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.98.75.68:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.135.139.170:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.113.239.216:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.53.7.74:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "169.212.165.183:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.204.16.148:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "115.20.151.101:12169",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.33.22.218:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.22.18.246:32414",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.212.82.132:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.220.190.179:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.44.96.97:18080",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.158.129.216:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.147.233.134:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.200.149.219:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.122.42.198:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.229.138.93:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.124.181.251:20202",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.212.186.203:30303",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.215.156.46:20201",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.157.145.120:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.94.74.212:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.178.174.74:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.108.215.96:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.197.42.147:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.103.167.69:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.195.0.158:10001",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.45.50.82:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.54.179.119:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.208.220.70:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "118.35.248.204:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.197.101.56:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.46.64.17:26257",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.134.6.129:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.166.172.94:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.84.246.146:20202",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.153.129.12:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.159.169.106:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.150.168.121:20202",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.121.106.232:19999",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.207.156.19:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.9.79.214:10000",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.170.173.224:12170",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.142.3.14:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.203.52.127:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.171.112.109:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.103.78.89:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.159.99.35:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.0.131.6:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.72.106.154:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.89.138.20:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.216.139.27:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.40.27.140:11211",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.164.213.185:35342",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.229.221.41:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.199.27.72:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.174.143.49:19888",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.180.134.224:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.166.101.160:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.183.186.184:37810",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.27.228.116:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.103.247.164:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.2.153.198:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.137.128.117:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "203.234.238.166:2087",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.142.126.133:35342",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.122.193.77:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "221.165.77.238:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.97.117.227:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "210.222.192.44:32771",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.122.102.107:12171",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.106.104.120:11434",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.31.175.247:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.197.63.160:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.79.223.151:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.118.153.222:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.162.110.48:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.103.202.243:18080",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.228.207.178:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.24.241.32:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.134.107.173:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.129.159.223:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.55.231.170:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.172.95.115:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "125.136.32.130:20201",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "218.150.196.52:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "175.201.29.145:18080",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "112.164.95.147:14430",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "220.80.149.78:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.161.234.104:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.32.158.138:18852",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "211.55.125.103:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.103.140.214:32400",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "119.202.234.7:20201",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "14.33.51.166:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "222.109.252.119:12172",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "121.144.97.174:10002",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "183.105.184.203:11300",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  },
+  {
+   "ipPort": "59.26.208.190:12173",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 1,
+   "asn": "AS4766",
+   "country": "KR",
+   "org": "Korea Telecom"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-10-21_1342Z.json"
+}
