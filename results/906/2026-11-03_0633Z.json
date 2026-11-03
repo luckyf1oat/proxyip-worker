@@ -1,0 +1,357 @@
+{
+ "runTime": "2026-11-03T06:33:52.585Z",
+ "group": {
+  "id": "906",
+  "name": "906",
+  "domain": "906.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 10,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": false,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 0,
+  "alive": 0,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "179.255.133.219:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "191.223.212.216:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "CN",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.119.95:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "69.63.209.127:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.69:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "191.223.208.13:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "CN",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.146.196:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "69.63.202.141:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.98:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.19:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.111.123:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.140.145:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.68:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "69.63.208.232:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.184:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.141.116:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.14:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "174.136.204.24:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.245.25:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.190:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "174.136.204.77:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.235.75:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.231.116:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "69.63.196.81:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "154.17.6.216:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.136.87:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.255.126.251:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "174.136.207.45:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "154.17.7.88:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.255.99:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.255.138:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "69.63.205.45:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "179.253.238.235:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  },
+  {
+   "ipPort": "154.17.22.135:443",
+   "latency": 9999,
+   "reason": "network_error",
+   "failCount": 2,
+   "asn": "AS906",
+   "country": "US",
+   "org": "DMIT Cloud Services"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [],
+ "distribution": {
+  "byAsn": [],
+  "byColo": [],
+  "byCountry": [],
+  "byCity": [],
+  "byOrg": [],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 0,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [],
+ "_file": "2026-11-03_0633Z.json"
+}
