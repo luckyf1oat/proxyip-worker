@@ -1,5 +1,5 @@
 // GitHub Actions检测脚本 - 从KV读取IP并检测
-const CHECK_API = 'https://cf.090227.xyz/check?proxyip=';
+const CHECK_API = 'https://checkpip.5671234.xyz/check?proxyip=';
 const INFO_API = 'https://api.ipapi.is/?q=';
 const CHECK_TIMEOUT = 10000;
 const INFO_TIMEOUT = 8000;
