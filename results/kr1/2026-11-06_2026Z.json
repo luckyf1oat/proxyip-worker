@@ -1,0 +1,752 @@
+{
+ "runTime": "2026-11-06T20:26:36.481Z",
+ "group": {
+  "id": "kr1",
+  "name": "kr1",
+  "domain": "krfxpip.5671234.xyz",
+  "recordType": "TXT",
+  "maxLatency": 2000,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "TXT",
+  "err": ""
+ },
+ "counts": {
+  "total": 54,
+  "alive": 54,
+  "removedThisRun": 66,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 22,
+   "alive": 22,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "58.124.39.181:11480",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.138.175.208:11480",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.235.53.156:11481",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "1.250.123.240:8880",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.208.84.52:32414",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "1.243.110.180:11602",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "50.114.114.65:9443",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.50.149.115:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "1.250.123.240:2086",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.38.103.152:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.50.149.116:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.50.149.118:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.50.149.114:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "1.250.123.240:2087",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "203.175.63.9:26470",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS17573",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.38.103.148:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "39.120.77.105:10332",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.237.185.229:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.237.185.235:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.237.185.232:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.139.79.36:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.139.79.21:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.178.105.135:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.139.79.50:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.178.105.133:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "114.201.241.26:29090",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.234.149.5:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.234.149.9:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.139.79.53:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "221.139.79.23:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.237.115.137:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "218.237.115.135:2095",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "110.9.206.180:10205",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "175.117.33.211:10201",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "1.224.230.169:10201",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "210.219.173.12:444",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.227.172.121:2053",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.27.30:25064",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "211.49.39.8:10001",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "175.114.222.83:10443",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.232.109.84:26214",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "112.148.121.195:29015",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS17858",
+   "country": "KR",
+   "org": "LG POWERCOMM"
+  },
+  {
+   "ipPort": "1.236.242.212:8080",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "58.232.109.84:27016",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "121.1.101.6:23791",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9694",
+   "country": "KR",
+   "org": "Seokyung Cable Television Co.. Ltd."
+  },
+  {
+   "ipPort": "219.254.172.221:2083",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2053",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2082",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "116.44.53.251:20202",
+   "latency": 9999,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS17858",
+   "country": "KR",
+   "org": "LG POWERCOMM"
+  },
+  {
+   "ipPort": "49.128.202.13:2053",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2087",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2095",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2096",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "219.254.172.221:2086",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "180.83.118.11:11300",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS17858",
+   "country": "KR",
+   "org": "LG POWERCOMM"
+  },
+  {
+   "ipPort": "219.254.172.221:8880",
+   "latency": 9999,
+   "reason": "timeout",
+   "failCount": 1,
+   "asn": "AS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  }
+ ],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "198.20.155.212:4443",
+   "latency": 162,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "218.49.81.7:16030",
+   "latency": 167,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "222.232.217.173:10209",
+   "latency": 168,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "27.115.143.37:10201",
+   "latency": 168,
+   "asn": "AS9971",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "218.49.51.119:20201",
+   "latency": 168,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "180.68.196.180:11434",
+   "latency": 171,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "58.231.41.19:11601",
+   "latency": 171,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "180.67.254.125:10162",
+   "latency": 171,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "DFW",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "ASAS9318",
+    22
+   ],
+   [
+    "AS9318",
+    19
+   ],
+   [
+    "ASAS3786",
+    3
+   ],
+   [
+    "ASAS17573",
+    3
+   ],
+   [
+    "AS3786",
+    2
+   ],
+   [
+    "ASAS23563",
+    1
+   ],
+   [
+    "AS17857",
+    1
+   ],
+   [
+    "AS9971",
+    1
+   ],
+   [
+    "AS9689",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "DFW",
+    54
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    54
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    25
+   ]
+  ],
+  "byOrg": [
+   [
+    "SK Broadband Co Ltd",
+    48
+   ],
+   [
+    "LG DACOM Corporation",
+    5
+   ],
+   [
+    "LG POWERCOMM",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 43,
+   "200-500ms": 10,
+   "500-1000ms": 0,
+   ">1000ms": 1,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "39.112.34.57:10181|198ms|ASAS9318|DFW|valid",
+  "218.49.81.7:16030|167ms|ASAS9318|DFW|valid",
+  "180.68.196.180:11434|171ms|ASAS9318|DFW|valid",
+  "115.92.109.27:11001|198ms|ASAS3786|DFW|valid",
+  "111.65.150.65:16922|237ms|ASAS17573|DFW|valid",
+  "58.238.65.90:12000|176ms|ASAS9318|DFW|valid",
+  "1.253.37.61:10106|217ms|ASAS9318|DFW|valid",
+  "111.65.177.210:10106|243ms|ASAS17573|DFW|valid",
+  "211.243.26.214:10106|178ms|ASAS9318|DFW|valid",
+  "222.235.190.141:13720|177ms|ASAS9318|DFW|valid",
+  "218.236.241.133:10101|174ms|ASAS9318|DFW|valid",
+  "114.201.222.64:33954|215ms|ASAS9318|DFW|valid",
+  "112.218.93.125:13579|224ms|ASAS3786|DFW|valid",
+  "210.117.76.24:11480|198ms|ASAS9318|DFW|valid",
+  "118.91.79.63:11481|196ms|ASAS17573|DFW|valid",
+  "110.9.101.157:11481|181ms|ASAS9318|DFW|valid",
+  "114.201.71.176:11481|182ms|ASAS9318|DFW|valid",
+  "221.141.41.100:11596|199ms|ASAS9318|DFW|valid",
+  "119.17.111.136:11596|197ms|ASAS23563|DFW|valid",
+  "211.213.102.88:11596|187ms|ASAS9318|DFW|valid",
+  "49.128.204.127:8880|177ms|ASAS9318|DFW|valid",
+  "58.231.41.19:11601|171ms|ASAS9318|DFW|valid",
+  "219.250.204.230:11601|176ms|ASAS9318|DFW|valid",
+  "180.65.213.57:11601|178ms|ASAS9318|DFW|valid",
+  "211.58.136.50:11602|226ms|ASAS9318|DFW|valid",
+  "106.248.34.75:14443|209ms|ASAS3786|DFW|valid",
+  "39.113.143.223:10162|185ms|ASAS9318|DFW|valid",
+  "175.115.73.219:11681|204ms|ASAS9318|DFW|valid",
+  "123.111.190.67:11688|172ms|ASAS9318|DFW|valid",
+  "198.20.155.212:4443|162ms|AS9318|DFW|valid",
+  "180.67.254.125:10162|171ms|AS9318|DFW|valid",
+  "221.141.183.143:10243|193ms|AS9318|DFW|valid",
+  "61.35.221.254:10332|188ms|AS3786|DFW|valid",
+  "118.219.175.35:10210|176ms|AS9318|DFW|valid",
+  "116.93.196.117:10210|222ms|AS17857|DFW|valid",
+  "218.234.129.19:10332|173ms|AS9318|DFW|valid",
+  "124.137.174.42:18853|199ms|AS9318|DFW|valid",
+  "1.236.112.166:10210|185ms|AS9318|DFW|valid",
+  "222.232.217.173:10209|168ms|AS9318|DFW|valid",
+  "219.250.203.99:10209|178ms|AS9318|DFW|valid",
+  "114.203.203.4:10209|186ms|AS9318|DFW|valid",
+  "180.64.102.191:10205|185ms|AS9318|DFW|valid",
+  "221.139.10.91:10205|176ms|AS9318|DFW|valid",
+  "211.213.40.99:10201|174ms|AS9318|DFW|valid",
+  "27.115.143.37:10201|168ms|AS9971|DFW|valid",
+  "211.117.50.160:10201|183ms|AS9318|DFW|valid",
+  "115.161.68.69:26470|182ms|AS9689|DFW|valid",
+  "1.225.249.17:10200|1672ms|AS9318|DFW|valid",
+  "211.49.39.8:10200|190ms|AS9318|DFW|valid",
+  "114.204.28.171:10200|229ms|AS9318|DFW|valid",
+  "218.49.51.119:20201|168ms|AS9318|DFW|valid",
+  "58.77.118.41:11001|186ms|AS3786|DFW|valid",
+  "123.111.28.66:10912|180ms|AS9318|DFW|valid",
+  "182.225.33.55:26470|188ms|AS17858|DFW|valid"
+ ],
+ "_file": "2026-11-06_2026Z.json"
+}
