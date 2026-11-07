@@ -1,0 +1,284 @@
+{
+ "runTime": "2026-11-07T12:55:18.170Z",
+ "group": {
+  "id": "kr1",
+  "name": "kr1",
+  "domain": "krfxpip.5671234.xyz",
+  "recordType": "TXT",
+  "maxLatency": 2000,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "TXT",
+  "err": ""
+ },
+ "counts": {
+  "total": 53,
+  "alive": 53,
+  "removedThisRun": 0,
+  "restoredThisRun": 1,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 1,
+   "alive": 1,
+   "overLatency": -1
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "218.236.241.133:10101",
+   "latency": 191,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  },
+  {
+   "ipPort": "175.115.73.219:11681",
+   "latency": 227,
+   "reason": "timeout",
+   "failCount": 2,
+   "asn": "ASAS9318",
+   "country": "KR",
+   "org": "SK Broadband Co Ltd"
+  }
+ ],
+ "restoredThisRun": [
+  {
+   "ipPort": "112.218.93.125:13579",
+   "latency": 192,
+   "asn": "ASAS3786",
+   "org": "LG DACOM Corporation"
+  }
+ ],
+ "resolved": [
+  {
+   "ipPort": "198.20.155.212:4443",
+   "latency": 138,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "211.213.40.99:10201",
+   "latency": 142,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "27.115.143.37:10201",
+   "latency": 142,
+   "asn": "AS9971",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "218.49.81.7:16030",
+   "latency": 143,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "121.1.101.6:23791",
+   "latency": 145,
+   "asn": "AS9694",
+   "org": "Seokyung Cable Television Co.. Ltd.",
+   "colo": "SJC",
+   "city": "Jinju",
+   "country": "KR"
+  },
+  {
+   "ipPort": "180.68.196.180:11434",
+   "latency": 146,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "58.231.41.19:11601",
+   "latency": 146,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "180.67.254.125:10162",
+   "latency": 146,
+   "asn": "AS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "SJC",
+   "city": "Seoul",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "ASAS9318",
+    20
+   ],
+   [
+    "AS9318",
+    19
+   ],
+   [
+    "ASAS3786",
+    3
+   ],
+   [
+    "ASAS17573",
+    3
+   ],
+   [
+    "AS3786",
+    2
+   ],
+   [
+    "ASAS23563",
+    1
+   ],
+   [
+    "AS17857",
+    1
+   ],
+   [
+    "AS9971",
+    1
+   ],
+   [
+    "AS9689",
+    1
+   ],
+   [
+    "AS17858",
+    1
+   ],
+   [
+    "AS9694",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "SJC",
+    53
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    53
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    25
+   ],
+   [
+    "Jinju",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "SK Broadband Co Ltd",
+    46
+   ],
+   [
+    "LG DACOM Corporation",
+    5
+   ],
+   [
+    "LG POWERCOMM",
+    1
+   ],
+   [
+    "Seokyung Cable Television Co.. Ltd.",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 51,
+   "200-500ms": 2,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "39.112.34.57:10181|171ms|ASAS9318|SJC|valid",
+  "218.49.81.7:16030|143ms|ASAS9318|SJC|valid",
+  "180.68.196.180:11434|146ms|ASAS9318|SJC|valid",
+  "115.92.109.27:11001|167ms|ASAS3786|SJC|valid",
+  "111.65.150.65:16922|214ms|ASAS17573|SJC|valid",
+  "58.238.65.90:12000|153ms|ASAS9318|SJC|valid",
+  "1.253.37.61:10106|197ms|ASAS9318|SJC|valid",
+  "111.65.177.210:10106|204ms|ASAS17573|SJC|valid",
+  "211.243.26.214:10106|155ms|ASAS9318|SJC|valid",
+  "222.235.190.141:13720|155ms|ASAS9318|SJC|valid",
+  "114.201.222.64:33954|188ms|ASAS9318|SJC|valid",
+  "210.117.76.24:11480|177ms|ASAS9318|SJC|valid",
+  "118.91.79.63:11481|173ms|ASAS17573|SJC|valid",
+  "110.9.101.157:11481|156ms|ASAS9318|SJC|valid",
+  "114.201.71.176:11481|157ms|ASAS9318|SJC|valid",
+  "221.141.41.100:11596|178ms|ASAS9318|SJC|valid",
+  "119.17.111.136:11596|174ms|ASAS23563|SJC|valid",
+  "211.213.102.88:11596|164ms|ASAS9318|SJC|valid",
+  "49.128.204.127:8880|149ms|ASAS9318|SJC|valid",
+  "58.231.41.19:11601|146ms|ASAS9318|SJC|valid",
+  "219.250.204.230:11601|153ms|ASAS9318|SJC|valid",
+  "180.65.213.57:11601|150ms|ASAS9318|SJC|valid",
+  "211.58.136.50:11602|182ms|ASAS9318|SJC|valid",
+  "106.248.34.75:14443|168ms|ASAS3786|SJC|valid",
+  "39.113.143.223:10162|159ms|ASAS9318|SJC|valid",
+  "123.111.190.67:11688|147ms|ASAS9318|SJC|valid",
+  "198.20.155.212:4443|138ms|AS9318|SJC|valid",
+  "180.67.254.125:10162|146ms|AS9318|SJC|valid",
+  "221.141.183.143:10243|168ms|AS9318|SJC|valid",
+  "61.35.221.254:10332|159ms|AS3786|SJC|valid",
+  "118.219.175.35:10210|153ms|AS9318|SJC|valid",
+  "116.93.196.117:10210|197ms|AS17857|SJC|valid",
+  "218.234.129.19:10332|152ms|AS9318|SJC|valid",
+  "124.137.174.42:18853|173ms|AS9318|SJC|valid",
+  "1.236.112.166:10210|152ms|AS9318|SJC|valid",
+  "222.232.217.173:10209|147ms|AS9318|SJC|valid",
+  "219.250.203.99:10209|153ms|AS9318|SJC|valid",
+  "114.203.203.4:10209|163ms|AS9318|SJC|valid",
+  "180.64.102.191:10205|158ms|AS9318|SJC|valid",
+  "221.139.10.91:10205|152ms|AS9318|SJC|valid",
+  "211.213.40.99:10201|142ms|AS9318|SJC|valid",
+  "27.115.143.37:10201|142ms|AS9971|SJC|valid",
+  "211.117.50.160:10201|162ms|AS9318|SJC|valid",
+  "115.161.68.69:26470|157ms|AS9689|SJC|valid",
+  "1.225.249.17:10200|157ms|AS9318|SJC|valid",
+  "211.49.39.8:10200|167ms|AS9318|SJC|valid",
+  "114.204.28.171:10200|191ms|AS9318|SJC|valid",
+  "218.49.51.119:20201|159ms|AS9318|SJC|valid",
+  "58.77.118.41:11001|153ms|AS3786|SJC|valid",
+  "123.111.28.66:10912|158ms|AS9318|SJC|valid",
+  "182.225.33.55:26470|157ms|AS17858|SJC|valid",
+  "121.1.101.6:23791|145ms|AS9694|SJC|valid",
+  "112.218.93.125:13579|192ms|ASAS3786|SJC|valid"
+ ],
+ "_file": "2026-11-07_1255Z.json"
+}
