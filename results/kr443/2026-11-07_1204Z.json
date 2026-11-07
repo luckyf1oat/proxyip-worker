@@ -1,0 +1,230 @@
+{
+ "runTime": "2026-11-07T12:04:21.376Z",
+ "group": {
+  "id": "kr443",
+  "name": "kr443",
+  "domain": "krautofxpip.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": null,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 17,
+  "alive": 17,
+  "removedThisRun": 0,
+  "restoredThisRun": 0,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [],
+ "restoredThisRun": [],
+ "resolved": [
+  {
+   "ipPort": "88.216.211.229:443",
+   "latency": 116,
+   "asn": "AS213896",
+   "org": "UAB Cherry Servers",
+   "colo": "MSP",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "167.94.163.71:443",
+   "latency": 117,
+   "asn": "AS203273",
+   "org": "NetCrafters OU",
+   "colo": "MSP",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "167.94.163.57:443",
+   "latency": 119,
+   "asn": "AS203273",
+   "org": "NetCrafters OU",
+   "colo": "MSP",
+   "city": "Seoul",
+   "country": "KR"
+  },
+  {
+   "ipPort": "167.94.163.112:443",
+   "latency": 125,
+   "asn": "ASAS203273",
+   "org": "NetCrafters OU",
+   "colo": "MSP",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "112.168.140.188:443",
+   "latency": 178,
+   "asn": "AS4766",
+   "org": "Korea Telecom",
+   "colo": "MSP",
+   "city": "Seongnam",
+   "country": "KR"
+  },
+  {
+   "ipPort": "168.93.224.149:443",
+   "latency": 179,
+   "asn": "ASAS9318",
+   "org": "SK Broadband Co Ltd",
+   "colo": "MSP",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "158.180.88.190:443",
+   "latency": 180,
+   "asn": "ASAS31898",
+   "org": "Oracle Corporation",
+   "colo": "MSP",
+   "city": "",
+   "country": "KR"
+  },
+  {
+   "ipPort": "193.123.248.71:443",
+   "latency": 183,
+   "asn": "ASAS31898",
+   "org": "Oracle Corporation",
+   "colo": "MSP",
+   "city": "",
+   "country": "KR"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "AS31898",
+    4
+   ],
+   [
+    "ASAS31898",
+    3
+   ],
+   [
+    "AS132203",
+    3
+   ],
+   [
+    "AS203273",
+    2
+   ],
+   [
+    "ASAS203273",
+    1
+   ],
+   [
+    "ASAS9318",
+    1
+   ],
+   [
+    "AS4766",
+    1
+   ],
+   [
+    "AS213896",
+    1
+   ],
+   [
+    "AS16509",
+    1
+   ]
+  ],
+  "byColo": [
+   [
+    "MSP",
+    17
+   ]
+  ],
+  "byCountry": [
+   [
+    "KR",
+    17
+   ]
+  ],
+  "byCity": [
+   [
+    "Seoul",
+    9
+   ],
+   [
+    "Chuncheon",
+    2
+   ],
+   [
+    "Seongnam",
+    1
+   ]
+  ],
+  "byOrg": [
+   [
+    "Oracle Corporation",
+    7
+   ],
+   [
+    "NetCrafters OU",
+    3
+   ],
+   [
+    "Tencent Building, Kejizhongyi Avenue",
+    3
+   ],
+   [
+    "SK Broadband Co Ltd",
+    1
+   ],
+   [
+    "Korea Telecom",
+    1
+   ],
+   [
+    "UAB Cherry Servers",
+    1
+   ],
+   [
+    "Amazon.com, Inc.",
+    1
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 17,
+   "200-500ms": 0,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "158.180.88.190:443|180ms|ASAS31898|MSP|valid",
+  "193.123.248.71:443|183ms|ASAS31898|MSP|valid",
+  "167.94.163.112:443|125ms|ASAS203273|MSP|valid",
+  "158.179.164.72:443|192ms|ASAS31898|MSP|valid",
+  "168.93.224.149:443|179ms|ASAS9318|MSP|valid",
+  "112.168.140.188:443|178ms|AS4766|MSP|valid",
+  "168.107.18.52:443|186ms|AS31898|MSP|valid",
+  "146.56.190.133:443|192ms|AS31898|MSP|valid",
+  "119.28.150.233:443|189ms|AS132203|MSP|valid",
+  "152.67.218.66:443|184ms|AS31898|MSP|valid",
+  "131.186.21.119:443|185ms|AS31898|MSP|valid",
+  "43.133.241.166:443|186ms|AS132203|MSP|valid",
+  "88.216.211.229:443|116ms|AS213896|MSP|valid",
+  "52.78.204.54:443|192ms|AS16509|MSP|valid",
+  "167.94.163.57:443|119ms|AS203273|MSP|valid",
+  "167.94.163.71:443|117ms|AS203273|MSP|valid",
+  "43.155.158.84:443|192ms|AS132203|MSP|valid"
+ ],
+ "_file": "2026-11-07_1204Z.json"
+}
