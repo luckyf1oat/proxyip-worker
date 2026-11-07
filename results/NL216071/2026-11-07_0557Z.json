@@ -1,0 +1,196 @@
+{
+ "runTime": "2026-11-07T05:57:10.224Z",
+ "group": {
+  "id": "NL216071",
+  "name": "NL216071",
+  "domain": "nl216071.9999669.xyz",
+  "recordType": "A",
+  "maxLatency": 1000,
+  "resolveCount": 8,
+  "selectedAsns": []
+ },
+ "dns": {
+  "ok": true,
+  "type": "A",
+  "err": ""
+ },
+ "counts": {
+  "total": 26,
+  "alive": 26,
+  "removedThisRun": 1,
+  "restoredThisRun": 1,
+  "overLatencyInTrash": 0,
+  "change": {
+   "total": 0,
+   "alive": 0,
+   "overLatency": 0
+  }
+ },
+ "removedThisRun": [
+  {
+   "ipPort": "87.199.200.236:443",
+   "latency": 160,
+   "reason": "api_fail",
+   "failCount": 1,
+   "asn": "AS216071",
+   "country": "NL",
+   "org": "Servers Tech Fzco"
+  }
+ ],
+ "restoredThisRun": [
+  {
+   "ipPort": "89.124.115.101:443",
+   "latency": 109,
+   "asn": "AS216071",
+   "org": "Servers Tech Fzco"
+  }
+ ],
+ "resolved": [
+  {
+   "ipPort": "146.103.102.109:443",
+   "latency": 108,
+   "asn": "ASAS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "",
+   "country": "NL"
+  },
+  {
+   "ipPort": "77.238.244.233:443",
+   "latency": 109,
+   "asn": "AS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "89.124.115.101:443",
+   "latency": 109,
+   "asn": "AS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "77.105.136.226:443",
+   "latency": 110,
+   "asn": "ASAS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "",
+   "country": "NL"
+  },
+  {
+   "ipPort": "212.118.39.102:443",
+   "latency": 111,
+   "asn": "ASAS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "",
+   "country": "NL"
+  },
+  {
+   "ipPort": "91.84.96.176:443",
+   "latency": 112,
+   "asn": "ASAS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "",
+   "country": "NL"
+  },
+  {
+   "ipPort": "195.63.135.129:443",
+   "latency": 112,
+   "asn": "AS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "Amsterdam",
+   "country": "NL"
+  },
+  {
+   "ipPort": "89.110.81.75:443",
+   "latency": 112,
+   "asn": "AS216071",
+   "org": "Servers Tech Fzco",
+   "colo": "MSP",
+   "city": "Amsterdam",
+   "country": "NL"
+  }
+ ],
+ "distribution": {
+  "byAsn": [
+   [
+    "ASAS216071",
+    15
+   ],
+   [
+    "AS216071",
+    11
+   ]
+  ],
+  "byColo": [
+   [
+    "MSP",
+    26
+   ]
+  ],
+  "byCountry": [
+   [
+    "NL",
+    26
+   ]
+  ],
+  "byCity": [
+   [
+    "Amsterdam",
+    11
+   ]
+  ],
+  "byOrg": [
+   [
+    "Servers Tech Fzco",
+    26
+   ]
+  ],
+  "latencyBuckets": {
+   "<50ms": 0,
+   "50-100ms": 0,
+   "100-200ms": 25,
+   "200-500ms": 1,
+   "500-1000ms": 0,
+   ">1000ms": 0,
+   "unknown": 0
+  }
+ },
+ "ips": [
+  "146.103.102.109:443|108ms|ASAS216071|MSP|valid",
+  "91.84.123.52:443|179ms|ASAS216071|MSP|valid",
+  "89.124.112.133:443|170ms|ASAS216071|MSP|valid",
+  "146.103.110.18:443|177ms|ASAS216071|MSP|valid",
+  "91.84.96.176:443|112ms|ASAS216071|MSP|valid",
+  "78.40.193.180:443|229ms|ASAS216071|MSP|valid",
+  "93.183.127.203:443|114ms|ASAS216071|MSP|valid",
+  "89.110.77.90:443|114ms|ASAS216071|MSP|valid",
+  "77.238.253.132:443|170ms|ASAS216071|MSP|valid",
+  "146.103.104.163:443|118ms|ASAS216071|MSP|valid",
+  "212.118.39.102:443|111ms|ASAS216071|MSP|valid",
+  "77.105.136.226:443|110ms|ASAS216071|MSP|valid",
+  "144.124.248.193:443|116ms|ASAS216071|MSP|valid",
+  "195.63.163.56:443|180ms|ASAS216071|MSP|valid",
+  "212.118.39.164:443|117ms|ASAS216071|MSP|valid",
+  "195.63.135.129:443|112ms|AS216071|MSP|valid",
+  "195.63.130.180:443|114ms|AS216071|MSP|valid",
+  "89.124.77.139:443|167ms|AS216071|MSP|valid",
+  "194.246.83.147:443|173ms|AS216071|MSP|valid",
+  "194.164.35.53:443|113ms|AS216071|MSP|valid",
+  "195.63.143.60:443|115ms|AS216071|MSP|valid",
+  "77.238.244.233:443|109ms|AS216071|MSP|valid",
+  "89.110.81.147:443|115ms|AS216071|MSP|valid",
+  "77.238.253.44:443|166ms|AS216071|MSP|valid",
+  "89.110.81.75:443|112ms|AS216071|MSP|valid",
+  "89.124.115.101:443|109ms|AS216071|MSP|valid"
+ ],
+ "_file": "2026-11-07_0557Z.json"
+}
